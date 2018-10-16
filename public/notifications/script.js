@@ -92,7 +92,7 @@ $('.display-toggle').on('click', function(event) {
       $('.display-toggle i').replaceWith('<i class="material-icons">check_box</i>');
     } else {
       $('.display-toggle i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
-      setNotificationStatus(true)
+      setNotificationStatus(true);
       startProcess();
     }
   } else if($('.display-toggle i').text() == 'check_box') {
@@ -180,11 +180,13 @@ function deleteToken() {
       console.error('Unable to delete token. ', err);
       $('#result').text('Unable to delete token. ' + err);
       $('#result').removeAttr('class').addClass('text-danger');
+      boxChecked();
     });
   }).catch(function(err) {
     console.error('Error retrieving Instance ID token. ', err);
     $('#result').text('Error retrieving Instance ID token. ' + err);
     $('#result').removeAttr('class').addClass('text-danger');
+    boxChecked();
   });
 }
 
