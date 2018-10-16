@@ -41,7 +41,6 @@ function getToken() {
       console.log('Token: ' + currentToken);
       $('#result').text('Notifications turned on.');
       $('#result').removeAttr('class').addClass('text-success');
-      boxChecked();
     } else {
       console.warn('No Instance ID token available. Request permission to generate one.');
       $('#result').text('Notification permission not requested.');
@@ -92,7 +91,6 @@ $('.display-toggle').on('click', function(event) {
       $('.display-toggle i').replaceWith('<i class="material-icons">check_box</i>');
     } else {
       $('.display-toggle i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
-      setNotificationStatus(true);
       startProcess();
     }
   } else if($('.display-toggle i').text() == 'check_box') {
@@ -109,24 +107,32 @@ $('.display-toggle').on('click', function(event) {
 // - subscribe/unsubscribe the token from topics
 function sendTokenToServer(currentToken) {
   if (!isTokenSentToServer()) {
+    boxUnChecked();
+    $('.display-toggle i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
     console.log('Sending token to server...');
-    var jqxhr = $.post('https://us-central1-blood-mv.cloudfunctions.net/subscribeToTopic', function() {
-      console.log('Sending subscription request to server...');
-      $('#result').text('Sending subscription request to server...');
-      $('#result').removeAttr('class').addClass('text-success');
-    })
-      .done(function() {
+    $.ajax({
+      method: 'POST',
+      dataType: "json",
+      url: 'subscribe',
+      data: { topic: 'all', token: currentToken },
+      success: function (data) {
         setTokenSentToServer(true);
-        console.log('Subscripttion successful.');
+        setNotificationStatus(true);
+        console.log('Subscripttion successful. ', data);
         $('#result').text('Subscripttion successful.');
         $('#result').removeAttr('class').addClass('text-success');
-      })
-      .fail(function() {
-        console.log('Something went wrong!');
+        boxChecked();
+      },
+      error: function (xhr, status, error) {
+        console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
         $('#result').text('Something went wrong!');
         $('#result').removeAttr('class').addClass('text-danger');
-      });
+        boxUnChecked();
+      },
+    });
   } else {
+    boxChecked();
+    setNotificationStatus(true);
     console.log('Token already sent to server so won\'t send it again unless it changes');
   }
 }

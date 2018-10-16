@@ -7,6 +7,7 @@
       "**/node_modules/**"
     ],
     "predeploy": [
+      "firebase target",
       "jshint --exclude **/*.min.js public/**/*.js",
       "mv public/style.css public/style.max.css",
       "csso public/style.max.css public/style.css",
@@ -40,14 +41,6 @@
       }
     ],
     "headers": [
-      {
-        "source": "/notifications/subscribe",
-        "headers": [
-          {
-            "Access-Control-Allow-Origin": "\*"
-          }
-        ]
-      },
       {
         "source": "**/*.@(js|css|json)",
         "headers": [
