@@ -18,7 +18,7 @@ messaging.onTokenRefresh(function() {
     startProcess();
   }).catch(function(err) {
     console.error('Unable to retrieve refreshed token ', err);
-    $('#result').text('Unable to retrieve refreshed token ' + err);
+    $('#result').text('Unable to retrieve refreshed token.');
     $('#result').addClass('text-danger');
   });
 });
@@ -49,7 +49,7 @@ function getToken() {
     }
   }).catch(function(err) {
     console.error('An error occurred while retrieving token. ', err);
-    $('#result').text('Error retrieving Instance ID token. ' + err);
+    $('#result').text('Error retrieving Instance ID token.');
     $('#result').removeAttr('class').addClass('text-danger');
     setTokenSentToServer(false);
     boxUnChecked();
@@ -80,24 +80,35 @@ function startProcess() {
 
 $('.display-toggle').on('click', function(event) {
   if(Notification.permission == 'default') {
-    $('.display-toggle i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+    $('.display-toggle i').text('refresh').addClass('icon-spin');
     requestPermission();
   }
   if($('.display-toggle i').text() == 'check_box_outline_blank') {
     if(getNotificationStatus() == true) {
-      $('.display-toggle i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+      $('.display-toggle i').text('refresh').addClass('icon-spin');
       startProcess();
       $('#allFields').removeAttr('disabled');
-      $('.display-toggle i').replaceWith('<i class="material-icons">check_box</i>');
+      $('.display-toggle i').text('check_box').removeClass('icon-spin');
     } else {
-      $('.display-toggle i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+      $('.display-toggle i').text('refresh').addClass('icon-spin');
+      setNotificationStatus(true);
       startProcess();
     }
   } else if($('.display-toggle i').text() == 'check_box') {
-    $('.display-toggle i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+    $('.display-toggle i').text('refresh').addClass('icon-spin');
     deleteToken();
   } else {
     console.warn('Some action is happening. Wait for a while!');
+  }
+});
+
+
+$('#mainForm input[type=checkbox]').on('change', function(event) {
+  $(event.target).attr('data-icon', 'refresh').addClass('icon-spin');
+  if($(event.target).prop('checked')) {
+    //$(event.target).attr('data-icon', 'check_box');
+  } else {
+    //$(event.target).attr('data-icon', 'check_box_outline_blank');
   }
 });
 
@@ -108,8 +119,9 @@ $('.display-toggle').on('click', function(event) {
 function sendTokenToServer(currentToken) {
   if (!isTokenSentToServer()) {
     boxUnChecked();
-    $('.display-toggle i').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+    $('.display-toggle i').text('refresh').addClass('icon-spin');
     console.log('Sending token to server...');
+    setNotificationStatus(false);
     $.ajax({
       method: 'POST',
       dataType: "json",
@@ -128,6 +140,7 @@ function sendTokenToServer(currentToken) {
         $('#result').text('Something went wrong!');
         $('#result').removeAttr('class').addClass('text-danger');
         boxUnChecked();
+        setNotificationStatus(false);
       },
     });
   } else {
@@ -140,13 +153,13 @@ function sendTokenToServer(currentToken) {
 
 function boxChecked() {
   $('#allFields').removeAttr('disabled');
-  $('.display-toggle i').replaceWith('<i class="material-icons">check_box</i>');
+  $('.display-toggle i').text('check_box').removeClass('icon-spin');
 }
 
 
 function boxUnChecked() {
   $('#allFields').attr('disabled', 'disabled');
-  $('.display-toggle i').replaceWith('<i class="material-icons">check_box_outline_blank</i>');
+  $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
   $('input:checkbox').prop('checked', '');
 }
 
@@ -180,7 +193,7 @@ function requestPermission() {
     startProcess();
   }).catch(function(err) {
     console.error('Unable to get permission to notify.', err);
-    $('#result').text('Unable to get permission to notify. ' + err);
+    $('#result').text('Unable to get permission to notify.');
     $('#result').removeAttr('class').addClass('text-danger');
     startProcess();
   });
@@ -198,13 +211,13 @@ function deleteToken() {
       boxUnChecked();
     }).catch(function(err) {
       console.error('Unable to delete token. ', err);
-      $('#result').text('Unable to delete token. ' + err);
+      $('#result').text('Unable to delete token.');
       $('#result').removeAttr('class').addClass('text-danger');
       boxChecked();
     });
   }).catch(function(err) {
     console.error('Error retrieving Instance ID token. ', err);
-    $('#result').text('Error retrieving Instance ID token. ' + err);
+    $('#result').text('Error retrieving Instance ID token.');
     $('#result').removeAttr('class').addClass('text-danger');
     boxChecked();
   });
