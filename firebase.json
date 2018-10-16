@@ -41,6 +41,14 @@
     ],
     "headers": [
       {
+        "source": "/notifications/subscribe",
+        "headers": [
+          {
+            "Access-Control-Allow-Origin": "*"
+          }
+        ]
+      },
+      {
         "source": "**/*.@(js|css|json)",
         "headers": [
           {

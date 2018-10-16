@@ -110,8 +110,22 @@ $('.display-toggle').on('click', function(event) {
 function sendTokenToServer(currentToken) {
   if (!isTokenSentToServer()) {
     console.log('Sending token to server...');
-    // TODO: Send the current token to your server.
-    setTokenSentToServer(true);
+    var jqxhr = $.post('https://us-central1-blood-mv.cloudfunctions.net/subscribeToTopic', function() {
+      console.log('Sending subscription request to server...');
+      $('#result').text('Sending subscription request to server...');
+      $('#result').removeAttr('class').addClass('text-success');
+    })
+      .done(function() {
+        setTokenSentToServer(true);
+        console.log('Subscripttion successful.');
+        $('#result').text('Subscripttion successful.');
+        $('#result').removeAttr('class').addClass('text-success');
+      })
+      .fail(function() {
+        console.log('Something went wrong!');
+        $('#result').text('Something went wrong!');
+        $('#result').removeAttr('class').addClass('text-danger');
+      });
   } else {
     console.log('Token already sent to server so won\'t send it again unless it changes');
   }
