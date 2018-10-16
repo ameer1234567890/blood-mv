@@ -7,7 +7,7 @@
       "**/node_modules/**"
     ],
     "predeploy": [
-      "jshint --exclude **/*.min.js **/*.js",
+      "jshint --exclude **/*.min.js public/**/*.js",
       "mv public/style.css public/style.max.css",
       "csso public/style.max.css public/style.css",
       "mv public/script.js public/script.max.js",
@@ -33,6 +33,11 @@
       "mv public/firebase-messaging-sw.max.js public/firebase-messaging-sw.js",
       "rm public/notifications/script.js.map",
       "mv public/notifications/script.max.js public/notifications/script.js"
+    ],
+    "rewrites": [
+      {
+        "source": "/notifications/subscribe", "function": "subscribeToTopic"
+      }
     ],
     "headers": [
       {
@@ -62,6 +67,11 @@
           }
         ]
       }
+    ]
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix functions run lint"
     ]
   }
 }
