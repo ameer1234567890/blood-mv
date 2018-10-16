@@ -1,0 +1,67 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "predeploy": [
+      "jshint --exclude **/*.min.js **/*.js",
+      "mv public/style.css public/style.max.css",
+      "csso public/style.max.css public/style.css",
+      "mv public/script.js public/script.max.js",
+      "google-closure-compiler --js=public/script.max.js --js_output_file=public/script.js --create_source_map=public/script.js.map",
+      "mv public/sw.js public/sw.max.js",
+      "google-closure-compiler --js=public/sw.max.js --js_output_file=public/sw.js --create_source_map=public/sw.js.map",
+      "mv public/firebase-messaging-sw.js public/firebase-messaging-sw.max.js",
+      "google-closure-compiler --js=public/firebase-messaging-sw.max.js --js_output_file=public/firebase-messaging-sw.js --create_source_map=public/firebase-messaging-sw.js.map",
+      "mv public/notifications/script.js public/notifications/script.max.js",
+      "google-closure-compiler --js=public/notifications/script.max.js --js_output_file=public/notifications/script.js --create_source_map=public/notifications/script.js.map"
+    ],
+    "postdeploy": [
+      "rm public/style.css",
+      "mv public/style.max.css public/style.css",
+      "rm public/script.js",
+      "rm public/script.js.map",
+      "mv public/script.max.js public/script.js",
+      "rm public/sw.js",
+      "rm public/sw.js.map",
+      "mv public/sw.max.js public/sw.js",
+      "rm public/firebase-messaging-sw.js",
+      "rm public/firebase-messaging-sw.js.map",
+      "mv public/firebase-messaging-sw.max.js public/firebase-messaging-sw.js",
+      "rm public/notifications/script.js.map",
+      "mv public/notifications/script.max.js public/notifications/script.js"
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|css|json)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|webp)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800"
+          }
+        ]
+      },
+      {
+        "source": "404.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=300"
+          }
+        ]
+      }
+    ]
+  }
+}

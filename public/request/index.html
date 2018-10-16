@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta name="theme-color" content="#212529">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="Description" content="A database of Maldivian blood donors and blood requests">
+  <title>Blood Requests :: Blood MV</title>
+  <link rel="preconnect" href="https://firestore.googleapis.com">
+  <link rel="stylesheet" href="//cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.18/datatables.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:regular,bold,italic">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.3.1/css/all.css">
+  <link rel="stylesheet" href="/sidenav/sidenav.min.css">
+  <link rel="stylesheet" href="/waves/waves.min.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body id="reqListPage">
+  <nav class="navbar navbar-dark bg-navbar fixed-top">
+    <div class="navbar-brand">
+      <button class="navbar-toggler" type="button" id="menu-toggle">
+        <span class="sr-only">Toggle Menu</span>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;Blood MV</span>
+    </div>
+  </nav>
+  <div id="backdrop"></div>
+  <div id="sidenav">
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <div class="header">
+      <i class="material-icons avatar">account_circle</i>
+      <div class="title" id="display-name">Not Logged in</div>
+      <div class="headline"></div>
+    </div>
+    <div>
+      <ul id="nav-links">
+        <li id="nav-home" class="waves-effect"><a href="/"><i class="material-icons">home</i>Home</a></li>
+        <li id="nav-req-list" class="active waves-effect"><a href="/request/"><i class="material-icons">list</i>Blood Requests</a></li>
+        <li id="nav-log" class="waves-effect"><a href=""><i class="material-icons">exit_to_app</i>Login</a></li>
+      </ul>
+    </div>
+  </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="display-toggle">
+          <span>Show fullfilled requests: </span><i class="fas fa-circle-notch fa-spin"></i>
+        </div>
+        <table id="requests" class="table table-striped table-bordered table-sm">
+          <caption>Fulfilled tick can only be changed by the creating user.</caption>
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Blood Group</th>
+              <th scope="col">Contact Number</th>
+              <th scope="col">Place</th>
+              <th scope="col">Requested at</th>
+              <th scope="col">Fulfilled</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <div class="spinner" id="spinner">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+        </div>
+      </div>
+    </div>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+  </div>
+  <script src="/__/firebase/5.3.0/firebase-app.js"></script>
+  <script src="/__/firebase/5.3.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/5.3.0/firebase-auth.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="//cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.18/datatables.min.js" defer></script>
+  <script src="/sidenav/sidenav.min.js" defer></script>
+  <script src="/waves/waves.min.js" defer></script>
+  <script src="/script.js" defer></script>
+</body>
+</html>

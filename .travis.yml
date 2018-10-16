@@ -1,0 +1,14 @@
+sudo: false
+language: node_js
+node_js:
+  - "node"
+cache:
+  directories:
+    - "node_modules"
+install:
+  - npm install -g jshint
+  - npm install -g csso-cli
+  - npm install -g google-closure-compiler
+  - npm install -g firebase-tools
+script:
+  - firebase deploy --project blood-mv --token $FIREBASE_TOKEN

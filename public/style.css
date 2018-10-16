@@ -1,0 +1,279 @@
+body {
+  font-family: Roboto;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+#nav-home:hover, #nav-log:hover, #nav-add:hover, #nav-req-list:hover, #nav-req-add:hover {
+  background-color: #eee;
+}
+
+.bg-navbar {
+  background-color: #212529;
+}
+
+table caption {
+  font-style: italic;
+}
+
+.fulf-disabled {
+  color: #888;
+  cursor: default;
+  font-size: 17px;
+}
+
+.fulf-enabled {
+  color: #007bff;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.fulf-enabled:hover {
+  color: #0056b3;
+}
+
+.display-toggle i {
+  color: #007bff;
+  cursor: pointer;
+  vertical-align: bottom;
+}
+
+.display-toggle i:hover {
+  color: #0056b3;
+}
+
+.display-toggle .fa-spin {
+  font-size: 24px;
+}
+
+i.disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+i.disabled:hover {
+  color: #ccc;
+  cursor: default;
+}
+
+table .fa-spin {
+  color: #007bff;
+  font-size: 17px;
+}
+
+table .fa-spin:hover {
+  color: #0056b3;
+}
+
+#addPage input:focus:required:valid, #reqAddPage input:focus:required:valid {
+  background-color: #c9e8c1;
+}
+
+#addPage input:focus:required:invalid, #reqAddPage input:focus:required:invalid {
+  background-color: #e8b6b6;
+}
+
+#addPage .spinner, #reqAddPage .spinner, .display-toggle {
+  float: right;
+}
+
+#listPage .spinner, #reqListPage .spinner {
+  margin: 100px auto;
+}
+
+#notifPage #mainForm input[type=checkbox]:before {
+  background: #fff;
+  color: #007bff;
+  content: "check_box_outline_blank";
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Material Icons';
+  font-size: 24px;
+  line-height: .5em;
+}
+
+#notifPage #mainForm input[type=checkbox] + label {
+  cursor: pointer;
+  padding-left: .5em;
+}
+
+#notifPage #mainForm input[type=checkbox]:hover:before {
+  color: #0056b3;
+}
+
+#notifPage #mainForm input[type=checkbox]:checked:before {
+  content: "check_box";
+}
+
+#notifPage #mainForm input[type=checkbox]:disabled:before,
+#notifPage #mainForm input[type=checkbox]:disabled + label {
+  cursor: default;
+  color: #ccc;
+}
+
+#notifPage .display-toggle {
+  float: left;
+}
+
+/*  --------------------------------------------------------  */
+/*  Responsive table                                          */
+/*  --------------------------------------------------------  */
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    left: -9999px;
+    position: absolute;
+    top: -9999px;
+  }
+  tr { border: 1px solid #ccc; }
+  td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding-left: 50%;
+    position: relative;
+  }
+  /* The above specified padding rule does not "cascade". So we be more specific here */
+  .table-sm td, .table-sm th { padding-left: 50%; }
+  td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    left: 6px;
+    padding-right: 10px;
+    top: 6px;
+    white-space: nowrap;
+    width: 45%;
+  }
+  /* Fill the caption to full width */
+  table caption { display: inline; }
+  /* Label the data */
+  #donors td:nth-of-type(1):before { content: "Name"; }
+  #donors td:nth-of-type(2):before { content: "Gender"; }
+  #donors td:nth-of-type(3):before { content: "Age"; }
+  #donors td:nth-of-type(4):before { content: "Blood Group"; }
+  #donors td:nth-of-type(5):before { content: "Atoll / City"; }
+  #donors td:nth-of-type(6):before { content: "Island / Ward"; }
+  #donors td:nth-of-type(7):before { content: "Phone"; }
+  #donors td:nth-of-type(8):before { content: "Last Donated"; }
+  #requests td:nth-of-type(1):before { content: "Blood Group"; }
+  #requests td:nth-of-type(2):before { content: "Contact Number"; }
+  #requests td:nth-of-type(3):before { content: "Place"; }
+  #requests td:nth-of-type(4):before { content: "Requested at"; }
+  #requests td:nth-of-type(5):before { content: "Fulfilled"; }
+}
+
+/*  --------------------------------------------------------  */
+/*  Sidenav - Android like side navigation                    */
+/*  --------------------------------------------------------  */
+#sidenav {
+  background: white;
+  width: 350px;
+}
+#sidenav .header {
+  background-color: #212529;
+  background-size: cover;
+  padding: 30px;
+  text-align: center;
+}
+#sidenav .avatar {
+  background: #fff;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 999px;
+  color: #fff;
+  color: rgba(255,255,255,0.8);
+  font-size: 102px;
+  text-shadow: 0 0 5px black;
+}
+#sidenav .avatar-img {
+  border-radius: 50%;
+}
+#sidenav .title {
+  color: #fff;
+  color: rgba(255,255,255,0.91);
+  font-size: 1.6em;
+  margin-top: 20px;
+  text-shadow: 0 0 3px #000;
+}
+#sidenav .headline {
+  color: #fff;
+  color: rgba(255,255,255,0.91);
+  font-size: 1.1em;
+  margin-top: 10px;
+  text-shadow: 0 0 3px #000;
+}
+#sidenav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#sidenav ul li {
+  align-items: center;
+  color: #333;
+  display: flex;
+  padding: 0;
+}
+#sidenav ul li i {
+  color: #888;
+  margin-right: 10px;
+  vertical-align: text-bottom;
+}
+#sidenav ul li.active {
+  background: #EEE;
+  color: #888;
+}
+#sidenav ul li a {
+  color: #333;
+  height: 100%;
+  padding: 15px;
+  width: 100%;
+}
+
+/*  --------------------------------------------------------  */
+/*  Spinner - loading animation while the table is generated  */
+/*  --------------------------------------------------------  */
+.spinner {
+  font-size: 10px;
+  height: 30px;
+  text-align: center;
+  width: 50px;
+}
+.spinner > div {
+  animation: stretchdelay 1.2s infinite ease-in-out;
+  background-color: #333;
+  display: inline-block;
+  height: 100%;
+  width: 6px;
+}
+.spinner .rect2 {
+  animation-delay: -1.1s;
+}
+.spinner .rect3 {
+  animation-delay: -1.0s;
+}
+.spinner .rect4 {
+  animation-delay: -.9s;
+}
+.spinner .rect5 {
+  animation-delay: -.8s;
+}
+@keyframes stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+  }
+}
