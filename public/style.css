@@ -126,31 +126,31 @@ table .fa-spin:hover {
 /*  Add to home screen (a2hs)                                 */
 /*  --------------------------------------------------------  */
 .a2hs-banner {
-  display: none;
-  position: fixed;
-  width: 100%;
   bottom: 0;
-  right: 0;
-  left: 0;
-  height: 50px;
-  text-align: center;
-  line-height: 50px;
-  z-index: 999;
-  color: #fff;
   box-shadow: 0 -4px 20px 0px #888;
+  color: #fff;
+  display: none;
+  height: 50px;
+  left: 0;
+  line-height: 50px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  width: 100%;
+  z-index: 999;
 }
 
 .a2hs-img {
-  position: absolute;
-  left: 10px;
-  top: 5px;
   height: 40px;
+  left: 10px;
+  position: absolute;
+  top: 5px;
   width: 40px;
 }
 
 .a2hs-add {
-  cursor: pointer;
   background: #007bff;
+  cursor: pointer;
 }
 
 .a2hs-add:hover {
@@ -158,16 +158,16 @@ table .fa-spin:hover {
 }
 
 .a2hs-close {
+  background: #007bff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  height: 50px;
+  line-height: 50px;
   position: absolute;
   right: 0;
   top: 0;
-  line-height: 50px;
-  height: 50px;
   width: 50px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  background: #007bff;
 }
 
 .a2hs-close:hover {
@@ -264,7 +264,7 @@ only screen and (max-width: 760px),
 #sidenav .header {
   background-color: #212529;
   background-size: cover;
-  padding: 30px;
+  padding: 4.1em 1em 1em 1em;
   text-align: center;
 }
 #sidenav .avatar {
@@ -278,6 +278,9 @@ only screen and (max-width: 760px),
 }
 #sidenav .avatar-img {
   border-radius: 50%;
+  float: left;
+  height: 4em;
+  width: 4em;
 }
 #sidenav .title {
   color: #fff;

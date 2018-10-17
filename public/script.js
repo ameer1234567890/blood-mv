@@ -502,7 +502,7 @@ function performLogout() {
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     $('#display-name').html(user.displayName);
-    $('.avatar').replaceWith('<img src="' + user.photoURL + '" class="avatar-img" alt="Avatar" width="100" height="100">');
+    $('.avatar').replaceWith('<img src="' + user.photoURL + '" class="avatar-img" alt="Avatar">');
     db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         isNewUser = false;
