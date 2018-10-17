@@ -6,7 +6,7 @@ a:hover {
   text-decoration: none;
 }
 
-#nav-home:hover, #nav-log:hover, #nav-add:hover, #nav-req-list:hover, #nav-req-add:hover {
+#nav-home:hover, #nav-log:hover, #nav-add:hover, #nav-req-list:hover, #nav-req-add:hover, #nav-notif:hover {
   background-color: #eee;
 }
 
