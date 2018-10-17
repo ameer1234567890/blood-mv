@@ -141,6 +141,14 @@ table .fa-spin:hover {
   box-shadow: 0 -4px 20px 0px #888;
 }
 
+.a2hs-img {
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  height: 40px;
+  width: 40px;
+}
+
 .a2hs-add {
   cursor: pointer;
 }
