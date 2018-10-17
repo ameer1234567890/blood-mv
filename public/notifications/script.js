@@ -70,9 +70,11 @@ function startProcess() {
       console.log('Notifications were turned off. So, not requesting a token.');
       boxUnChecked();
     } else {
+      setSubscritions();
       getToken();
     }
   } else {
+    setSubscritions();
     getToken();
   }
 }
@@ -103,14 +105,66 @@ $('.display-toggle').on('click', function(event) {
 });
 
 
-$('#mainForm input[type=checkbox]').on('change', function(event) {
+$('#mainForm input[type=checkbox]').on('click', function(event) {
   $(event.target).attr('data-icon', 'refresh').addClass('icon-spin');
+  theTopic = $(event.target).attr('id');
   if($(event.target).prop('checked')) {
-    //$(event.target).attr('data-icon', 'check_box');
+    $.ajax({
+      method: 'POST',
+      dataType: "json",
+      url: 'subscribe',
+      data: { topic: theTopic, token: currentToken },
+      success: function(data) {
+        setSubscriptionStatus(theTopic, true);
+        console.log('Subscribed to topic: ', theTopic, ' ', data);
+        $('#result').text('Subscribed to: ' + theTopic);
+        $('#result').removeAttr('class').addClass('text-success');
+        $(event.target).attr('data-icon', 'check_box').removeClass('icon-spin');
+      },
+      error: function(xhr, status, error) {
+        console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
+        $('#result').text('Something went wrong!');
+        $('#result').removeAttr('class').addClass('text-danger');
+        $(event.target).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
+      },
+    });
   } else {
-    //$(event.target).attr('data-icon', 'check_box_outline_blank');
+    $.ajax({
+      method: 'POST',
+      dataType: "json",
+      url: 'unsubscribe',
+      data: { topic: theTopic, token: currentToken },
+      success: function(data) {
+        setSubscriptionStatus(theTopic, false);
+        console.log('Unsubscribed from topic: ', theTopic, ' ', data);
+        $('#result').text('Unsubscribed from: ' + theTopic);
+        $('#result').removeAttr('class').addClass('text-success');
+        $(event.target).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
+      },
+      error: function(xhr, status, error) {
+        console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
+        $('#result').text('Something went wrong!');
+        $('#result').removeAttr('class').addClass('text-danger');
+        $(event.target).attr('data-icon', 'check_box').removeClass('icon-spin');
+      },
+    });
   }
 });
+
+
+function setSubscritions() {
+  $('#mainForm input[type=checkbox]').each(function(box) {
+    $(this).attr('data-icon', 'refresh').addClass('icon-spin');
+    theTopic = $(this).attr('id');
+    if(getSubscriptionStatus(theTopic)) {
+      $(this).prop('checked', 'checked');
+      $(this).attr('data-icon', 'check_box').removeClass('icon-spin');
+    } else {
+      $(this).prop('checked', '');
+      $(this).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
+    }
+  });
+}
 
 
 // Send the Instance ID token to your application server, so that it can:
@@ -127,7 +181,7 @@ function sendTokenToServer(currentToken) {
       dataType: "json",
       url: 'subscribe',
       data: { topic: 'all', token: currentToken },
-      success: function (data) {
+      success: function(data) {
         setTokenSentToServer(true);
         setNotificationStatus(true);
         console.log('Subscripttion successful. ', data);
@@ -135,7 +189,7 @@ function sendTokenToServer(currentToken) {
         $('#result').removeAttr('class').addClass('text-success');
         boxChecked();
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
         $('#result').text('Something went wrong!');
         $('#result').removeAttr('class').addClass('text-danger');
@@ -181,6 +235,15 @@ function getNotificationStatus() {
 
 function setNotificationStatus(status) {
   window.localStorage.setItem('notificationStatus', status ? '1' : '0');
+}
+
+function getSubscriptionStatus(topic) {
+  return window.localStorage.getItem(topic) === '1';
+}
+
+
+function setSubscriptionStatus(topic, status) {
+  window.localStorage.setItem(topic, status ? '1' : '0');
 }
 
 

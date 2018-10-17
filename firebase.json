@@ -38,6 +38,9 @@
     "rewrites": [
       {
         "source": "/notifications/subscribe", "function": "subscribeToTopic"
+      },
+      {
+        "source": "/notifications/unsubscribe", "function": "unsubscribeFromTopic"
       }
     ],
     "headers": [

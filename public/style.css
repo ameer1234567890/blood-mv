@@ -96,6 +96,7 @@ table .fa-spin:hover {
   font-family: "Material Icons";
   font-size: 24px;
   line-height: .5em;
+  text-indent: -.25em;
 }
 
 #notifPage #mainForm input[type=checkbox] + label {
