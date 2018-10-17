@@ -135,7 +135,6 @@ table .fa-spin:hover {
   height: 50px;
   text-align: center;
   line-height: 50px;
-  background: #007bff;
   z-index: 999;
   color: #fff;
   box-shadow: 0 -4px 20px 0px #888;
@@ -151,15 +150,16 @@ table .fa-spin:hover {
 
 .a2hs-add {
   cursor: pointer;
+  background: #007bff;
 }
 
 .a2hs-add:hover {
-  color: #0056b3;
+  background: #0056b3;
 }
 
 .a2hs-close {
   position: absolute;
-  right: 10px;
+  right: 0;
   top: 0;
   line-height: 50px;
   height: 50px;
@@ -167,15 +167,16 @@ table .fa-spin:hover {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  background: #007bff;
 }
 
 .a2hs-close:hover {
-  color: #0056b3;
+  background: #0056b3;
 }
 
 
 /*  --------------------------------------------------------  */
-/*  The infamous icon spin                                    */
+/*  The infamous icon spin & pulse                            */
 /*  --------------------------------------------------------  */
 .icon-spin {
   animation: icon-spin 2s infinite linear;
