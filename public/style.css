@@ -123,6 +123,49 @@ table .fa-spin:hover {
 }
 
 /*  --------------------------------------------------------  */
+/*  Add to home screen (a2hs)                                 */
+/*  --------------------------------------------------------  */
+.a2hs-banner {
+  display: none;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  background: #007bff;
+  z-index: 999;
+  color: #fff;
+}
+
+.a2hs-add {
+  cursor: pointer;
+}
+
+.a2hs-add:hover {
+  color: #0056b3;
+}
+
+.a2hs-close {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  line-height: 50px;
+  height: 50px;
+  width: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.a2hs-close:hover {
+  color: #0056b3;
+}
+
+
+/*  --------------------------------------------------------  */
 /*  The infamous icon spin                                    */
 /*  --------------------------------------------------------  */
 .icon-spin {
