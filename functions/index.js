@@ -6,7 +6,7 @@ admin.initializeApp();
 exports.subscribeToTopic = functions.https.onRequest((req, res) => {
   var registrationTokens = [ req.body.token ];
   var topic = req.body.topic;
-  // console.log(req.body); // Uncomment this line for debugging
+  console.log(req.body); // Uncomment this line for debugging
   admin.messaging().subscribeToTopic(registrationTokens, topic)
     .then((response) => {
       console.log('Successfully subscribed to topic:', response);
@@ -22,7 +22,7 @@ exports.subscribeToTopic = functions.https.onRequest((req, res) => {
 exports.unsubscribeFromTopic = functions.https.onRequest((req, res) => {
   var registrationTokens = [ req.body.token ];
   var topic = req.body.topic;
-  // console.log(req.body); // Uncomment this line for debugging
+  console.log(req.body); // Uncomment this line for debugging
   admin.messaging().unsubscribeFromTopic(registrationTokens, topic)
     .then((response) => {
       console.log('Successfully unsubscribed from topic:', response);

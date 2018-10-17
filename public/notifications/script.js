@@ -8,6 +8,9 @@ const messaging = firebase.messaging();
 // Add the public key generated from the console here.
 messaging.usePublicVapidKey('BL1aLfJpeXegbscdgQ5s0Zs95fo9EDXvgCnbGShysqEBbX60hoYPuUuY0zLH_IAsVp38mNqzBYetW3QtUb-24h0');
 
+// Set global token
+var theToken;
+
 
 // Callback fired if Instance ID token is updated.
 messaging.onTokenRefresh(function() {
@@ -41,6 +44,7 @@ function getToken() {
       console.log('Token: ' + currentToken);
       $('#result').text('Notifications turned on.');
       $('#result').removeAttr('class').addClass('text-success');
+      theToken = currentToken;
     } else {
       console.warn('No Instance ID token available. Request permission to generate one.');
       $('#result').text('Notification permission not requested.');
@@ -107,13 +111,13 @@ $('.display-toggle').on('click', function(event) {
 
 $('#mainForm input[type=checkbox]').on('click', function(event) {
   $(event.target).attr('data-icon', 'refresh').addClass('icon-spin');
-  theTopic = $(event.target).attr('id');
+  var theTopic = $(event.target).attr('id');
   if($(event.target).prop('checked')) {
     $.ajax({
       method: 'POST',
       dataType: "json",
       url: 'subscribe',
-      data: { topic: theTopic, token: currentToken },
+      data: { topic: theTopic, token: theToken },
       success: function(data) {
         setSubscriptionStatus(theTopic, true);
         console.log('Subscribed to topic: ', theTopic, ' ', data);
@@ -133,7 +137,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
       method: 'POST',
       dataType: "json",
       url: 'unsubscribe',
-      data: { topic: theTopic, token: currentToken },
+      data: { topic: theTopic, token: theToken },
       success: function(data) {
         setSubscriptionStatus(theTopic, false);
         console.log('Unsubscribed from topic: ', theTopic, ' ', data);
@@ -155,7 +159,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
 function setSubscritions() {
   $('#mainForm input[type=checkbox]').each(function(box) {
     $(this).attr('data-icon', 'refresh').addClass('icon-spin');
-    theTopic = $(this).attr('id');
+    var theTopic = $(this).attr('id');
     if(getSubscriptionStatus(theTopic)) {
       $(this).prop('checked', 'checked');
       $(this).attr('data-icon', 'check_box').removeClass('icon-spin');
