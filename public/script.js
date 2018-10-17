@@ -174,15 +174,15 @@ if($('#addPage')[0]) {
 // Reload list of donors / requests when toggle is clicked
 $('.display-toggle').on('click', function(event) {
   if($('#reqListPage')[0]) {
-    if($('.display-toggle .material-icons').text() == 'check_box') {
-      $('.display-toggle .material-icons').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+    if($('.display-toggle i').text() == 'check_box') {
+      $('.display-toggle i').text('refresh').addClass('icon-spin');
       $('#spinner').show();
       $('#requests').DataTable().destroy();
       $('#requests').find('tr:gt(0)').remove();
       setCookie('inclfulf', 'false', 30);
       LoadBloodRequests(false);
     } else {
-      $('.display-toggle .material-icons').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+      $('.display-toggle i').text('refresh').addClass('icon-spin');
       $('#spinner').show();
       $('#requests').DataTable().destroy();
       $('#requests').find('tr:gt(0)').remove();
@@ -190,15 +190,15 @@ $('.display-toggle').on('click', function(event) {
       LoadBloodRequests(true);
     }
   } else if ($('#listPage')[0]) {
-    if($('.display-toggle .material-icons').text() == 'check_box') {
-      $('.display-toggle .material-icons').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+    if($('.display-toggle i').text() == 'check_box') {
+      $('.display-toggle i').text('refresh').addClass('icon-spin');
       $('#spinner').show();
       $('#donors').DataTable().destroy();
       $('#donors').find('tr:gt(0)').remove();
       setCookie('inclundonatables', 'false', 30);
       LoadBloodDonors(false);
     } else {
-      $('.display-toggle .material-icons').replaceWith('<i class="fas fa-circle-notch fa-spin"></i>');
+      $('.display-toggle i').text('refresh').addClass('icon-spin');
       $('#spinner').show();
       $('#donors').DataTable().destroy();
       $('#donors').find('tr:gt(0)').remove();
@@ -258,7 +258,7 @@ function LoadBloodDonors(includeUndonatables) {
         );
       });
       $('#spinner').hide();
-      $('.display-toggle .fas').replaceWith('<i class="material-icons">check_box</i>');
+      $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
       $('#donors').DataTable();
     });
   } else {
@@ -278,7 +278,7 @@ function LoadBloodDonors(includeUndonatables) {
         );
       });
       $('#spinner').hide();
-      $('.display-toggle .fas').replaceWith('<i class="material-icons">check_box_outline_blank</i>');
+      $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
       $('#donors').DataTable();
     });    
   }
@@ -323,7 +323,7 @@ function LoadBloodRequests(includeFulfilled) {
         });
       });
       $('#spinner').hide();
-      $('.display-toggle .fas').replaceWith('<i class="material-icons">check_box</i>');
+      $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
       $('#requests').DataTable({ "order": [[ 4, "desc" ], [ 3, "asc" ]] });
     });
   } else {
@@ -350,7 +350,7 @@ function LoadBloodRequests(includeFulfilled) {
         });
       });
       $('#spinner').hide();
-      $('.display-toggle .fas').replaceWith('<i class="material-icons">check_box_outline_blank</i>');
+      $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
       $('#requests').DataTable({ "order": [[ 4, "desc" ], [ 3, "asc" ]] });
     });
   }
@@ -358,7 +358,7 @@ function LoadBloodRequests(includeFulfilled) {
 
 
 function ToggleFullfillment(docId, isFulfilled) {
-  $('#checkbox-' + docId).replaceWith('<i class="fas fa-circle-notch fa-spin" id="checkbox-' + docId + '"></i>');
+  $('#checkbox-' + docId).replaceWith('<i class="material-icons icon-spin" id="checkbox-' + docId + '">refresh</i>');
   if(isFulfilled == 'true') {
     db.collection('requests').doc(docId).update({
       fulfilled: 'false'
