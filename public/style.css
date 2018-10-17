@@ -21,17 +21,21 @@ table caption {
 .fulf-disabled {
   color: #888;
   cursor: default;
-  font-size: 17px;
 }
 
 .fulf-enabled {
   color: #007bff;
   cursor: pointer;
-  font-size: 17px;
 }
 
 .fulf-enabled:hover {
   color: #0056b3;
+}
+
+/* This is used for the icons inside table cells */
+.small-font {
+  font-size: 17px;
+  vertical-align: middle;
 }
 
 .display-toggle i {

@@ -258,7 +258,7 @@ function LoadBloodDonors(includeUndonatables) {
         );
       });
       $('#spinner').hide();
-      $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
+      $('.display-toggle i').text('check_box').removeClass('icon-spin');
       $('#donors').DataTable();
     });
   } else {
@@ -309,8 +309,8 @@ function LoadBloodRequests(includeFulfilled) {
           .append($('<td>').text(humanDate(doc.data().datetime.toDate(), true)))
           .append($('<td>').html('' +
                                  (doc.data().user == firebase.auth().getUid() ?
-                                   '<i class="material-icons fulf-enabled" id="checkbox-' + doc.id + '" data-fulfilled="' + doc.data().fulfilled + '">' :
-                                   '<i class="material-icons fulf-disabled">') +
+                                   '<i class="material-icons fulf-enabled small-font" id="checkbox-' + doc.id + '" data-fulfilled="' + doc.data().fulfilled + '">' :
+                                   '<i class="material-icons fulf-disabled small-font">') +
                                  '' +
                                  (doc.data().fulfilled == 'true' ?
                                    'check_box</i>' :
@@ -323,7 +323,7 @@ function LoadBloodRequests(includeFulfilled) {
         });
       });
       $('#spinner').hide();
-      $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
+      $('.display-toggle i').text('check_box').removeClass('icon-spin');
       $('#requests').DataTable({ "order": [[ 4, "desc" ], [ 3, "asc" ]] });
     });
   } else {
@@ -336,8 +336,8 @@ function LoadBloodRequests(includeFulfilled) {
           .append($('<td>').text(humanDate(doc.data().datetime.toDate(), true)))
           .append($('<td>').html('' +
                                  (doc.data().user == firebase.auth().getUid() ?
-                                   '<i class="material-icons fulf-enabled" id="checkbox-' + doc.id + '" data-fulfilled="' + doc.data().fulfilled + '">' :
-                                   '<i class="material-icons fulf-disabled">') +
+                                   '<i class="material-icons fulf-enabled small-font" id="checkbox-' + doc.id + '" data-fulfilled="' + doc.data().fulfilled + '">' :
+                                   '<i class="material-icons fulf-disabled small-font">') +
                                  '' +
                                  (doc.data().fulfilled == 'true' ?
                                    'check_box</i>' :
@@ -358,20 +358,20 @@ function LoadBloodRequests(includeFulfilled) {
 
 
 function ToggleFullfillment(docId, isFulfilled) {
-  $('#checkbox-' + docId).replaceWith('<i class="material-icons icon-spin" id="checkbox-' + docId + '">refresh</i>');
+  $('#checkbox-' + docId).text('refresh').addClass('icon-spin');
   if(isFulfilled == 'true') {
     db.collection('requests').doc(docId).update({
       fulfilled: 'false'
     })
     .then(function(docRef) {
-      $('#checkbox-' + docId).replaceWith('<i class="material-icons fulf-enabled" id="checkbox-' + docId + '" data-fulfilled="false">check_box_outline_blank</i>');
+      $('#checkbox-' + docId).text('check_box_outline_blank').removeClass('icon-spin').attr('data-fulfilled', 'false');
       $('#checkbox-' + docId).on('click', function(event) {
         isFulfilled = $('#checkbox-' + docId).attr('data-fulfilled');
         ToggleFullfillment(docId, isFulfilled);
       });
     })
     .catch(function(error) {
-      $('#checkbox-' + docId).replaceWith('<i class="material-icons fulf-enabled" id="checkbox-' + docId + '" data-fulfilled="true">check_box</i>');
+      $('#checkbox-' + docId).text('check_box').removeClass('icon-spin').attr('data-fulfilled', 'true');
       $('#checkbox-' + docId).on('click', function(event) {
         isFulfilled = $('#checkbox-' + docId).attr('data-fulfilled');
         ToggleFullfillment(docId, isFulfilled);
@@ -383,14 +383,14 @@ function ToggleFullfillment(docId, isFulfilled) {
       fulfilled: 'true'
     })
     .then(function(docRef) {
-      $('#checkbox-' + docId).replaceWith('<i class="material-icons fulf-enabled" id="checkbox-' + docId + '" data-fulfilled="true">check_box</i>');
+      $('#checkbox-' + docId).text('check_box').removeClass('icon-spin').attr('data-fulfilled', 'true');
       $('#checkbox-' + docId).on('click', function(event) {
         isFulfilled = $('#checkbox-' + docId).attr('data-fulfilled');
         ToggleFullfillment(docId, isFulfilled);
       });
     })
     .catch(function(error) {
-      $('#checkbox-' + docId).replaceWith('<i class="material-icons fulf-enabled" id="checkbox-' + docId + '" data-fulfilled="false">check_box_outline_blank</i>');
+      $('#checkbox-' + docId).text('check_box_outline_blank').removeClass('icon-spin').attr('data-fulfilled', 'false');
       $('#checkbox-' + docId).on('click', function(event) {
         isFulfilled = $('#checkbox-' + docId).attr('data-fulfilled');
         ToggleFullfillment(docId, isFulfilled);
