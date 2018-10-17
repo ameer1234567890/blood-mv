@@ -74,11 +74,11 @@ function startProcess() {
       console.log('Notifications were turned off. So, not requesting a token.');
       boxUnChecked();
     } else {
-      setSubscritions();
+      getSubscritions();
       getToken();
     }
   } else {
-    setSubscritions();
+    getSubscritions();
     getToken();
   }
 }
@@ -156,7 +156,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
 });
 
 
-function setSubscritions() {
+function getSubscritions() {
   $('#mainForm input[type=checkbox]').each(function(box) {
     $(this).attr('data-icon', 'refresh').addClass('icon-spin');
     var theTopic = $(this).attr('id');
@@ -165,6 +165,19 @@ function setSubscritions() {
       $(this).attr('data-icon', 'check_box').removeClass('icon-spin');
     } else {
       $(this).prop('checked', '');
+      $(this).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
+    }
+  });
+}
+
+
+function resetSubscritions() {
+  $('#mainForm input[type=checkbox]').each(function(box) {
+    $(this).attr('data-icon', 'refresh').addClass('icon-spin');
+    var theTopic = $(this).attr('id');
+    if(getSubscriptionStatus(theTopic)) {
+      setSubscriptionStatus(theTopic, false);
+      $(this).prop('checked', 'checked');
       $(this).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
     }
   });
@@ -275,6 +288,7 @@ function deleteToken() {
       setNotificationStatus(false);
       $('#result').text('Notifications turned off.');
       $('#result').removeAttr('class').addClass('text-success');
+      resetSubscritions();
       boxUnChecked();
     }).catch(function(err) {
       console.error('Unable to delete token. ', err);
