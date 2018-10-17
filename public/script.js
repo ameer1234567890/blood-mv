@@ -593,16 +593,10 @@ document.getElementById('menu-toggle').addEventListener('click', function() {
 });
 
 
-btnInstall.addEventListener('click', () => {
-  installPromptEvent.prompt();
-  installPromptEvent.userChoice.then((choice) => {
-    if (choice.outcome === 'accepted') {
-      console.log('User accepted the A2HS prompt');
-    } else {
-      console.log('User dismissed the A2HS prompt');
-    }
-    installPromptEvent = null;
-  });
+window.addEventListener('beforeinstallprompt', function (e) {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  e.prompt();
 });
 
 
