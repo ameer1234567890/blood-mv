@@ -178,8 +178,8 @@ function resetSubscritions() {
     if(getSubscriptionStatus(theTopic)) {
       setSubscriptionStatus(theTopic, false);
       $(this).prop('checked', 'checked');
-      $(this).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
     }
+    $(this).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
   });
 }
 
