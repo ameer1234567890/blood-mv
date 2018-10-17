@@ -138,6 +138,7 @@ table .fa-spin:hover {
   background: #007bff;
   z-index: 999;
   color: #fff;
+  box-shadow: 0 -4px 20px 0px #888;
 }
 
 .a2hs-add {
