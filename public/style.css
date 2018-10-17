@@ -2,6 +2,10 @@ body {
   font-family: Roboto;
 }
 
+button, button:hover, button:focus, button:active {
+  outline: none;
+}
+
 a:hover {
   text-decoration: none;
 }
