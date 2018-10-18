@@ -179,14 +179,14 @@ $('.display-toggle').on('click', function(event) {
       $('#spinner').show();
       $('#requests').DataTable().destroy();
       $('#requests').find('tr:gt(0)').remove();
-      setCookie('inclfulf', 'false', 30);
+      setStoredKeyValue('includeFulfilled', false);
       LoadBloodRequests(false);
     } else {
       $('.display-toggle i').text('refresh').addClass('icon-spin');
       $('#spinner').show();
       $('#requests').DataTable().destroy();
       $('#requests').find('tr:gt(0)').remove();
-      setCookie('inclfulf', 'true', 30);
+      setStoredKeyValue('includeFulfilled', true);
       LoadBloodRequests(true);
     }
   } else if ($('#listPage')[0]) {
@@ -195,14 +195,14 @@ $('.display-toggle').on('click', function(event) {
       $('#spinner').show();
       $('#donors').DataTable().destroy();
       $('#donors').find('tr:gt(0)').remove();
-      setCookie('inclundonatables', 'false', 30);
+      setStoredKeyValue('includeOnlyDonatable', true);
       LoadBloodDonors(false);
     } else {
       $('.display-toggle i').text('refresh').addClass('icon-spin');
       $('#spinner').show();
       $('#donors').DataTable().destroy();
       $('#donors').find('tr:gt(0)').remove();
-      setCookie('inclundonatables', 'true', 30);
+      setStoredKeyValue('includeOnlyDonatable', false);
       LoadBloodDonors(true);
     }
   }
@@ -231,37 +231,16 @@ $('#atoll').on('change', function(event) {
 
 // Load donors table
 if($('#listPage')[0]) {
-  if(!getCookie('inclundonatables')) {
-    setCookie('inclundonatables', 'true', 30);
-  }
-  if(getCookie('inclundonatables') == 'true') {
-    LoadBloodDonors(true);
-  } else {
+  if(getStoredKeyValue('includeOnlyDonatable')) {
     LoadBloodDonors(false);
+  } else {
+    LoadBloodDonors(true);
   }
 }
 
 
-function LoadBloodDonors(includeUndonatables) {
-  if(includeUndonatables == true) {
-    db.collection('donors').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        $('#donors').find('tbody').append($('<tr>')
-          .append($('<td scope="row">').text(doc.data().first + ' ' + doc.data().last))
-          .append($('<td>').text(doc.data().gender))
-          .append($('<td>').text(age(doc.data().born.toDate())))
-          .append($('<td>').text(doc.data().group))
-          .append($('<td>').text(doc.data().atoll))
-          .append($('<td>').text(doc.data().island))
-          .append($('<td>').text(doc.data().phone))
-          .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
-        );
-      });
-      $('#spinner').hide();
-      $('.display-toggle i').text('check_box').removeClass('icon-spin');
-      $('#donors').DataTable();
-    });
-  } else {
+function LoadBloodDonors(includeOnlyDonatable) {
+  if(includeOnlyDonatable) {
     var d = new Date();
     var threeMonthsBack = new Date(d.setMonth(d.getMonth() - 3));
     db.collection('donors').where('donated', '<', threeMonthsBack).get().then((querySnapshot) => {
@@ -281,16 +260,31 @@ function LoadBloodDonors(includeUndonatables) {
       $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
       $('#donors').DataTable();
     });    
+  } else {
+    db.collection('donors').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        $('#donors').find('tbody').append($('<tr>')
+          .append($('<td scope="row">').text(doc.data().first + ' ' + doc.data().last))
+          .append($('<td>').text(doc.data().gender))
+          .append($('<td>').text(age(doc.data().born.toDate())))
+          .append($('<td>').text(doc.data().group))
+          .append($('<td>').text(doc.data().atoll))
+          .append($('<td>').text(doc.data().island))
+          .append($('<td>').text(doc.data().phone))
+          .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
+        );
+      });
+      $('#spinner').hide();
+      $('.display-toggle i').text('check_box').removeClass('icon-spin');
+      $('#donors').DataTable();
+    });
   }
 }
 
 
 // Load requests table
 if($('#reqListPage')[0]) {
-  if(!getCookie('inclfulf')) {
-    setCookie('inclfulf', 'false', 30);
-  }
-  if(getCookie('inclfulf') == 'true') {
+  if(getStoredKeyValue('includeFulfilled')) {
     LoadBloodRequests(true);
   } else {
     LoadBloodRequests(false);
@@ -400,29 +394,13 @@ function ToggleFullfillment(docId, isFulfilled) {
   }
 }
 
-
-function getCookie(cname) {
-  var name = cname + '=';
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i <ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return '';
+function getStoredKeyValue(key) {
+  return window.localStorage.getItem(key) === '1';
 }
 
 
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = 'expires=' + d.toUTCString();
-    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+function setStoredKeyValue(key, value) {
+  window.localStorage.setItem(key, value ? '1' : '0');
 }
 
 
