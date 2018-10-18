@@ -49,12 +49,14 @@ function getToken() {
       console.warn('No Instance ID token available. Request permission to generate one.');
       $('#result').text('Notification permission not requested.');
       $('#result').removeAttr('class').addClass('text-success');
+      setKeyValueStore('notificationStatus', false);
       boxUnChecked();
     }
   }).catch(function(err) {
     console.error('An error occurred while retrieving token. ', err);
     $('#result').text('Error retrieving Instance ID token.');
     $('#result').removeAttr('class').addClass('text-danger');
+    setKeyValueStore('notificationStatus', false);
     setKeyValueStore('sentToServer', false);
     boxUnChecked();
   });
@@ -251,6 +253,7 @@ function requestPermission() {
     console.log('Notification permission granted.');
     $('#result').text('Notification permission granted.');
     $('#result').removeAttr('class').addClass('text-success');
+    setKeyValueStore('notificationStatus', true);
     startProcess();
   }).catch(function(err) {
     console.error('Unable to get permission to notify.', err);
