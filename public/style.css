@@ -140,7 +140,6 @@ table .fa-spin:hover {
   line-height: 50px;
   position: fixed;
   right: 0;
-  text-align: center;
   width: 100%;
   z-index: 999;
 }
@@ -155,6 +154,7 @@ table .fa-spin:hover {
 
 .a2hs-add {
   cursor: pointer;
+  padding-left: 4em;
 }
 
 .a2hs-close {
@@ -166,6 +166,7 @@ table .fa-spin:hover {
   line-height: 50px;
   position: absolute;
   right: 0;
+  text-align: center;
   top: 0;
   width: 50px;
 }
