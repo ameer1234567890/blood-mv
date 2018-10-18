@@ -16,7 +16,7 @@ var theToken;
 messaging.onTokenRefresh(function() {
   messaging.getToken().then(function(refreshedToken) {
     console.log('Token refreshed.');
-    setTokenSentToServer(false);
+    setKeyValueStore('sentToServer', false);
     sendTokenToServer(refreshedToken);
     startProcess();
   }).catch(function(err) {
@@ -55,7 +55,7 @@ function getToken() {
     console.error('An error occurred while retrieving token. ', err);
     $('#result').text('Error retrieving Instance ID token.');
     $('#result').removeAttr('class').addClass('text-danger');
-    setTokenSentToServer(false);
+    setKeyValueStore('sentToServer', false);
     boxUnChecked();
   });
 }
@@ -70,7 +70,7 @@ function startProcess() {
     $('.display-toggle i').addClass('disabled');
     $('.display-toggle').off('click');
   } else if(Notification.permission == 'granted') {
-    if(getNotificationStatus() == false) {
+    if(getKeyValueStore('notificationStatus') == false) {
       console.log('Notifications were turned off. So, not requesting a token.');
       boxUnChecked();
     } else {
@@ -90,14 +90,14 @@ $('.display-toggle').on('click', function(event) {
     requestPermission();
   }
   if($('.display-toggle i').text() == 'check_box_outline_blank') {
-    if(getNotificationStatus() == true) {
+    if(getKeyValueStore('notificationStatus') == true) {
       $('.display-toggle i').text('refresh').addClass('icon-spin');
       startProcess();
       $('#allFields').removeAttr('disabled');
       $('.display-toggle i').text('check_box').removeClass('icon-spin');
     } else {
       $('.display-toggle i').text('refresh').addClass('icon-spin');
-      setNotificationStatus(true);
+      setKeyValueStore('notificationStatus', true);
       startProcess();
     }
   } else if($('.display-toggle i').text() == 'check_box') {
@@ -119,7 +119,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
       url: 'subscribe',
       data: { topic: theTopic, token: theToken },
       success: function(data) {
-        setSubscriptionStatus(theTopic, true);
+        setKeyValueStore(theTopic, true);
         console.log('Subscribed to topic: ', theTopic, ' ', data);
         $('#result').text('Subscribed to: ' + theTopic);
         $('#result').removeAttr('class').addClass('text-success');
@@ -139,7 +139,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
       url: 'unsubscribe',
       data: { topic: theTopic, token: theToken },
       success: function(data) {
-        setSubscriptionStatus(theTopic, false);
+        setKeyValueStore(theTopic, false);
         console.log('Unsubscribed from topic: ', theTopic, ' ', data);
         $('#result').text('Unsubscribed from: ' + theTopic);
         $('#result').removeAttr('class').addClass('text-success');
@@ -160,7 +160,7 @@ function getSubscritions() {
   $('#mainForm input[type=checkbox]').each(function(box) {
     $(this).attr('data-icon', 'refresh').addClass('icon-spin');
     var theTopic = $(this).attr('id');
-    if(getSubscriptionStatus(theTopic)) {
+    if(getKeyValueStore(theTopic)) {
       $(this).prop('checked', 'checked');
       $(this).attr('data-icon', 'check_box').removeClass('icon-spin');
     } else {
@@ -175,8 +175,8 @@ function resetSubscritions() {
   $('#mainForm input[type=checkbox]').each(function(box) {
     $(this).attr('data-icon', 'refresh').addClass('icon-spin');
     var theTopic = $(this).attr('id');
-    if(getSubscriptionStatus(theTopic)) {
-      setSubscriptionStatus(theTopic, false);
+    if(getKeyValueStore(theTopic)) {
+      setKeyValueStore(theTopic, false);
       $(this).prop('checked', 'checked');
     }
     $(this).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
@@ -188,19 +188,19 @@ function resetSubscritions() {
 // - send messages back to this app
 // - subscribe/unsubscribe the token from topics
 function sendTokenToServer(currentToken) {
-  if (!isTokenSentToServer()) {
+  if (!getKeyValueStore('sentToServer')) {
     boxUnChecked();
     $('.display-toggle i').text('refresh').addClass('icon-spin');
     console.log('Sending token to server...');
-    setNotificationStatus(false);
+    setKeyValueStore('notificationStatus', false);
     $.ajax({
       method: 'POST',
       dataType: "json",
       url: 'subscribe',
       data: { topic: 'all', token: currentToken },
       success: function(data) {
-        setTokenSentToServer(true);
-        setNotificationStatus(true);
+        setKeyValueStore('sentToServer', true);
+        setKeyValueStore('notificationStatus', true);
         console.log('Subscripttion successful. ', data);
         $('#result').text('Subscripttion successful.');
         $('#result').removeAttr('class').addClass('text-success');
@@ -211,12 +211,12 @@ function sendTokenToServer(currentToken) {
         $('#result').text('Something went wrong!');
         $('#result').removeAttr('class').addClass('text-danger');
         boxUnChecked();
-        setNotificationStatus(false);
+        setKeyValueStore('notificationStatus', false);
       },
     });
   } else {
     boxChecked();
-    setNotificationStatus(true);
+    setKeyValueStore('notificationStatus', true);
     console.log('Token already sent to server so won\'t send it again unless it changes');
   }
 }
@@ -235,32 +235,13 @@ function boxUnChecked() {
 }
 
 
-function isTokenSentToServer() {
-  return window.localStorage.getItem('sentToServer') === '1';
+function getKeyValueStore(key) {
+  return window.localStorage.getItem(key) === '1';
 }
 
 
-function setTokenSentToServer(sent) {
-  window.localStorage.setItem('sentToServer', sent ? '1' : '0');
-}
-
-
-function getNotificationStatus() {
-  return window.localStorage.getItem('notificationStatus') === '1';
-}
-
-
-function setNotificationStatus(status) {
-  window.localStorage.setItem('notificationStatus', status ? '1' : '0');
-}
-
-function getSubscriptionStatus(topic) {
-  return window.localStorage.getItem(topic) === '1';
-}
-
-
-function setSubscriptionStatus(topic, status) {
-  window.localStorage.setItem(topic, status ? '1' : '0');
+function setKeyValueStore(key, value) {
+  window.localStorage.setItem(key, value ? '1' : '0');
 }
 
 
@@ -284,8 +265,8 @@ function deleteToken() {
   messaging.getToken().then(function(currentToken) {
     messaging.deleteToken(currentToken).then(function() {
       console.log('Token deleted.');
-      setTokenSentToServer(false);
-      setNotificationStatus(false);
+      setKeyValueStore('sentToServer', false);
+      setKeyValueStore('notificationStatus', false);
       $('#result').text('Notifications turned off.');
       $('#result').removeAttr('class').addClass('text-success');
       resetSubscritions();
