@@ -477,9 +477,19 @@ function performLogout() {
 }
 
 
+function trim(textToTrim, numCharacters) {
+  if(textToTrim.length > numCharacters) {
+    return textToTrim.substring(0, textToTrim.length - (textToTrim.length - numCharacters) - 3) + '...';
+  } else {
+    return textToTrim;
+  }
+}
+
+
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    $('#display-name').html(user.displayName);
+    $('#display-name').text(trim(user.displayName, 25));
+    $('#display-email').text(trim(user.email, 25));
     $('.avatar').replaceWith('<img src="' + user.photoURL + '" class="avatar-img" alt="Avatar">');
     db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -544,8 +554,9 @@ firebase.auth().onAuthStateChanged(function(user) {
       $('#spinner').hide();
     }
   } else {
-    $('.headline').html('Please login to add / edit your details');
-    $('#display-name').html('Not Logged in');
+    $('.avatar-img').replaceWith('<i class="material-icons avatar">account_circle</i>');
+    $('#display-name').text('Not Logged in');
+    $('#display-email').text('Login to add / edit records');
     $('#nav-log').replaceWith('<li id="nav-log" class="waves-effect"><a href=""><i class="material-icons">exit_to_app</i>Login</a></li>');
     $('#nav-log').on('click', function(event) {
       event.preventDefault();
