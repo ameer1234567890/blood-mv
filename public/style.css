@@ -42,20 +42,6 @@ table caption {
   vertical-align: middle;
 }
 
-.display-toggle i {
-  color: #007bff;
-  cursor: pointer;
-  vertical-align: bottom;
-}
-
-.display-toggle i:hover {
-  color: #0056b3;
-}
-
-.display-toggle .fa-spin {
-  font-size: 24px;
-}
-
 i.disabled {
   color: #ccc;
   cursor: default;
@@ -175,6 +161,32 @@ table .fa-spin:hover {
   background: #ccc;
 }
 
+
+/*  --------------------------------------------------------  */
+/*  Toggle button shown on list page and request list page    */
+/*  --------------------------------------------------------  */
+.display-toggle i {
+  color: #007bff;
+  cursor: pointer;
+  vertical-align: bottom;
+}
+
+.display-toggle i:hover {
+  color: #0056b3;
+}
+
+.display-toggle .fa-spin {
+  font-size: 24px;
+}
+
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+  .display-toggle {
+    text-align: center;
+    width: 100%;
+  }
+}
 
 /*  --------------------------------------------------------  */
 /*  The infamous icon spin & pulse                            */
