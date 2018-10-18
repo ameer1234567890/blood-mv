@@ -196,14 +196,14 @@ $('.display-toggle').on('click', function(event) {
       $('#donors').DataTable().destroy();
       $('#donors').find('tr:gt(0)').remove();
       setStoredKeyValue('includeOnlyDonatable', true);
-      LoadBloodDonors(false);
+      LoadBloodDonors(true);
     } else {
       $('.display-toggle i').text('refresh').addClass('icon-spin');
       $('#spinner').show();
       $('#donors').DataTable().destroy();
       $('#donors').find('tr:gt(0)').remove();
       setStoredKeyValue('includeOnlyDonatable', false);
-      LoadBloodDonors(true);
+      LoadBloodDonors(false);
     }
   }
 });
@@ -232,9 +232,9 @@ $('#atoll').on('change', function(event) {
 // Load donors table
 if($('#listPage')[0]) {
   if(getStoredKeyValue('includeOnlyDonatable')) {
-    LoadBloodDonors(false);
-  } else {
     LoadBloodDonors(true);
+  } else {
+    LoadBloodDonors(false);
   }
 }
 
