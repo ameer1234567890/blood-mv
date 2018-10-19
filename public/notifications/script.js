@@ -138,6 +138,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).removeClass('sub-selected');
           $(event.target.nextSibling).attr('data-icon', 'add');
+          $(event.target).prop('checked', '');
         },
       });
     } else {
@@ -162,6 +163,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).addClass('sub-selected');
           $(event.target.nextSibling).attr('data-icon', 'check');
+          $(event.target).prop('checked', 'checked');
         },
       });
     }
@@ -174,14 +176,15 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
 
 function getSubscritions() {
   $('#mainForm input[type=checkbox]').each(function() {
-    console.log($(this.nextSibling));
     var theTopic = $(this).attr('id');
     if(getKeyValueStore(theTopic)) {
       $(this).prop('checked', 'checked');
       $(this.nextSibling).attr('data-icon', 'check');
+      $(this.nextSibling).addClass('sub-selected');
     } else {
       $(this).prop('checked', '');
       $(this.nextSibling).attr('data-icon', 'add');
+      $(this.nextSibling).removeClass('sub-selected');
     }
   });
 }
