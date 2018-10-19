@@ -18,6 +18,16 @@ if($('#listPage')[0]) {
   $('#spinner').show();
 }
 
+// Set defaults for DataTable
+$.extend(true, $.fn.dataTable.defaults, {
+  language: {
+    paginate: {
+      next: '<i class="material-icons avatar">navigate_next</i>',
+      previous: '<i class="material-icons avatar">navigate_before</i>'  
+    }
+  }
+});
+
 
 // Add donor details to database
 $('#addDonor').on('click', function(event) {

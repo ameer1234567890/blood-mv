@@ -24,6 +24,11 @@ table caption {
   font-style: italic;
 }
 
+.paginate_button i {
+  line-height: 0;
+  vertical-align: middle;
+}
+
 .fulf-disabled {
   color: #888;
   cursor: default;
