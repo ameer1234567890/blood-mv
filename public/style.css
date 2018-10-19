@@ -15,6 +15,10 @@ a:hover {
   background-color: #eee;
 }
 
+#nav-req-add, #nav-add {
+  display: none;
+}
+
 .bg-navbar {
   background-color: #212529;
   box-shadow: 0 2px 10px 0 #888;

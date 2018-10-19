@@ -19,14 +19,16 @@ if($('#listPage')[0]) {
 }
 
 // Set defaults for DataTable
-$.extend(true, $.fn.dataTable.defaults, {
-  language: {
-    paginate: {
-      next: '<i class="material-icons avatar">navigate_next</i>',
-      previous: '<i class="material-icons avatar">navigate_before</i>'  
+if($('#listPage')[0] || $('#reqListPage')[0]) {
+  $.extend(true, $.fn.dataTable.defaults, {
+    language: {
+      paginate: {
+        next: '<i class="material-icons avatar">navigate_next</i>',
+        previous: '<i class="material-icons avatar">navigate_before</i>'  
+      }
     }
-  }
-});
+  });
+}
 
 
 // Add donor details to database
@@ -505,32 +507,32 @@ firebase.auth().onAuthStateChanged(function(user) {
       querySnapshot.forEach((doc) => {
         isNewUser = false;
         if($('#addPage')[0]) {
-          $('#nav-links').append($('<li id="nav-add" class="active waves-effect"><a href="/add/"><i class="material-icons">edit</i>Edit my details</a></li>'));
+          $('#nav-add').show().addClass('active');
+          $('#nav-add a').html('<i class="material-icons">edit</i>Edit my details');
         } else {
-          $('#nav-links').append($('<li id="nav-add" class="waves-effect"><a href="/add/"><i class="material-icons">edit</i>Edit my details</a></li>'));
+          $('#nav-add').show();
+          $('#nav-add a').html('<i class="material-icons">edit</i>Edit my details');
         }
       });
     })
     .then(function(docRef) {
       if(isNewUser == true) {
         if($('#addPage')[0]) {
-          $('#nav-links').append($('<li id="nav-add" class="active waves-effect"><a href="/add/"><i class="material-icons">add</i>Add me as a donor</a></li>'));
+          $('#nav-add').show().addClass('active');
         } else {
-          $('#nav-links').append($('<li id="nav-add" class="waves-effect"><a href="/add/"><i class="material-icons">add</i>Add me as a donor</a></li>'));
+          $('#nav-add').show();
         }
       }
-      // Remove element and re-add, to move it to last
-      $('#nav-log').remove();
-      $('#nav-links').append($('<li id="nav-log" class="waves-effect"><a href=""><i class="material-icons">exit_to_app</i>Logout</a></li>'));
+      $('#nav-log a').html('<i class="material-icons">exit_to_app</i>Logout');
       $('#nav-log').on('click', function(event) {
         event.preventDefault();
         performLogout();
       });
     });
     if($('#reqAddPage')[0]) {
-      $('#nav-links').append($('<li id="nav-req-add" class="active waves-effect"><a href="/request/add/"><i class="material-icons">local_hospital</i>Request for Blood</a></li>'));
+      $('#nav-req-add').show().addClass('active');
     } else {
-      $('#nav-links').append($('<li id="nav-req-add" class="waves-effect"><a href="/request/add/"><i class="material-icons">local_hospital</i>Request for Blood</a></li>'));
+      $('#nav-req-add').show();
     }
     if($('#addPage')[0]) {
       $('#mainForm #email').val(firebase.auth().currentUser.email);
