@@ -5,7 +5,8 @@ node_js:
 cache:
   directories:
     - "node_modules"
-    - $HOME/.nvm/versions/node/"$(node --version)"/lib/node_modules
+    - "$HOME/.nvm/versions/node/$(node --version)/lib/node_modules"
+    - "functions/node_modules"
 install:
   - npm install -g jshint
   - npm install -g csso-cli
