@@ -115,8 +115,8 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
   var theTopic = $(event.target).attr('id');
   if($(event.target.nextSibling).attr('data-icon') != 'refresh') {
     $(event.target.nextSibling).attr('data-icon', 'refresh');
+    $(event.target.parentNode).addClass('sub-loading');
     if(event.target.checked) {
-      $(event.target.parentNode).addClass('sub-loading');
       $.ajax({
         method: 'POST',
         dataType: 'json',
@@ -173,22 +173,22 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
 
 
 function getSubscritions() {
-  $('#mainForm input[type=checkbox]').each(function(box) {
-    $(this).attr('data-icon', 'refresh').addClass('icon-spin');
+  $('#mainForm input[type=checkbox]').each(function() {
+    console.log($(this.nextSibling));
     var theTopic = $(this).attr('id');
     if(getKeyValueStore(theTopic)) {
       $(this).prop('checked', 'checked');
-      $(this).attr('data-icon', 'check_box').removeClass('icon-spin');
+      $(this.nextSibling).attr('data-icon', 'check');
     } else {
       $(this).prop('checked', '');
-      $(this).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
+      $(this.nextSibling).attr('data-icon', 'add');
     }
   });
 }
 
 
 function resetSubscritions() {
-  $('#mainForm input[type=checkbox]').each(function(box) {
+  $('#mainForm input[type=checkbox]').each(function() {
     $(this).attr('data-icon', 'refresh').addClass('icon-spin');
     var theTopic = $(this).attr('id');
     if(getKeyValueStore(theTopic)) {
