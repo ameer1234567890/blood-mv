@@ -180,11 +180,11 @@ function getSubscritions() {
     if(getKeyValueStore(theTopic)) {
       $(this).prop('checked', 'checked');
       $(this.nextSibling).attr('data-icon', 'check');
-      $(this.nextSibling).addClass('sub-selected');
+      $(this.parentNode).addClass('sub-selected');
     } else {
       $(this).prop('checked', '');
       $(this.nextSibling).attr('data-icon', 'add');
-      $(this.nextSibling).removeClass('sub-selected');
+      $(this.parentNode).removeClass('sub-selected');
     }
   });
 }

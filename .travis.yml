@@ -4,7 +4,6 @@ node_js:
   - "node"
 cache:
   directories:
-    - ".firebase"
     - "$HOME/.nvm/versions/node/$(node --version)/lib/node_modules"
     - "functions/node_modules"
 install:
