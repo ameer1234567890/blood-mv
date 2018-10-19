@@ -75,6 +75,7 @@ function startProcess() {
     if(getKeyValueStore('notificationStatus') == false) {
       console.log('Notifications were turned off. So, not requesting a token.');
       boxUnChecked();
+      resetSubscritions();
     } else {
       getSubscritions();
       getToken();
@@ -175,10 +176,6 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
 
 
 function getSubscritions() {
-  var formState = $('#allFields').attr('disabled');
-  if(formState == 'disabled') {
-    $('#allFields').removeAttr('disabled');
-  }
   $('#mainForm input[type=checkbox]').each(function() {
     var theTopic = $(this).attr('id');
     if(getKeyValueStore(theTopic)) {
@@ -191,9 +188,6 @@ function getSubscritions() {
       $(this.parentNode).removeClass('sub-selected');
     }
   });
-  if(formState == 'disabled') {
-    $('#allFields').attr('disabled', 'disabled');
-  }
 }
 
 
@@ -205,7 +199,8 @@ function resetSubscritions() {
       setKeyValueStore(theTopic, false);
       $(this).prop('checked', 'checked');
     }
-    $(this).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
+    $(this.nextSibling).attr('data-icon', 'add');
+    $(this.parentNode).removeClass('sub-selected');
   });
 }
 
