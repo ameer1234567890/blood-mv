@@ -175,6 +175,10 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
 
 
 function getSubscritions() {
+  var formState = $('#allFields').attr('disabled');
+  if(formState == 'disabled') {
+    $('#allFields').removeAttr('disabled');
+  }
   $('#mainForm input[type=checkbox]').each(function() {
     var theTopic = $(this).attr('id');
     if(getKeyValueStore(theTopic)) {
@@ -187,6 +191,9 @@ function getSubscritions() {
       $(this.parentNode).removeClass('sub-selected');
     }
   });
+  if(formState == 'disabled') {
+    $('#allFields').attr('disabled', 'disabled');
+  }
 }
 
 
