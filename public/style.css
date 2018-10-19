@@ -1,5 +1,6 @@
 body {
   font-family: Roboto;
+  background: #eceff1;
 }
 
 button, button:hover, button:focus, button:active {
@@ -224,20 +225,26 @@ only screen and (max-width: 760px),
   table, thead, tbody, th, td, tr {
     display: block;
   }
+  table.table, .table-bordered td, .table-bordered th {
+    border: none;
+  }
   /* Hide table headers (but not display: none;, for accessibility) */
   thead tr {
     left: -9999px;
     position: absolute;
     top: -9999px;
   }
-  tr { border: 1px solid #ccc; }
+  tr {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    margin-bottom: 20px;
+  }
   td {
     /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee;
     padding-left: 50%;
     position: relative;
   }
+  table.table tr:nth-child(even) { background: #fff; }
+  table.table tr:nth-child(odd) { background: #fff; }
   /* The above specified padding rule does not "cascade". So we be more specific here */
   .table-sm td, .table-sm th { padding-left: 50%; }
   td:before {
