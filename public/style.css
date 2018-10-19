@@ -97,40 +97,61 @@ table .fa-spin:hover {
   margin: 100px auto;
 }
 
-#notifPage #mainForm input[type=checkbox]:before {
-  background: #fff;
-  color: #007bff;
-  content: attr(data-icon);
-  cursor: pointer;
+/*  --------------------------------------------------------  */
+/*  Styles for the notifications page                         */
+/*  --------------------------------------------------------  */
+ul.subs-groups li input[type="checkbox"] {
+  display: none;
+}
+
+ul.subs-groups {
+  list-style: none;
+}
+
+ul.subs-groups.disabled {
+  color: #adadad;
+}
+
+ul.subs-groups li {
   display: inline-block;
-  font-family: "Material Icons";
-  font-size: 24px;
-  line-height: .5em;
-  text-indent: -.25em;
+  background-color: #fff;
+  border: 1px solid #8b8b8b;
+  border-radius: 25px;
+  margin: 10px 10px;
 }
 
-#notifPage #mainForm input[type=checkbox] + label {
+ul.subs-groups li label {
+  padding: 0 20px 0 5px;
   cursor: pointer;
-  padding-left: .5em;
+  line-height: 32px;
+  margin-bottom: 0;
+  transition: all 1s;
 }
 
-#notifPage #mainForm input[type=checkbox]:hover:before {
-  color: #0056b3;
+ul.subs-groups li label::before {
+  content: attr(data-icon);
+  display: inline-block;
+  font-family: 'Material Icons';
+  font-size: 24px;
+  line-height: 14px;
+  padding: 2px 30px 2px 2px;
+  text-indent: 2px;
+  width: 13px;
+  vertical-align: text-bottom;
 }
 
-#notifPage #mainForm input[type=checkbox]:checked:before {
+ul.subs-groups li.sub-selected {
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  color: #fff;
+  transition: all 1s;
+}
+
+ul.subs-groups li.sub-loading label::before {
+  animation: icon-spin 2s infinite linear;
   content: attr(data-icon);
 }
 
-#notifPage #mainForm input[type=checkbox]:disabled:before,
-#notifPage #mainForm input[type=checkbox]:disabled + label {
-  cursor: default;
-  color: #ccc;
-}
-
-#notifPage .display-toggle {
-  float: left;
-}
 
 /*  --------------------------------------------------------  */
 /*  Add to home screen (a2hs)                                 */

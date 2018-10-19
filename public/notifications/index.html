@@ -58,38 +58,16 @@
         <div>&nbsp;</div>
         <form method="post" id="mainForm">
           <fieldset id="allFields">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="apositive" data-icon="check_box_outline_blank">
-              <label for="apositive" class="form-check-label">A+</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="anegative" data-icon="check_box_outline_blank">
-              <label for="anegative" class="form-check-label">A-</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="bpositive" data-icon="check_box_outline_blank">
-              <label for="bpositive" class="form-check-label">B+</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="bnegative" data-icon="check_box_outline_blank">
-              <label for="bnegative" class="form-check-label">B-</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="opositive" data-icon="check_box_outline_blank">
-              <label for="opositive" class="form-check-label">O+</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="onegative" data-icon="check_box_outline_blank">
-              <label for="onegative" class="form-check-label">O-</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="abpositive" data-icon="check_box_outline_blank">
-              <label for="abpositive" class="form-check-label">AB+</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="abnegative" data-icon="check_box_outline_blank">
-              <label for="abnegative" class="form-check-label">AB-</label>
-            </div>
+            <ul class="subs-groups">
+              <li><input type="checkbox" id="apositive"><label for="apositive" data-icon="add">A Positive</label></li>
+              <li><input type="checkbox" id="anegative"><label for="anegative" data-icon="add">A Negative</label></li>
+              <li><input type="checkbox" id="bpositive"><label for="bpositive" data-icon="add">B Positive</label></li>
+              <li><input type="checkbox" id="bnegative"><label for="bnegative" data-icon="add">B Negative</label></li>
+              <li><input type="checkbox" id="opositive"><label for="opositive" data-icon="add">O Positive</label></li>
+              <li><input type="checkbox" id="onegative"><label for="onegative" data-icon="add">O Negative</label></li>
+              <li><input type="checkbox" id="abpositive"><label for="abpositive" data-icon="add">AB Positive</label></li>
+              <li><input type="checkbox" id="abnegative"><label for="abnegative" data-icon="add">AB Negative</label></li>
+            </ul>
             <div>&nbsp;</div>
             <span id="result"></span>
             <div class="spinner" id="spinner">

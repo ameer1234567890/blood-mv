@@ -112,50 +112,64 @@ $('.display-toggle').on('click', function(event) {
 
 
 $('#mainForm input[type=checkbox]').on('click', function(event) {
-  $(event.target).attr('data-icon', 'refresh').addClass('icon-spin');
   var theTopic = $(event.target).attr('id');
-  if($(event.target).prop('checked')) {
-    $.ajax({
-      method: 'POST',
-      dataType: "json",
-      url: 'subscribe',
-      data: { topic: theTopic, token: theToken },
-      success: function(data) {
-        setKeyValueStore(theTopic, true);
-        console.log('Subscribed to topic: ', theTopic, ' ', data);
-        $('#result').text('Subscribed to: ' + theTopic);
-        $('#result').removeAttr('class').addClass('text-success');
-        $(event.target).attr('data-icon', 'check_box').removeClass('icon-spin');
-      },
-      error: function(xhr, status, error) {
-        console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
-        $('#result').text('Something went wrong!');
-        $('#result').removeAttr('class').addClass('text-danger');
-        $(event.target).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
-      },
-    });
+  if($(event.target.nextSibling).attr('data-icon') != 'refresh') {
+    $(event.target.nextSibling).attr('data-icon', 'refresh');
+    if(event.target.checked) {
+      $(event.target.parentNode).addClass('sub-loading');
+      $.ajax({
+        method: 'POST',
+        dataType: 'json',
+        url: 'subscribe',
+        data: { topic: theTopic, token: theToken },
+        success: function(data) {
+          setKeyValueStore(theTopic, true);
+          console.log('Subscribed to topic: ', theTopic, ' ', data);
+          $('#result').text('Subscribed to: ' + theTopic);
+          $('#result').removeAttr('class').addClass('text-success');
+          $(event.target.parentNode).removeClass('sub-loading');
+          $(event.target.parentNode).addClass('sub-selected');
+          $(event.target.nextSibling).attr('data-icon', 'check');
+        },
+        error: function(xhr, status, error) {
+          console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
+          $('#result').text('Something went wrong!');
+          $('#result').removeAttr('class').addClass('text-danger');
+          $(event.target.parentNode).removeClass('sub-loading');
+          $(event.target.parentNode).removeClass('sub-selected');
+          $(event.target.nextSibling).attr('data-icon', 'add');
+        },
+      });
+    } else {
+      $.ajax({
+        method: 'POST',
+        dataType: 'json',
+        url: 'unsubscribe',
+        data: { topic: theTopic, token: theToken },
+        success: function(data) {
+          setKeyValueStore(theTopic, false);
+          console.log('Unsubscribed from topic: ', theTopic, ' ', data);
+          $('#result').text('Unsubscribed from: ' + theTopic);
+          $('#result').removeAttr('class').addClass('text-success');
+          $(event.target.parentNode).removeClass('sub-loading');
+          $(event.target.parentNode).removeClass('sub-selected');
+          $(event.target.nextSibling).attr('data-icon', 'add');
+        },
+        error: function(xhr, status, error) {
+          console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
+          $('#result').text('Something went wrong!');
+          $('#result').removeAttr('class').addClass('text-danger');
+          $(event.target.parentNode).removeClass('sub-loading');
+          $(event.target.parentNode).addClass('sub-selected');
+          $(event.target.nextSibling).attr('data-icon', 'check');
+        },
+      });
+    }
   } else {
-    $.ajax({
-      method: 'POST',
-      dataType: "json",
-      url: 'unsubscribe',
-      data: { topic: theTopic, token: theToken },
-      success: function(data) {
-        setKeyValueStore(theTopic, false);
-        console.log('Unsubscribed from topic: ', theTopic, ' ', data);
-        $('#result').text('Unsubscribed from: ' + theTopic);
-        $('#result').removeAttr('class').addClass('text-success');
-        $(event.target).attr('data-icon', 'check_box_outline_blank').removeClass('icon-spin');
-      },
-      error: function(xhr, status, error) {
-        console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
-        $('#result').text('Something went wrong!');
-        $('#result').removeAttr('class').addClass('text-danger');
-        $(event.target).attr('data-icon', 'check_box').removeClass('icon-spin');
-      },
-    });
+    console.log('Action already in progress, ignoring event!');
   }
 });
+
 
 
 function getSubscritions() {
@@ -197,7 +211,7 @@ function sendTokenToServer(currentToken) {
     setKeyValueStore('notificationStatus', false);
     $.ajax({
       method: 'POST',
-      dataType: "json",
+      dataType: 'json',
       url: 'subscribe',
       data: { topic: 'all', token: currentToken },
       success: function(data) {
@@ -226,12 +240,14 @@ function sendTokenToServer(currentToken) {
 
 function boxChecked() {
   $('#allFields').removeAttr('disabled');
+  $('ul.subs-groups').removeClass('disabled');
   $('.display-toggle i').text('check_box').removeClass('icon-spin');
 }
 
 
 function boxUnChecked() {
   $('#allFields').attr('disabled', 'disabled');
+  $('ul.subs-groups').addClass('disabled');
   $('.display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
   $('input:checkbox').prop('checked', '');
 }
