@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 /*globals caches, Promise */
 
-var VERSION = '27';
+var VERSION = '28';
 
 this.addEventListener('install', function(e) {
   e.waitUntil(caches.open(VERSION).then(cache => {
@@ -10,7 +10,8 @@ this.addEventListener('install', function(e) {
       '/add/',
       '/request/',
       '/request/add/',
-      '/sw.js',
+      '/notifications/',
+      '/notifications/script.js',
       '/style.css',
       '/script.js',
       '/add/atolls.min.json',
