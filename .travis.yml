@@ -16,4 +16,4 @@ before_script:
   - npm install
   - cd ..
 script:
-  - firebase deploy --project blood-mv --token $FIREBASE_TOKEN
+  - firebase deploy --only hosting --project blood-mv --token $FIREBASE_TOKEN

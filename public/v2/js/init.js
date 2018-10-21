@@ -1,27 +1,35 @@
+/*jshint esversion: 6 */
+/*globals $ */
+
 $('.sidenav').sidenav();
 
 $('.dropdown-trigger').dropdown();
 
-
 window.onload = function() {
   var defaultPage = 'donors';
-  var rootPath = '/v2/';
   var pages = {
-    donors: { title: "Blood MV" },
-    requests: { title: "Requests :: Blood MV" },
-    requestsadd: { title: "Add Request :: Blood MV" },
-    add: { title: "Add Donor :: Blood MV" },
-    notify: { title: "Notify :: Blood MV" }
+    donors: { title: "Blood MV", menu_element: "donors" },
+    requests: { title: "Requests :: Blood MV", menu_element: "requests" },
+    requestsadd: { title: "Add Request :: Blood MV", menu_element: "requestsadd" },
+    add: { title: "Add Donor :: Blood MV", menu_element: "add" },
+    notify: { title: "Notify :: Blood MV", menu_element: "notify" }
   }
 
   var navLinks = document.querySelectorAll('nav .container > ul > li > a, #nav-mobile > li > a');
-  var contentElement = document.getElementById('content');
+  var contentElement = '#content';
+  var progressElement = '.progress';
 
   var updateContent = function(stateObj, pageURL) {
     if (stateObj) {
-      document.title = stateObj.title;
-      $('#content').load(pageURL + ' #content > *', function(){
-        $('.progress').hide();
+      $(contentElement).load(pageURL + ' #content > *', function(){
+        document.title = stateObj.title;
+        var desktopMenuElement = 'nav-d-' + stateObj.menu_element;
+        var mobileMenuElement = 'nav-m-' + stateObj.menu_element;
+        $('nav > .container > ul > li.active').removeClass('active');
+        $('#nav-mobile > li.active').removeClass('active');
+        $('#' + desktopMenuElement).addClass('active');
+        $('#' + mobileMenuElement).addClass('active');
+        $(progressElement).hide();
       });
     }
   };

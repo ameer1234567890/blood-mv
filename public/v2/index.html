@@ -21,8 +21,8 @@
         <ul class="right hide-on-med-and-down">
           <li class="waves-effect active" id="nav-d-donors"><a href="/v2/">Donors</a></li>
           <li class="waves-effect" id="nav-d-requests"><a href="/v2/requests/">Requests</a></li>
-          <li class="waves-effect" id="nav-d-requestadd"><a href="/v2/requests/add/">Add Request</a></li>
-          <li class="waves-effect" id="nav-d-donoradd"><a href="/v2/add/">Add Donor</a></li>
+          <li class="waves-effect" id="nav-d-requestsadd"><a href="/v2/requests/add/">Add Request</a></li>
+          <li class="waves-effect" id="nav-d-add"><a href="/v2/add/">Add Donor</a></li>
           <li class="waves-effect" id="nav-d-notify"><a href="/v2/notify/">Notify</a></li>
           <li id="nav-d-sign"><a class="dropdown-trigger" data-target="drop-acc">Account<i class="material-icons right">account_circle</i></a></li>
         </ul>
@@ -49,16 +49,26 @@
     </li>
     <li class="waves-effect waves-orange active" id="nav-m-donors"><a href="/v2/">Donors</a></li>
     <li class="waves-effect waves-orange" id="nav-m-requests"><a href="/v2/requests/">Requests</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-requestadd"><a href="/v2/requests/add/">Add Request</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-donoradd"><a href="/v2/add/">Add Donor</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-requestsadd"><a href="/v2/requests/add/">Add Request</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-add"><a href="/v2/add/">Add Donor</a></li>
     <li class="waves-effect waves-orange" id="nav-m-notify"><a href="/v2/notify/">Notify</a></li>
     <li class="waves-effect waves-orange" id="nav-m-sign"><a href="">Sign Out</a></li>
   </ul>
   <div class="section no-pad-bot" id="content">
     <div class="container">
       <br>
-      <div class="switch right">Show unavailable donors: <label><input type="checkbox"><span class="lever"></span></label></div>
-      <br><br>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="search" type="text" class="validate"><label for="search">Search</label>
+            </div>
+            <div class="input-field col s6">
+              <div class="switch right">Show unavailable donors: <label><input type="checkbox"><span class="lever"></span></label></div>
+            </div>
+          </div>
+        </form>
+      </div>
       <table id="donors" class="striped">
         <thead>
           <tr><th>Name</th><th>Gender</th><th>Age</th><th>Blood Group</th><th>Atoll / City</th><th>Island / Ward</th><th>Phone</th><th>Last Donated</th></tr>
@@ -69,7 +79,7 @@
           <tr><td>Mohamed Muaaz</td><td>M</td><td>30</td><td>O+</td><td>Male' City</td><td>Hulhumale'</td><td>9813387</td><td>04-Aug-2018</td></tr>
         </tbody>
       </table>
-      <ul class="pagination">
+      <ul class="pagination right">
         <li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
         <li class="active"><a href="#">1</a></li>
         <li class="waves-effect"><a href="#">2</a></li>
@@ -77,7 +87,7 @@
         <li class="waves-effect"><a href="#">4</a></li>
         <li class="waves-effect"><a href="#">5</a></li>
         <li class="waves-effect"><a href="#"><i class="material-icons">chevron_right</i></a></li>
-      </ul>
+      </ul><br><br>
     </div>
   </div>
   <br><br>
