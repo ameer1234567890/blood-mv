@@ -630,9 +630,9 @@ $('.a2hs-close').on('click', function() {
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').then(function() {
-    console.log('[Service Worker] Service worker is all cool.');
+    console.log('[SW] Service worker is all cool.');
   }).catch(function(e) {
-    console.error('[Service Worker] Service worker is not so cool.', e);
+    console.error('[SW] Service worker is not so cool.', e);
     throw e;
   });
 }
