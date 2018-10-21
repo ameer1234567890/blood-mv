@@ -27,19 +27,21 @@ window.onload = function() {
   };
 
   for (var i = 0; i < navLinks.length; i++) {
-    navLinks[i].addEventListener('click', function(e) {
-      e.preventDefault();
-      $('.progress').show();
-      var sidenavInstance = document.querySelectorAll('.sidenav')[0].M_Sidenav;
-      sidenavInstance.close();
-      var pageURL = this.attributes['href'].value;
-      var pageData = pages[pageURL.replace(/\/v2/g, '').replace(/\//g, '')];
-      if(!pageData) {
-        pageData = pages[defaultPage];
-      }
-      updateContent(pageData, pageURL);
-      history.pushState(pageData, pageData.title, pageURL);
-    });
+    if(!$(navLinks[i]).hasClass('dropdown-trigger')) {
+      navLinks[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        $('.progress').show();
+        var sidenavInstance = document.querySelectorAll('.sidenav')[0].M_Sidenav;
+        sidenavInstance.close();
+        var pageURL = this.attributes['href'].value;
+        var pageData = pages[pageURL.replace(/\/v2/g, '').replace(/\//g, '')];
+        if(!pageData) {
+          pageData = pages[defaultPage];
+        }
+        updateContent(pageData, pageURL);
+        history.pushState(pageData, pageData.title, pageURL);
+      });
+    }
   }
 
   window.addEventListener('popstate', function(event) {
