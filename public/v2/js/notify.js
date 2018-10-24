@@ -2,12 +2,6 @@
 /*globals $, firebase, topLoader */
 /*exported requestPermission, deleteToken */
 
-// Retrieve Firebase Messaging object.
-const messaging = firebase.messaging();
-
-// Add the public key generated from the console here.
-messaging.usePublicVapidKey('BL1aLfJpeXegbscdgQ5s0Zs95fo9EDXvgCnbGShysqEBbX60hoYPuUuY0zLH_IAsVp38mNqzBYetW3QtUb-24h0');
-
 // Set global token
 var theToken;
 

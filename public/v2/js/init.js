@@ -6,8 +6,11 @@
 var db = firebase.firestore();
 db.settings({timestampsInSnapshots: true});
 
-// Update 
-var authStatusUpdated = false;
+// Retrieve Firebase Messaging object.
+const messaging = firebase.messaging();
+
+// Add the public key generated from the console here.
+messaging.usePublicVapidKey('BL1aLfJpeXegbscdgQ5s0Zs95fo9EDXvgCnbGShysqEBbX60hoYPuUuY0zLH_IAsVp38mNqzBYetW3QtUb-24h0');
 
 // Initialize Google Auth Provider
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -20,8 +23,8 @@ $('.sidenav').sidenav();
 var sidenavInstance = document.querySelectorAll('.sidenav')[0].M_Sidenav;
 $('.dropdown-trigger').dropdown();
 
-// Progress loader on top of page
 var topLoader = '.progress';
+var authStatusUpdated = false;
 
 
 // History API Magic: Lifted from https://codepen.io/matt-west/pen/FGHAK
