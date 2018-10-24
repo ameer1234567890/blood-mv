@@ -10,11 +10,11 @@ $('.dropdown-trigger').dropdown();
 window.onload = function() {
   var defaultPage = 'donors';
   var pages = {
-    donors: { title: "Blood MV", menu_element: "donors" },
-    requests: { title: "Requests :: Blood MV", menu_element: "requests" },
-    requestsadd: { title: "Add Request :: Blood MV", menu_element: "requestsadd" },
-    add: { title: "Add Donor :: Blood MV", menu_element: "add" },
-    notify: { title: "Notify :: Blood MV", menu_element: "notify" }
+    donors: { title: 'Blood MV', menu_element: 'donors' },
+    requests: { title: 'Requests :: Blood MV', menu_element: 'requests' },
+    requestsadd: { title: 'Add Request :: Blood MV', menu_element: 'requestsadd' },
+    add: { title: 'Add Donor :: Blood MV', menu_element: 'add' },
+    notify: { title: 'Notify :: Blood MV', menu_element: 'notify' }
   }
 
   var navLinks = document.querySelectorAll('nav .container > ul > li > a, #nav-mobile > li > a');
