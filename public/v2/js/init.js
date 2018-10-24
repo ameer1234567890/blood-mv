@@ -5,6 +5,8 @@ $('.sidenav').sidenav();
 
 $('.dropdown-trigger').dropdown();
 
+
+// Lifted from https://codepen.io/matt-west/pen/FGHAK
 window.onload = function() {
   var defaultPage = 'donors';
   var pages = {
@@ -57,5 +59,37 @@ window.onload = function() {
     updateContent(event.state, pageURL)
   });
 };
+
+
+$('#search').on('keyup', function(event) {
+  var searchElement = document.getElementById('search');
+  var tableElement = document.getElementById('donors');
+  tableSearch(searchElement, tableElement);
+});
+
+
+// Lifted from https://stackoverflow.com/a/43622296/289254
+function tableSearch(searchElement, tableElement) {
+  var filter = searchElement.value.toUpperCase();
+  var filterOne = filter.split(' ')[0];
+  var filterTwo = filter.split(' ')[1];
+  var tr = tableElement.getElementsByTagName('tr');
+  for (var i = 1; i < tr.length; i++) { // i should start from 1, not 0, if table header is to be always visible
+    if(filterTwo) {
+      if(tr[i].textContent.toUpperCase().indexOf(filterOne) > -1 && tr[i].textContent.toUpperCase().indexOf(filterTwo) > -1) {
+        tr[i].style.display = '';
+      } else {
+        tr[i].style.display = 'none';
+      }
+    } else {
+      if(tr[i].textContent.toUpperCase().indexOf(filterOne) > -1) {
+        tr[i].style.display = '';
+      } else {
+        tr[i].style.display = 'none';
+      }      
+    }
+  }
+}
+
 
 $('.progress').hide();
