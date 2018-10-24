@@ -1,12 +1,13 @@
 /*jshint esversion: 6 */
 /*globals caches, Promise */
 
-var VERSION = '28';
+var VERSION = '29';
 
 this.addEventListener('install', function(e) {
   e.waitUntil(caches.open(VERSION).then(cache => {
     return cache.addAll([
       '/',
+      '/manifest.webmanifest',
       '/add/',
       '/request/',
       '/request/add/',
