@@ -30,11 +30,11 @@
         <ul id="drop-acc" class="dropdown-content collection">
           <li class="collection-item avatar">
             <i class="material-icons circle">account_circle</i>
-            <span class="black-text title">Ameer Dawood</span>
-            <span class="black-text email">ameer1234567890@gmail.com</span>
+            <span class="black-text title">Not Signed in</span>
+            <span class="black-text email">Sign in to add / edit records</span>
           </li>
-           <li class="divider"></li>
-          <li class="waves-effect"><a href="#">Sign Out</a></li>
+          <li class="divider"></li>
+          <li class="waves-effect"><a>Sign in</a></li>
         </ul>
       </div>
     </nav>
@@ -43,20 +43,45 @@
     <li class="red">
       <div class="user-view">
         <i class="material-icons circle white-text">account_circle</i>
-        <span class="white-text name">Ameer Dawood</span>
-        <span class="white-text email">ameer1234567890@gmail.com</span>
+        <span class="white-text name">Not Signed in</span>
+        <span class="white-text email">Sign in to add / edit records</span>
       </div>
     </li>
-    <li class="waves-effect waves-orange" id="nav-m-donors"><a href="/v2/">Donors</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-requests"><a href="/v2/requests/">Requests</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-requestsadd"><a href="/v2/requests/add/">Add Request</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-add"><a href="/v2/add/">Add Donor</a></li>
-    <li class="waves-effect waves-orange active" id="nav-m-notify"><a href="/v2/notify/">Notify</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-sign"><a href="">Sign Out</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-donors"><a href="/v2/"><i class="material-icons">home</i>Donors</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-requests"><a href="/v2/requests/"><i class="material-icons">list</i>Requests</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-requestsadd"><a href="/v2/requests/add/"><i class="material-icons">local_hospital</i>Add Request</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-add"><a href="/v2/add/"><i class="material-icons">add</i>Add Donor</a></li>
+    <li class="waves-effect waves-orange active" id="nav-m-notify"><a href="/v2/notify/"><i class="material-icons">sms</i>Notify</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-sign"><a><i class="material-icons">exit_to_app</i>Sign in</a></li>
   </ul>
   <div class="section no-pad-bot" id="content">
     <div class="container">
-      <p>Notify</p>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <div id="display-toggle" class="right">Show notifications: <i class="material-icons icon-spin">refresh</i></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <form class="col s12" method="post" id="mainForm">
+          <fieldset id="allFields">
+            <ul class="subs-groups">
+              <li><input type="checkbox" id="apositive"><label for="apositive" data-icon="refresh">A Positive</label></li>
+              <li><input type="checkbox" id="anegative"><label for="anegative" data-icon="refresh">A Negative</label></li>
+              <li><input type="checkbox" id="bpositive"><label for="bpositive" data-icon="refresh">B Positive</label></li>
+              <li><input type="checkbox" id="bnegative"><label for="bnegative" data-icon="refresh">B Negative</label></li>
+              <li><input type="checkbox" id="opositive"><label for="opositive" data-icon="refresh">O Positive</label></li>
+              <li><input type="checkbox" id="onegative"><label for="onegative" data-icon="refresh">O Negative</label></li>
+              <li><input type="checkbox" id="abpositive"><label for="abpositive" data-icon="refresh">AB Positive</label></li>
+              <li><input type="checkbox" id="abnegative"><label for="abnegative" data-icon="refresh">AB Negative</label></li>
+            </ul>
+            <span id="result"></span>
+          </fieldset>
+        </form>
+      </div>
     </div>
   </div>
   <br><br>
@@ -76,9 +101,15 @@
       <div class="container">Made by <a class="orange-text text-lighten-3" href="https://ameer.io" target="_blank">Ameer Dawood</a></div>
     </div>
   </footer>
+  <script src="/__/firebase/5.3.0/firebase-app.js"></script>
+  <script src="/__/firebase/5.3.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/5.3.0/firebase-auth.js"></script>
+  <script src="/__/firebase/5.5.3/firebase-messaging.js"></script>
+  <script src="/__/firebase/init.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!--script src="https://code.jquery.com/jquery-2.1.1.min.js"></script-->
   <script src="/v2/js/materialize.js"></script>
   <script src="/v2/js/init.js"></script>
+  <script src="/v2/js/notify.js"></script>
 </body>
 </html>

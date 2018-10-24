@@ -1,74 +1,86 @@
 /*jshint esversion: 6 */
-/*globals $ */
+/*globals $, firebase */
+/* exported tableSearch, getKeyValueStore, setKeyValueStore, age, humanDate, htmlDate, topLoader */
 
+// Create firebase database reference
+var db = firebase.firestore();
+db.settings({timestampsInSnapshots: true});
+
+// Update 
+var authStatusUpdated = false;
+
+// Initialize Google Auth Provider
+var provider = new firebase.auth.GoogleAuthProvider();
+
+// Enable offline database caching
+firebase.firestore().enablePersistence({experimentalTabSynchronization:true}).catch(function(err) { console.error(err); });
+
+// Initialize sidenav & dropdown
 $('.sidenav').sidenav();
-
+var sidenavInstance = document.querySelectorAll('.sidenav')[0].M_Sidenav;
 $('.dropdown-trigger').dropdown();
 
+// Progress loader on top of page
+var topLoader = '.progress';
 
-// Lifted from https://codepen.io/matt-west/pen/FGHAK
-window.onload = function() {
-  var defaultPage = 'donors';
-  var pages = {
-    donors: { title: 'Blood MV', menu_element: 'donors' },
-    requests: { title: 'Requests :: Blood MV', menu_element: 'requests' },
-    requestsadd: { title: 'Add Request :: Blood MV', menu_element: 'requestsadd' },
-    add: { title: 'Add Donor :: Blood MV', menu_element: 'add' },
-    notify: { title: 'Notify :: Blood MV', menu_element: 'notify' }
-  }
 
-  var navLinks = document.querySelectorAll('nav .container > ul > li > a, #nav-mobile > li > a');
-  var contentElement = '#content';
-  var progressElement = '.progress';
-
-  var updateContent = function(stateObj, pageURL) {
-    if (stateObj) {
-      $(contentElement).load(pageURL + ' #content > *', function(){
-        document.title = stateObj.title;
-        var desktopMenuElement = 'nav-d-' + stateObj.menu_element;
-        var mobileMenuElement = 'nav-m-' + stateObj.menu_element;
-        $('nav > .container > ul > li.active').removeClass('active');
-        $('#nav-mobile > li.active').removeClass('active');
-        $('#' + desktopMenuElement).addClass('active');
-        $('#' + mobileMenuElement).addClass('active');
-        $(progressElement).hide();
-      });
-    }
-  };
-
-  for (var i = 0; i < navLinks.length; i++) {
-    if(!$(navLinks[i]).hasClass('dropdown-trigger')) {
-      navLinks[i].addEventListener('click', function(e) {
-        e.preventDefault();
-        $('.progress').show();
-        var sidenavInstance = document.querySelectorAll('.sidenav')[0].M_Sidenav;
-        sidenavInstance.close();
-        var pageURL = this.attributes['href'].value;
-        var pageData = pages[pageURL.replace(/\/v2/g, '').replace(/\//g, '')];
-        if(!pageData) {
-          pageData = pages[defaultPage];
-        }
-        updateContent(pageData, pageURL);
-        history.pushState(pageData, pageData.title, pageURL);
-      });
-    }
-  }
-
-  window.addEventListener('popstate', function(event) {
-    var pageURL = event.currentTarget.location.pathname;
-    updateContent(event.state, pageURL)
-  });
+// History API Magic: Lifted from https://codepen.io/matt-west/pen/FGHAK
+var defaultPage = 'donors';
+var pages = {
+  donors: { title: 'Blood MV', menu_element: 'donors', script: '/v2/js/donors.js' },
+  requests: { title: 'Requests :: Blood MV', menu_element: 'requests', script: '/v2/js/requests.js' },
+  requestsadd: { title: 'Add Request :: Blood MV', menu_element: 'requestsadd', script: '/v2/js/requestsadd.js' },
+  add: { title: 'Add Donor :: Blood MV', menu_element: 'add', script: '/v2/js/add.js' },
+  notify: { title: 'Notify :: Blood MV', menu_element: 'notify', script: '/v2/js/notify.js' }
 };
 
+var navLinks = document.querySelectorAll('nav .container > ul > li > a, #nav-mobile > li > a');
+var contentElement = '#content';
 
-$('#search').on('keyup', function(event) {
-  var searchElement = document.getElementById('search');
-  var tableElement = document.getElementById('donors');
-  tableSearch(searchElement, tableElement);
+function updateContent(stateObj, pageURL) {
+  if (stateObj) {
+    $(contentElement).load(pageURL + ' #content > *', function(){
+      $.getScript(stateObj.script);
+      document.title = stateObj.title;
+      var desktopMenuElement = 'nav-d-' + stateObj.menu_element;
+      var mobileMenuElement = 'nav-m-' + stateObj.menu_element;
+      $('nav > .container > ul > li.active').removeClass('active');
+      $('#nav-mobile > li.active').removeClass('active');
+      $('#' + desktopMenuElement).addClass('active');
+      $('#' + mobileMenuElement).addClass('active');
+    });
+  }
+}
+
+
+for (var i = 0; i < navLinks.length; i++) {
+  if($(navLinks[i]).parent().is('#nav-m-sign')) {
+    // This is the sign in link on mobile nav
+  } else if($(navLinks[i]).hasClass('dropdown-trigger')) {
+    // This is the dropdown trigger for account link
+  } else {
+    navLinks[i].addEventListener('click', function(e) {
+      e.preventDefault();
+      $('.progress').show();
+      sidenavInstance.close();
+      var pageURL = this.attributes.href.value;
+      var pageData = pages[pageURL.replace(/\/v2/g, '').replace(/\//g, '')]; // DEBUG: /v2 prefix needs to be removed from here ////////////////
+      if(!pageData) {
+        pageData = pages[defaultPage];
+      }
+      updateContent(pageData, pageURL);
+      history.pushState(pageData, pageData.title, pageURL);
+    });
+  }
+}
+
+window.addEventListener('popstate', function(event) {
+  var pageURL = event.currentTarget.location.pathname;
+  updateContent(event.state, pageURL);
 });
 
 
-// Lifted from https://stackoverflow.com/a/43622296/289254
+// Search within Table: Lifted from https://stackoverflow.com/a/43622296/289254
 function tableSearch(searchElement, tableElement) {
   var filter = searchElement.value.toUpperCase();
   var filterOne = filter.split(' ')[0];
@@ -92,4 +104,136 @@ function tableSearch(searchElement, tableElement) {
 }
 
 
-$('.progress').hide();
+// Perform Login when login link is clicked
+$('#drop-acc > li > a').on('click', function() {
+  performLogin();
+});
+$('#nav-m-sign > a').on('click', function() {
+  performLogin();
+});
+
+
+// Get a key's value from LocalStorage
+function getKeyValueStore(key) {
+  return window.localStorage.getItem(key) === '1';
+}
+
+
+// Set a key and its value in LocalStorage
+function setKeyValueStore(key, value) {
+  window.localStorage.setItem(key, value ? '1' : '0');
+}
+
+
+// Calculate and return age
+function age(dob) {
+  dob = new Date(dob);
+  var today = new Date();
+  var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+  return age;
+}
+
+
+// Dates for the humans
+function humanDate(date, returnTime) {
+  date = new Date(date);
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  if(returnTime == true) {
+    return ('0' + date.getDate()).slice(-2) +
+           '-' + monthNames[date.getMonth()] +
+           '-' + date.getFullYear() +
+           ' '  + ('0' + date.getHours()).slice(-2) +
+           ':' + ('0' + date.getMinutes()).slice(-2);
+  } else {
+    return ('0' + date.getDate()).slice(-2) +
+           '-' + monthNames[date.getMonth()] +
+           '-' + date.getFullYear();
+  }
+}
+
+
+// Dates for HTML input elements
+function htmlDate(date, returnTime) {
+  date = new Date(date);
+  var monthNames = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '1', '12'];
+  if(returnTime == true) {
+    return date.getFullYear() +
+           '-' + monthNames[date.getMonth()] +
+           '-' + ('0' + date.getDate()).slice(-2) +
+           ' '  + ('0' + date.getHours()).slice(-2) +
+           ':' + ('0' + date.getMinutes()).slice(-2);
+  } else {
+    return date.getFullYear() +
+           '-' + monthNames[date.getMonth()] +
+           '-' + ('0' + date.getDate()).slice(-2);
+  }
+}
+
+
+// Perform the login process
+function performLogin() {
+  firebase.auth().signInWithRedirect(provider).then(function(result) {
+    console.log(result.user);
+  }).catch(function(error) {
+    console.error(error);
+  });
+}
+
+
+// Perform the logout process
+function performLogout() {
+  firebase.auth().signOut().then(function() {
+    console.log('Signout Succesfull');
+  }, function(error) {
+    console.error('Signout Failed');
+    console.error(error);
+  });
+}
+
+// Trim text to a specific number of characters, add ellipsis and return
+function trim(textToTrim, numCharacters) {
+  if(textToTrim.length > numCharacters) {
+    return textToTrim.substring(0, textToTrim.length - (textToTrim.length - numCharacters) - 3) + '...';
+  } else {
+    return textToTrim;
+  }
+}
+
+
+// Update auth details on load / when auth status changes
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    $('#drop-acc > li > .title').text(trim(user.displayName, 25));
+    $('#nav-mobile > li > div.user-view > .name').text(trim(user.displayName, 25));
+    $('#drop-acc > li > .email').text(trim(user.email, 25));
+    $('#nav-mobile > li > div.user-view > .email').text(trim(user.email, 25));
+    $('#drop-acc > li > .circle').replaceWith('<img src="' + user.photoURL + '" alt="Avatar">');
+    $('#nav-mobile > li > div.user-view > .circle').replaceWith('<img src="' + user.photoURL + '" alt="Avatar">');
+    $('#drop-acc > li > a').text('Sign out').off().on('click', function(){
+      performLogout();
+    });
+    $('#nav-m-sign > a').html('<i class="material-icons">exit_to_app</i>Sign out').off().on('click', function(){
+      performLogout();
+    });
+    db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        authStatusUpdated = true;
+        $('#nav-d-add > a').text('Edit my details');
+        $('#nav-m-add > a').html('<i class="material-icons">edit</i>Edit my details');
+      });
+    });
+  } else {
+    $('#drop-acc > li > .title').text('Not Signed in');
+    $('#nav-mobile > li > div.user-view > .name').text('Not Signed in');
+    $('#drop-acc > li > .email').text('Sign in to add / edit records');
+    $('#nav-mobile > li > div.user-view > .email').text('Sign in to add / edit records');
+    $('#drop-acc > li > img').replaceWith('<i class="material-icons circle white-text">account_circle</i>');
+    $('#nav-mobile > li > div.user-view > img').replaceWith('<i class="material-icons circle white-text">account_circle</i>');
+    $('#drop-acc > li > a').text('Sign in').off().on('click', function(){
+      performLogin();
+    });
+    $('#nav-m-sign > a').html('<i class="material-icons">exit_to_app</i>Sign in').off().on('click', function(){
+      performLogin();
+    });
+  }
+});

@@ -30,11 +30,11 @@
         <ul id="drop-acc" class="dropdown-content collection">
           <li class="collection-item avatar">
             <i class="material-icons circle">account_circle</i>
-            <span class="black-text title">Ameer Dawood</span>
-            <span class="black-text email">ameer1234567890@gmail.com</span>
+            <span class="black-text title">Not Signed in</span>
+            <span class="black-text email">Sign in to add / edit records</span>
           </li>
-           <li class="divider"></li>
-          <li class="waves-effect"><a href="#">Sign Out</a></li>
+          <li class="divider"></li>
+          <li class="waves-effect"><a>Sign in</a></li>
         </ul>
       </div>
     </nav>
@@ -43,20 +43,59 @@
     <li class="red">
       <div class="user-view">
         <i class="material-icons circle white-text">account_circle</i>
-        <span class="white-text name">Ameer Dawood</span>
-        <span class="white-text email">ameer1234567890@gmail.com</span>
+        <span class="white-text name">Not Signed in</span>
+        <span class="white-text email">Sign in to add / edit records</span>
       </div>
     </li>
-    <li class="waves-effect waves-orange" id="nav-m-donors"><a href="/v2/">Donors</a></li>
-    <li class="waves-effect waves-orange active" id="nav-m-requests"><a href="/v2/requests/">Requests</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-requestsadd"><a href="/v2/requests/add/">Add Request</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-add"><a href="/v2/add/">Add Donor</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-notify"><a href="/v2/notify/">Notify</a></li>
-    <li class="waves-effect waves-orange" id="nav-m-sign"><a href="">Sign Out</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-donors"><a href="/v2/"><i class="material-icons">home</i>Donors</a></li>
+    <li class="waves-effect waves-orange active" id="nav-m-requests"><a href="/v2/requests/"><i class="material-icons">list</i>Requests</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-requestsadd"><a href="/v2/requests/add/"><i class="material-icons">local_hospital</i>Add Request</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-add"><a href="/v2/add/"><i class="material-icons">add</i>Add Donor</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-notify"><a href="/v2/notify/"><i class="material-icons">sms</i>Notify</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-sign"><a><i class="material-icons">exit_to_app</i>Sign in</a></li>
   </ul>
   <div class="section no-pad-bot" id="content">
     <div class="container">
-      <p>Requests</p>
+      <br>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="search" type="text" class="validate"><label for="search">Search</label>
+            </div>
+            <div class="input-field col s6">
+              <div class="switch right">Show fulfilled requests: <label><input type="checkbox" id="display-toggle"><span class="lever"></span></label></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <table id="requests" class="striped">
+        <thead>
+          <tr><th>Blood Group</th><th>Contact Number</th><th>Place</th><th>Requested at</th><th>Fulfilled</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div class="preloader-wrapper active" id="table-spinner">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <ul class="pagination right">
+        <li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li class="waves-effect"><a href="#">2</a></li>
+        <li class="waves-effect"><a href="#">3</a></li>
+        <li class="waves-effect"><a href="#">4</a></li>
+        <li class="waves-effect"><a href="#">5</a></li>
+        <li class="waves-effect"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+      </ul><br><br>
     </div>
   </div>
   <br><br>
@@ -76,9 +115,15 @@
       <div class="container">Made by <a class="orange-text text-lighten-3" href="https://ameer.io" target="_blank">Ameer Dawood</a></div>
     </div>
   </footer>
+  <script src="/__/firebase/5.3.0/firebase-app.js"></script>
+  <script src="/__/firebase/5.3.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/5.3.0/firebase-auth.js"></script>
+  <script src="/__/firebase/5.5.3/firebase-messaging.js"></script>
+  <script src="/__/firebase/init.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!--script src="https://code.jquery.com/jquery-2.1.1.min.js"></script-->
   <script src="/v2/js/materialize.js"></script>
   <script src="/v2/js/init.js"></script>
+  <script src="/v2/js/requests.js"></script>
 </body>
 </html>

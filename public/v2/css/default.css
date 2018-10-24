@@ -23,6 +23,7 @@
 
 #drop-acc {
   width: 350px !important;
+  top: 64px !important;
 }
 
 #drop-acc > li > .title, #drop-acc > li > .email {
@@ -38,8 +39,129 @@
   cursor: default;
 }
 
+#drop-acc > li > img,
+#nav-mobile > li > div.user-view > img {
+  width: 72px;
+  border-radius: 50%;
+}
+
+#drop-acc > li > img {
+  left: 15px;
+  position: absolute;
+  width: 50px;
+}
+
+#table-spinner {
+  left: 50%
+}
+
 .pagination.right {
   width: auto;
+}
+
+.fulf-disabled {
+  color: #888;
+  cursor: default;
+}
+
+.fulf-enabled,
+#logineasy {
+  color: #009688;
+  cursor: pointer;
+}
+
+.fulf-enabled:hover,
+#logineasy:hover {
+  color: #00796b;
+}
+
+#display-toggle i {
+  color: #009688;
+  cursor: pointer;
+  vertical-align: bottom;
+}
+
+#display-toggle i:hover {
+  color: #00796b;
+}
+
+#allFields {
+  border: none;
+}
+
+/*  --------------------------------------------------------  */
+/*  Styles for the notifications page                         */
+/*  --------------------------------------------------------  */
+ul.subs-groups li input[type="checkbox"] {
+  display: none;
+}
+
+ul.subs-groups {
+  list-style: none;
+}
+
+ul.subs-groups.disabled {
+  color: #adadad;
+}
+
+ul.subs-groups li {
+  display: inline-block;
+  background-color: #fff;
+  border: 1px solid #8b8b8b;
+  border-radius: 25px;
+  margin: 10px 10px;
+}
+
+ul.subs-groups li label {
+  padding: 0 20px 0 5px;
+  cursor: pointer;
+  line-height: 32px;
+  margin-bottom: 0;
+  transition: all 1s;
+}
+
+ul.subs-groups li label::before {
+  content: attr(data-icon);
+  display: inline-block;
+  font-family: 'Material Icons';
+  font-size: 24px;
+  line-height: 14px;
+  padding: 2px 30px 2px 2px;
+  text-indent: 2px;
+  width: 13px;
+  vertical-align: text-bottom;
+}
+
+ul.subs-groups li.sub-selected {
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  color: #fff;
+  transition: all 1s;
+}
+
+ul.subs-groups li.sub-loading label::before {
+  animation: icon-spin 2s infinite linear;
+  content: attr(data-icon);
+}
+
+/*  --------------------------------------------------------  */
+/*  The infamous icon spin & pulse                            */
+/*  --------------------------------------------------------  */
+.icon-spin {
+  animation: icon-spin 2s infinite linear;
+}
+
+.icon-pulse {
+  animation: icon-spin 1s infinite steps(8);
+}
+
+@keyframes icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 /*  --------------------------------------------------------  */
