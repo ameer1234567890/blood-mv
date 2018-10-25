@@ -281,7 +281,7 @@ $('.a2hs-close').on('click', function() {
 
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/js/sw.js')
+  navigator.serviceWorker.register('/sw.js')
   .then((registration) => {
     messaging.useServiceWorker(registration);
     console.log('[SW] Service worker is all cool.');
