@@ -5,87 +5,117 @@
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#212529">
+  <meta name="theme-color" content="#f44336">
   <link rel="manifest" href="/manifest.webmanifest">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="Description" content="A database of Maldivian blood donors and blood requests">
+  <meta name="viewport" content="width=device-width">
   <title>Blood MV</title>
-  <link rel="preconnect" href="https://firestore.googleapis.com">
-  <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.18/datatables.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic">
+  <meta name="Description" content="A database of Maldivian blood donors and blood requests">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="/sidenav/sidenav.min.css">
-  <link rel="stylesheet" href="/waves/waves.min.css">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/css/materialize.css">
+  <link rel="stylesheet" href="/css/default.css">
 </head>
-<body id="listPage">
-  <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-  <nav class="navbar navbar-dark bg-navbar fixed-top">
-    <div class="navbar-brand">
-      <i class="material-icons" id="menu-toggle">menu</i>
-      <span>Blood MV</span>
-    </div>
-  </nav>
-  <div id="backdrop"></div>
-  <div id="sidenav">
-    <div class="header">
-      <i class="material-icons avatar">account_circle</i>
-      <div class="title" id="display-name">Not Logged in</div>
-      <div class="email" id="display-email">Login to add / edit records</div>
-    </div>
-    <div>
-      <ul id="nav-links">
-        <li id="nav-home" class="active waves-effect"><a href="/"><i class="material-icons">home</i>Home</a></li>
-        <li id="nav-req-list" class="waves-effect"><a href="/request/"><i class="material-icons">list</i>Blood Requests</a></li>
-        <li id="nav-notif" class="waves-effect"><a href="/notifications/"><i class="material-icons">sms</i>Notifications</a></li>
-        <li id="nav-req-add" class="waves-effect"><a href="/request/add/"><i class="material-icons">local_hospital</i>Request for Blood</a></li>
-        <li id="nav-add" class="waves-effect"><a href="/add/"><i class="material-icons">add</i>Add me as a donor</a></li>
-        <li id="nav-log" class="waves-effect"><a href=""><i class="material-icons">exit_to_app</i>Login</a></li>
-      </ul>
+<body>
+  <div class="navbar-fixed">
+    <nav class="red">
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Blood MV</a>
+        <ul class="right hide-on-med-and-down">
+          <li class="waves-effect active" id="nav-d-donors"><a href="/">Donors</a></li>
+          <li class="waves-effect" id="nav-d-requests"><a href="/requests/">Requests</a></li>
+          <li class="waves-effect" id="nav-d-requestsadd"><a href="/requests/add/">Add Request</a></li>
+          <li class="waves-effect" id="nav-d-add"><a href="/add/">Add Donor</a></li>
+          <li class="waves-effect" id="nav-d-notify"><a href="/notify/">Notify</a></li>
+          <li id="nav-d-sign"><a class="dropdown-trigger" data-target="drop-acc">Account<i class="material-icons right">account_circle</i></a></li>
+        </ul>
+        <ul id="drop-acc" class="dropdown-content collection">
+          <li class="collection-item avatar">
+            <i class="material-icons circle white-text">account_circle</i>
+            <span class="black-text title">Not Signed in</span>
+            <span class="black-text email">Sign in to add / edit records</span>
+          </li>
+          <li class="divider"></li>
+          <li class="waves-effect"><a>Sign in</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="progress"><div class="indeterminate"></div></div>
+  <ul id="nav-mobile" class="sidenav">
+    <li class="red">
+      <div class="user-view">
+        <i class="material-icons circle white-text">account_circle</i>
+        <span class="white-text name">Not Signed in</span>
+        <span class="white-text email">Sign in to add / edit records</span>
+      </div>
+    </li>
+    <li class="waves-effect waves-orange active" id="nav-m-donors"><a href="/"><i class="material-icons">home</i>Donors</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-requests"><a href="/requests/"><i class="material-icons">list</i>Requests</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-requestsadd"><a href="/requests/add/"><i class="material-icons">local_hospital</i>Add Request</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-add"><a href="/add/"><i class="material-icons">add</i>Add Donor</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-notify"><a href="/notify/"><i class="material-icons">sms</i>Notify</a></li>
+    <li class="waves-effect waves-orange" id="nav-m-sign"><a><i class="material-icons">exit_to_app</i>Sign in</a></li>
+  </ul>
+  <div class="section no-pad-bot" id="content">
+    <div class="container">
+      <br>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="search" type="text" class="validate"><label for="search">Search</label>
+            </div>
+            <div class="input-field col s6">
+              <div class="switch right">Show unavailable donors: <label><input type="checkbox" id="display-toggle"><span class="lever"></span></label></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <table id="donors" class="striped">
+        <thead>
+          <tr><th>Name</th><th>Gender</th><th>Age</th><th>Blood Group</th><th>Atoll / City</th><th>Island / Ward</th><th>Phone</th><th>Last Donated</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div class="preloader-wrapper active" id="table-spinner">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <ul class="pagination right">
+        <li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li class="waves-effect"><a href="#">2</a></li>
+        <li class="waves-effect"><a href="#">3</a></li>
+        <li class="waves-effect"><a href="#">4</a></li>
+        <li class="waves-effect"><a href="#">5</a></li>
+        <li class="waves-effect"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+      </ul><br><br>
     </div>
   </div>
-  <div>&nbsp;</div>
-  <div>&nbsp;</div>
-  <div>&nbsp;</div>
-  <div>&nbsp;</div>
-  <div id="content" class="container">
-    <div class="row">
-      <div class="col-xl-12">
-        <div class="display-toggle">
-          <span>Show unavailable donors: </span><i class="material-icons icon-spin">refresh</i>
-        </div>
-        <br>
-        <table id="donors" class="table table-striped table-bordered table-sm">
-          <caption>Atoll and island mentioned are of the donor's currently residing place, unless outdated information was provided.</caption>
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Gender</th>
-              <th scope="col">Age</th>
-              <th scope="col">Blood Group</th>
-              <th scope="col">Atoll / City</th>
-              <th scope="col">Island / Ward</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Last Donated</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-        <div class="spinner" id="spinner">
-          <div class="rect1"></div>
-          <div class="rect2"></div>
-          <div class="rect3"></div>
-          <div class="rect4"></div>
-          <div class="rect5"></div>
+  <br><br>
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l8 s12">
+          <h5 class="white-text">Blood MV</h5>
+          <p class="grey-text text-lighten-4">Blood MV is a database of Maldivian blood donors, also
+          consisiting of blood requests and options to notify when new blood requests are added.<br>
+          PS: Location and contact details provided are not to be deemed current and up to date. You are
+          advised to contact donors / requesters and confirm the details.</p>
         </div>
       </div>
     </div>
-    <div>&nbsp;</div>
-    <div>&nbsp;</div>
-    <div>&nbsp;</div>
-    <div>&nbsp;</div>
-  </div>
+    <div class="footer-copyright">
+      <div class="container">Made by <a class="orange-text text-lighten-3" href="https://ameer.io" target="_blank">Ameer Dawood</a></div>
+    </div>
+  </footer>
   <div class="a2hs-banner">
     <img class="a2hs-img" src="/favicon.png">
     <div class="a2hs-add">Install Blood MV</div>
@@ -94,10 +124,12 @@
   <script src="/__/firebase/5.3.0/firebase-app.js"></script>
   <script src="/__/firebase/5.3.0/firebase-firestore.js"></script>
   <script src="/__/firebase/5.3.0/firebase-auth.js"></script>
+  <script src="/__/firebase/5.5.3/firebase-messaging.js"></script>
   <script src="/__/firebase/init.js"></script>
-  <script src="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.18/datatables.min.js" defer></script>
-  <script src="/sidenav/sidenav.min.js" defer></script>
-  <script src="/waves/waves.min.js" defer></script>
-  <script src="/script.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--script src="https://code.jquery.com/jquery-2.1.1.min.js"></script-->
+  <script src="/js/materialize.js"></script>
+  <script src="/js/init.js"></script>
+  <script src="/js/donors.js"></script>
 </body>
 </html>

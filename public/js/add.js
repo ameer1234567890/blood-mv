@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-/*globals $, firebase, topLoader, authStatusUpdated */
+/*globals $, firebase, topLoader, authStatusUpdated, M, db, htmlDate, performLogin */
 
 var progressElement = '#form-spinner';
 var theDocId;
@@ -192,14 +192,14 @@ $('#addDonor').on('click', function(event) {
 function initializeSelects() {
   var elems = document.querySelectorAll('select');
   var options = {};
-  var instances = M.FormSelect.init(elems, options);
+  M.FormSelect.init(elems, options);
 }
   
 
 function initializePickers() {
   var elems = document.querySelectorAll('.datepicker');
   var options = { 'format': 'yyyy-mm-dd'};
-  var instances = M.Datepicker.init(elems, options);
+  M.Datepicker.init(elems, options);
 }
 
 

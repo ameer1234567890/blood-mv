@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-/*globals $, firebase, topLoader */
+/*globals $, firebase, topLoader, M, db, performLogin, authStatusUpdated */
 
 var progressElement = '#form-spinner';
 
@@ -76,7 +76,7 @@ $('#addRequest').on('click', function(event) {
 function initializeSelects() {
   var elems = document.querySelectorAll('select');
   var options = {};
-  var instances = M.FormSelect.init(elems, options);
+  M.FormSelect.init(elems, options);
 }
 
 

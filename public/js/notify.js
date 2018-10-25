@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
-/*globals $, firebase, topLoader */
-/*exported requestPermission, deleteToken */
+/*globals $, topLoader, messaging, setKeyValueStore, getKeyValueStore, M */
+/*exported showNotification */
 
 // Set global token
 var theToken;
@@ -29,7 +29,7 @@ messaging.onMessage(function(payload) {
   M.toast({
     html: payload.notification.body,
     displayLength: 10000
-  })
+  });
 });
 
 
@@ -118,7 +118,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
       $.ajax({
         method: 'POST',
         dataType: 'json',
-        url: '/notifications/subscribe',
+        url: '/notify/subscribe',
         data: { topic: theTopic, token: theToken },
         success: function(data) {
           setKeyValueStore(theTopic, true);
@@ -143,7 +143,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
       $.ajax({
         method: 'POST',
         dataType: 'json',
-        url: '/notifications/unsubscribe',
+        url: '/notify/unsubscribe',
         data: { topic: theTopic, token: theToken },
         success: function(data) {
           setKeyValueStore(theTopic, false);
@@ -214,13 +214,13 @@ function sendTokenToServer(currentToken) {
     $.ajax({
       method: 'POST',
       dataType: 'json',
-      url: '/notifications/subscribe',
+      url: '/notify/subscribe',
       data: { topic: 'all', token: currentToken },
       success: function(data) {
         setKeyValueStore('sentToServer', true);
         setKeyValueStore('notificationStatus', true);
-        console.log('Subscripttion successful. ', data);
-        $('#result').text('Subscripttion successful.');
+        console.log('Subscription successful. ', data);
+        $('#result').text('Subscription successful.');
         $('#result').removeAttr('class').addClass('text-success');
         boxChecked();
       },

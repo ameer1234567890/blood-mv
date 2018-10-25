@@ -1,7 +1,12 @@
 /*jshint esversion: 6 */
-/*globals caches, Promise */
+/*globals caches, Promise, importScripts, firebase, self */
 
-var VERSION = '29';
+var VERSION = '30';
+
+importScripts('/__/firebase/5.0.0/firebase-app.js');
+importScripts('/__/firebase/5.0.0/firebase-messaging.js');
+importScripts('/__/firebase/init.js');
+var messaging = firebase.messaging();
 
 this.addEventListener('install', function(e) {
   e.waitUntil(caches.open(VERSION).then(cache => {
@@ -9,12 +14,18 @@ this.addEventListener('install', function(e) {
       '/',
       '/manifest.webmanifest',
       '/add/',
-      '/request/',
-      '/request/add/',
-      '/notifications/',
-      '/notifications/script.js',
-      '/style.css',
-      '/script.js',
+      '/requests/',
+      '/requests/add/',
+      '/notify/',
+      '/css/default.css',
+      '/css/materialize.min.css',
+      '/js/add.js',
+      '/js/donors.js',
+      '/js/init.js',
+      '/js/materialize.min.js',
+      '/js/notify.js',
+      '/js/requests.js',
+      '/js/requestsadd.js',
       '/add/atolls.min.json',
       '/add/islands.min.json'
     ]);
@@ -68,3 +79,17 @@ function fetchFromNetworkAndCache(e) {
 function handleNoCacheMatch(e) {
   return fetchFromNetworkAndCache(e);
 }
+
+
+messaging.setBackgroundMessageHandler(function(payload) {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  var notificationTitle = 'Background Message Title';
+  var notificationOptions = {
+    body: 'Background Message body.',
+    icon: '/favicon.png',
+    badge: '/icons/badge.png',
+    click_action: '/request/'
+  };
+
+  return self.registration.showNotification(notificationTitle, notificationOptions);
+});

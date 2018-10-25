@@ -30,11 +30,11 @@ var authStatusUpdated = false;
 // History API Magic: Lifted from https://codepen.io/matt-west/pen/FGHAK
 var defaultPage = 'donors';
 var pages = {
-  donors: { title: 'Blood MV', menu_element: 'donors', script: '/v2/js/donors.js' },
-  requests: { title: 'Requests :: Blood MV', menu_element: 'requests', script: '/v2/js/requests.js' },
-  requestsadd: { title: 'Add Request :: Blood MV', menu_element: 'requestsadd', script: '/v2/js/requestsadd.js' },
-  add: { title: 'Add Donor :: Blood MV', menu_element: 'add', script: '/v2/js/add.js' },
-  notify: { title: 'Notify :: Blood MV', menu_element: 'notify', script: '/v2/js/notify.js' }
+  donors: { title: 'Blood MV', menu_element: 'donors', script: '/js/donors.js' },
+  requests: { title: 'Requests :: Blood MV', menu_element: 'requests', script: '/js/requests.js' },
+  requestsadd: { title: 'Add Request :: Blood MV', menu_element: 'requestsadd', script: '/js/requestsadd.js' },
+  add: { title: 'Add Donor :: Blood MV', menu_element: 'add', script: '/js/add.js' },
+  notify: { title: 'Notify :: Blood MV', menu_element: 'notify', script: '/js/notify.js' }
 };
 
 var navLinks = document.querySelectorAll('nav .container > ul > li > a, #nav-mobile > li > a');
@@ -67,7 +67,7 @@ for (var i = 0; i < navLinks.length; i++) {
       $('.progress').show();
       sidenavInstance.close();
       var pageURL = this.attributes.href.value;
-      var pageData = pages[pageURL.replace(/\/v2/g, '').replace(/\//g, '')]; // DEBUG: /v2 prefix needs to be removed from here ////////////////
+      var pageData = pages[pageURL.replace(/\//g, '')];
       if(!pageData) {
         pageData = pages[defaultPage];
       }
@@ -240,3 +240,49 @@ firebase.auth().onAuthStateChanged(function(user) {
     });
   }
 });
+
+
+var deferredPrompt;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log('beforeinstallprompt triggered');
+  showAddToHomeScreen();
+});
+
+
+function showAddToHomeScreen() {
+  $('.a2hs-banner').show();
+  $('.a2hs-add').on('click', addToHomeScreen);
+}
+
+
+function addToHomeScreen() {
+  $('.a2hs-banner').hide();
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(function(choiceResult) {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted the A2HS prompt');
+    } else {
+      console.log('User dismissed the A2HS prompt');
+    }
+    deferredPrompt = null;
+  });
+}
+
+
+$('.a2hs-close').on('click', function() {
+  $('.a2hs-banner').hide();
+});
+
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/js/sw.js')
+  .then((registration) => {
+    messaging.useServiceWorker(registration);
+    console.log('[SW] Service worker is all cool.');
+  }).catch(function(e) {
+    console.error('[SW] Service worker is not so cool.', e);
+    throw e;
+  });
+}

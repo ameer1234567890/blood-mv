@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-/*globals $, topLoader, setKeyValueStore */
+/*globals $, firebase, topLoader, setKeyValueStore, getKeyValueStore, db, tableSearch, humanDate */
 
 var progressElement = '#table-spinner';
 

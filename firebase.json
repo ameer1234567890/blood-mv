@@ -8,39 +8,70 @@
     ],
     "predeploy": [
       "firebase target",
-      "jshint --exclude **/*.min.js public/**/*.js",
-      "mv public/style.css public/style.max.css",
-      "csso public/style.max.css public/style.css",
-      "mv public/script.js public/script.max.js",
-      "google-closure-compiler --js=public/script.max.js --js_output_file=public/script.js --create_source_map=public/script.js.map",
-      "mv public/sw.js public/sw.max.js",
-      "google-closure-compiler --js=public/sw.max.js --js_output_file=public/sw.js --create_source_map=public/sw.js.map",
-      "mv public/firebase-messaging-sw.js public/firebase-messaging-sw.max.js",
-      "google-closure-compiler --js=public/firebase-messaging-sw.max.js --js_output_file=public/firebase-messaging-sw.js --create_source_map=public/firebase-messaging-sw.js.map",
-      "mv public/notifications/script.js public/notifications/script.max.js",
-      "google-closure-compiler --js=public/notifications/script.max.js --js_output_file=public/notifications/script.js --create_source_map=public/notifications/script.js.map"
+      "jshint --exclude **/*.min.js,**/materialize.js public/**/*.js",
+
+      "mv public/css/default.css public/css/default.max.css",
+      "csso public/css/default.max.css public/css/default.css",
+
+      "mv public/js/add.js public/js/add.max.js",
+      "google-closure-compiler --js=public/js/add.max.js --js_output_file=public/js/add.js --create_source_map=public/js/add.js.map",
+
+      "mv public/js/donors.js public/js/donors.max.js",
+      "google-closure-compiler --js=public//js/donors.max.js --js_output_file=public/js/donors.js --create_source_map=public/js/donors.js.map",
+
+      "mv public/js/init.js public/js/init.max.js",
+      "google-closure-compiler --js=public/js/init.max.js --js_output_file=public/js/init.js --create_source_map=public/js/init.js.map",
+
+      "mv public/js/notify.js public/js/notify.max.js",
+      "google-closure-compiler --js=public/js/notify.max.js --js_output_file=public/js/notify.js --create_source_map=public/js/notify.js.map",
+
+      "mv public/js/requests.js public/js/requests.max.js",
+      "google-closure-compiler --js=public/js/requests.max.js --js_output_file=public/js/requests.js --create_source_map=public/js/requests.js.map",
+
+      "mv public/js/requestsadd.js public/js/requestsadd.max.js",
+      "google-closure-compiler --js=public/js/requestsadd.max.js --js_output_file=public/js/requestsadd.js --create_source_map=public/js/requestsadd.js.map",
+
+      "mv public/js/sw.js public/js/sw.max.js",
+      "google-closure-compiler --js=public/js/sw.max.js --js_output_file=public/js/sw.js --create_source_map=public/js/sw.js.map"
     ],
     "postdeploy": [
-      "rm public/style.css",
-      "mv public/style.max.css public/style.css",
-      "rm public/script.js",
-      "rm public/script.js.map",
-      "mv public/script.max.js public/script.js",
-      "rm public/sw.js",
-      "rm public/sw.js.map",
-      "mv public/sw.max.js public/sw.js",
-      "rm public/firebase-messaging-sw.js",
-      "rm public/firebase-messaging-sw.js.map",
-      "mv public/firebase-messaging-sw.max.js public/firebase-messaging-sw.js",
-      "rm public/notifications/script.js.map",
-      "mv public/notifications/script.max.js public/notifications/script.js"
+      "rm public/css/default.css",
+      "mv public/css/default.max.css public/css/default.css",
+
+      "rm public/js/add.js",
+      "rm public/js/add.js.map",
+      "mv public/js/add.max.js public/js/add.js",
+
+      "rm public/js/donors.js",
+      "rm public/js/donors.js.map",
+      "mv public/js/donors.max.js public/js/donors.js",
+
+      "rm public/js/init.js",
+      "rm public/js/init.js.map",
+      "mv public/js/init.max.js public/js/init.js",
+
+      "rm public/js/notify.js",
+      "rm public/js/notify.js.map",
+      "mv public/js/notify.max.js public/js/notify.js",
+
+      "rm public/js/requests.js",
+      "rm public/js/requests.js.map",
+      "mv public/js/requests.max.js public/js/requests.js",
+
+      "rm public/js/requestsadd.js",
+      "rm public/js/requestsadd.js.map",
+      "mv public/js/requestsadd.max.js public/js/requestsadd.js",
+
+      "rm public/js/sw.js",
+      "rm public/js/sw.js.map",
+      "mv public/js/sw.max.js public/js/sw.js"
     ],
     "rewrites": [
       {
-        "source": "/notifications/subscribe", "function": "subscribeToTopic"
+        "source": "/notify/subscribe", "function": "subscribeToTopic"
       },
       {
-        "source": "/notifications/unsubscribe", "function": "unsubscribeFromTopic"
+        "source": "/notify/unsubscribe", "function": "unsubscribeFromTopic"
       }
     ],
     "headers": [
