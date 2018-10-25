@@ -17,9 +17,9 @@ $(document).ready(function() {
       if (firebase.auth().currentUser) {
         $('#mainForm #email').val(firebase.auth().currentUser.email);
         $('#mainForm #user').val(firebase.auth().getUid());
-        $(progressElement).hide();
       }
     });
+    $(progressElement).hide();
   }
 });
 
@@ -28,7 +28,6 @@ $(document).ready(function() {
 $('#addRequest').on('click', function(event) {
   if(!firebase.auth().currentUser) {
     event.preventDefault();
-    $('#spinner').hide();
     $('#result').html('Please <a id="logineasy">Login</a> with a Google account.');
     $('#logineasy').on('click', function(event) {
       event.preventDefault();
@@ -53,20 +52,18 @@ $('#addRequest').on('click', function(event) {
           user: $('#user').val()
         })
         .then(function(docRef) {
-          $('#spinner').hide();
           $('#result').text('Record added!');
           $('#result').addClass('green-text');
           $('#mainForm')[0].reset();
         })
         .catch(function(error) {
-          $('#spinner').hide();
           $('#result').text('Error: Something went wrong!');
           console.error(error);
         });
         $('#addDonor').removeAttr('disabled');
       } else {
         $('#result').text('Please fill all details!');
-         $('#result').addClass('red-text');
+        $('#result').addClass('red-text');
       }
     }
   }
