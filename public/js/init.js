@@ -23,8 +23,12 @@ $('.sidenav').sidenav();
 var sidenavInstance = document.querySelectorAll('.sidenav')[0].M_Sidenav;
 $('.dropdown-trigger').dropdown();
 
+// Some global variables
 var topLoader = '.progress';
 var authStatusUpdated = false;
+
+// Turn on jQuery Ajax caching
+$.ajaxSetup({ cache: true });
 
 
 // History API Magic: Lifted from https://codepen.io/matt-west/pen/FGHAK
