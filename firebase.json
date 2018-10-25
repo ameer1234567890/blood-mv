@@ -31,8 +31,8 @@
       "mv public/js/requestsadd.js public/js/requestsadd.max.js",
       "google-closure-compiler --js=public/js/requestsadd.max.js --js_output_file=public/js/requestsadd.js --create_source_map=public/js/requestsadd.js.map",
 
-      "mv public/js/sw.js public/js/sw.max.js",
-      "google-closure-compiler --js=public/js/sw.max.js --js_output_file=public/js/sw.js --create_source_map=public/js/sw.js.map"
+      "mv public/sw.js public/sw.max.js",
+      "google-closure-compiler --js=public/sw.max.js --js_output_file=public/sw.js --create_source_map=public/sw.js.map"
     ],
     "postdeploy": [
       "rm public/css/default.css",
@@ -62,9 +62,9 @@
       "rm public/js/requestsadd.js.map",
       "mv public/js/requestsadd.max.js public/js/requestsadd.js",
 
-      "rm public/js/sw.js",
-      "rm public/js/sw.js.map",
-      "mv public/js/sw.max.js public/js/sw.js"
+      "rm public/sw.js",
+      "rm public/sw.js.map",
+      "mv public/sw.max.js public/js/sw.js"
     ],
     "rewrites": [
       {
