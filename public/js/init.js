@@ -62,7 +62,7 @@ for (var i = 0; i < navLinks.length; i++) {
   } else if($(navLinks[i]).hasClass('dropdown-trigger')) {
     // This is the dropdown trigger for account link
   } else {
-    navLinks[i].addEventListener('click', function(e) {
+    navLinks[i].addEventListener('click', function(e) { // jshint ignore:line
       e.preventDefault();
       $('.progress').show();
       sidenavInstance.close();
