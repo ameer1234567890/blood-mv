@@ -125,7 +125,6 @@ $('#addDonor').on('click', function(event) {
          $('#phone').val() != '') {
         $('#addDonor').attr('disabled', 'disabled');
         $('#result').text('');
-        $('#spinner').show();
         if(isNewUser == true) {
           db.collection('donors').add({
             first: $('#first').val(),
@@ -141,13 +140,11 @@ $('#addDonor').on('click', function(event) {
             user: $('#user').val()
           })
           .then(function(docRef) {
-            $('#spinner').hide();
             $('#result').text('Record added!');
             $('#result').addClass('green-text');
             $('#mainForm')[0].reset();
           })
           .catch(function(error) {
-            $('#spinner').hide();
             $('#result').text('Error: Something went wrong!');
             $('#result').addClass('red-text');
             console.error(error);
@@ -167,13 +164,11 @@ $('#addDonor').on('click', function(event) {
             user: $('#user').val()
           })
           .then(function(docRef) {
-            $('#spinner').hide();
             $('#result').text('Record updated!');
             $('#result').addClass('green-text');
             $('#mainForm')[0].reset();
           })
           .catch(function(error) {
-            $('#spinner').hide();
             $('#result').text('Error: Something went wrong!');
             $('#result').addClass('red-text');
             console.error(error);
