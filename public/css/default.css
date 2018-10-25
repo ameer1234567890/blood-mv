@@ -59,39 +59,31 @@
   width: auto;
 }
 
-.fulf-disabled {
-  color: #888;
-  cursor: default;
-}
-
 .fulf-enabled,
-#logineasy {
+#logineasy,
+#display-toggle > i {
   color: #009688;
   cursor: pointer;
 }
 
 .fulf-enabled:hover,
-#logineasy:hover {
+#logineasy:hover,
+#display-toggle > i:hover {
   color: #00796b;
 }
 
-#display-toggle i {
-  color: #009688;
-  cursor: pointer;
+.fulf-disabled,
+#display-toggle > i.disabled {
+  color: #888;
+  cursor: default;
+}
+
+#display-toggle > i {
   vertical-align: bottom;
-}
-
-#display-toggle i:hover {
-  color: #00796b;
 }
 
 #allFields {
   border: none;
-}
-
-.disabled {
-  color: #888;
-  cursor: default;
 }
 
 /*  --------------------------------------------------------  */
