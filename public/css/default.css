@@ -113,7 +113,6 @@ ul.subs-groups > li > label {
   line-height: 32px;
   margin-bottom: 0;
   transition: all 1s;
-  transition: all 1s;
 }
 
 ul.subs-groups > li > label::before {
