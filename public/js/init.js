@@ -132,6 +132,18 @@ function setKeyValueStore(key, value) {
 }
 
 
+// Get a key's value from SessionStorage
+function getSessionStore(key) {
+  return window.sessionStorage.getItem(key) === '1';
+}
+
+
+// Set a key and its value in SessionStorage
+function setSessionStore(key, value) {
+  window.sessionStorage.setItem(key, value ? '1' : '0');
+}
+
+
 // Calculate and return age
 function age(dob) {
   dob = new Date(dob);
@@ -251,7 +263,11 @@ window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   deferredPrompt = e;
   console.log('beforeinstallprompt triggered');
-  showAddToHomeScreen();
+  if(getSessionStore('hideA2HS') {
+    console.log('User has closed A2HS banner before. It is hiiden for this session.');
+  } else {
+    showAddToHomeScreen();
+  }
 });
 
 
@@ -276,6 +292,7 @@ function addToHomeScreen() {
 
 
 $('.a2hs-close').on('click', function() {
+  setSessionStore('hideA2HS', true);
   $('.a2hs-banner').hide();
 });
 
