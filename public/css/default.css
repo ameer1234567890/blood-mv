@@ -74,7 +74,7 @@
 
 .fulf-disabled,
 #display-toggle > i.disabled {
-  color: #888;
+  color: #9e9e9e;
   cursor: default;
 }
 
@@ -89,7 +89,7 @@
 /*  --------------------------------------------------------  */
 /*  Styles for the notifications page                         */
 /*  --------------------------------------------------------  */
-ul.subs-groups li input[type="checkbox"] {
+ul.subs-groups > li > input[type="checkbox"] {
   display: none;
 }
 
@@ -97,27 +97,27 @@ ul.subs-groups {
   list-style: none;
 }
 
-ul.subs-groups.disabled {
-  color: #adadad;
-}
-
-ul.subs-groups li {
+ul.subs-groups > li {
   display: inline-block;
   background-color: #fff;
-  border: 1px solid #8b8b8b;
+  border: 1px solid #009688;
   border-radius: 25px;
   margin: 10px 10px;
+  transition: all 1s;
 }
 
-ul.subs-groups li label {
+ul.subs-groups > li > label {
+  color: #009688;
   padding: 0 20px 0 5px;
   cursor: pointer;
   line-height: 32px;
   margin-bottom: 0;
   transition: all 1s;
+  transition: all 1s;
 }
 
-ul.subs-groups li label::before {
+ul.subs-groups > li > label::before {
+  color: #009688;
   content: attr(data-icon);
   display: inline-block;
   font-family: 'Material Icons';
@@ -127,16 +127,32 @@ ul.subs-groups li label::before {
   text-indent: 2px;
   width: 13px;
   vertical-align: text-bottom;
+  transition: all 1s;
 }
 
-ul.subs-groups li.sub-selected {
-  background-color: #007bff;
-  border: 1px solid #007bff;
+ul.subs-groups > li.sub-selected {
+  background-color: #009688;
+  border: 1px solid #009688;  
+  transition: all 1s;
+}
+
+ul.subs-groups > li.sub-selected > label,
+ul.subs-groups > li.sub-selected > label:before {
   color: #fff;
   transition: all 1s;
 }
 
-ul.subs-groups li.sub-loading label::before {
+ul.subs-groups.disabled > li {
+  border-color: #9e9e9e;
+}
+
+ul.subs-groups.disabled > li > label,
+ul.subs-groups.disabled > li > label::before {
+  color: #9e9e9e;
+  cursor: default;
+}
+
+ul.subs-groups > li.sub-loading > label::before {
   animation: icon-spin 2s infinite linear;
   content: attr(data-icon);
 }
@@ -226,7 +242,7 @@ only screen and (max-width: 760px),
     display: block;
   }
   /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
+  thead > tr {
     left: -9999px;
     position: absolute;
     top: -9999px;
@@ -248,7 +264,7 @@ only screen and (max-width: 760px),
     position: absolute;
   }
   /* Material card layout */
-  table.striped tbody tr {
+  table.striped > tbody > tr {
     border-radius: 10px;
     border-style: solid;
     border-color: #e0e0e0;
