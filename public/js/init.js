@@ -263,7 +263,7 @@ window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   deferredPrompt = e;
   console.log('beforeinstallprompt triggered');
-  if(getSessionStore('hideA2HS') {
+  if(getSessionStore('hideA2HS')) {
     console.log('User has closed A2HS banner before. It is hiiden for this session.');
   } else {
     showAddToHomeScreen();
