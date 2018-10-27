@@ -1,0 +1,13 @@
+{
+  "name": "blood-mv",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "jshint": "^2.9.6",
+    "csso-cli": "^1.1.0",
+    "firebase-tools": "^6.0.0",
+    "google-closure-compiler": "^20181008.0.0"
+  },
+  "private": true
+}

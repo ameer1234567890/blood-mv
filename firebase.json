@@ -8,31 +8,31 @@
     ],
     "predeploy": [
       "firebase target",
-      "jshint --exclude **/*.min.js,**/materialize.js public/**/*.js",
+      "./node_modules/jshint/bin/jshint --exclude **/*.min.js,**/materialize.js public/**/*.js",
 
       "mv public/css/default.css public/css/default.max.css",
-      "csso public/css/default.max.css public/css/default.css",
+      "./node_modules/csso-cli/bin/csso public/css/default.max.css public/css/default.css",
 
       "mv public/js/add.js public/js/add.max.js",
-      "google-closure-compiler --js=public/js/add.max.js --js_output_file=public/js/add.js --create_source_map=public/js/add.js.map",
+      "./node_modules/google-closure-compiler/cli.js --js=public/js/add.max.js --js_output_file=public/js/add.js --create_source_map=public/js/add.js.map",
 
       "mv public/js/donors.js public/js/donors.max.js",
-      "google-closure-compiler --js=public//js/donors.max.js --js_output_file=public/js/donors.js --create_source_map=public/js/donors.js.map",
+      "./node_modules/google-closure-compiler/cli.js --js=public//js/donors.max.js --js_output_file=public/js/donors.js --create_source_map=public/js/donors.js.map",
 
       "mv public/js/init.js public/js/init.max.js",
-      "google-closure-compiler --js=public/js/init.max.js --js_output_file=public/js/init.js --create_source_map=public/js/init.js.map",
+      "./node_modules/google-closure-compiler/cli.js --js=public/js/init.max.js --js_output_file=public/js/init.js --create_source_map=public/js/init.js.map",
 
       "mv public/js/notify.js public/js/notify.max.js",
-      "google-closure-compiler --js=public/js/notify.max.js --js_output_file=public/js/notify.js --create_source_map=public/js/notify.js.map",
+      "./node_modules/google-closure-compiler/cli.js --js=public/js/notify.max.js --js_output_file=public/js/notify.js --create_source_map=public/js/notify.js.map",
 
       "mv public/js/requests.js public/js/requests.max.js",
-      "google-closure-compiler --js=public/js/requests.max.js --js_output_file=public/js/requests.js --create_source_map=public/js/requests.js.map",
+      "./node_modules/google-closure-compiler/cli.js --js=public/js/requests.max.js --js_output_file=public/js/requests.js --create_source_map=public/js/requests.js.map",
 
       "mv public/js/requestsadd.js public/js/requestsadd.max.js",
-      "google-closure-compiler --js=public/js/requestsadd.max.js --js_output_file=public/js/requestsadd.js --create_source_map=public/js/requestsadd.js.map",
+      "./node_modules/google-closure-compiler/cli.js --js=public/js/requestsadd.max.js --js_output_file=public/js/requestsadd.js --create_source_map=public/js/requestsadd.js.map",
 
       "mv public/sw.js public/sw.max.js",
-      "google-closure-compiler --js=public/sw.max.js --js_output_file=public/sw.js --create_source_map=public/sw.js.map"
+      "./node_modules/google-closure-compiler/cli.js --js=public/sw.max.js --js_output_file=public/sw.js --create_source_map=public/sw.js.map"
     ],
     "postdeploy": [
       "rm public/css/default.css",
