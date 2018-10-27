@@ -9,9 +9,9 @@ cache:
 install:
   - npm install
 # Comment below if functions are not to be deployed
-before_script:
-  - cd functions
-  - npm install
-  - cd ..
+# before_script:
+#  - cd functions
+#  - npm install
+#  - cd ..
 script:
   - firebase deploy --only hosting --project blood-mv --token $FIREBASE_TOKEN
