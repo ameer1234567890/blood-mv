@@ -2,6 +2,10 @@
 /*globals $, tableSearch, setKeyValueStore, getKeyValueStore, age, humanDate, db, topLoader */
 
 var progressElement = '#table-spinner';
+var loadMoreElement = '.load-more';
+var collectionName = 'donors';
+var recordsPerPage = 10;
+var lastVisible;
 
 // Search the table when something is entered in search box
 $('#search').on('keyup', function(event) {
@@ -39,42 +43,56 @@ $(document).ready(function() {
 });
 
 
-function loadBloodDonors(includeOnlyDonatable) {
-  if(includeOnlyDonatable) {
-    var d = new Date();
-    var threeMonthsBack = new Date(d.setMonth(d.getMonth() - 3));
-    db.collection('donors').where('donated', '<', threeMonthsBack).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        $('#donors > tbody').append($('<tr>')
-          .append($('<td scope="row">').text(doc.data().first + ' ' + doc.data().last))
-          .append($('<td>').text(doc.data().gender))
-          .append($('<td>').text(age(doc.data().born.toDate())))
-          .append($('<td>').text(doc.data().group))
-          .append($('<td>').text(doc.data().atoll))
-          .append($('<td>').text(doc.data().island))
-          .append($('<td>').text(doc.data().phone))
-          .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
-        );
-      });
-      $(progressElement).hide();
-    });    
+// Click handlers for pagination
+$(loadMoreElement).on('click', function() {
+  loadBloodDonors(getKeyValueStore('includeOnlyDonatable'), true);
+});
+
+
+function loadBloodDonors(includeOnlyDonatable, loadMore) {
+  $(loadMoreElement).off();
+  var query;
+  var d = new Date();
+  var threeMonthsBack = new Date(d.setMonth(d.getMonth() - 3));
+  if(loadMore) {
+    if(includeOnlyDonatable) {
+      query = db.collection(collectionName).where('donated', '<', threeMonthsBack).startAfter(lastVisible);
+    } else {
+      query = db.collection(collectionName).limit(recordsPerPage).startAfter(lastVisible);
+    }
   } else {
-    db.collection('donors').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        $('#donors > tbody').append($('<tr>')
-          .append($('<td scope="row">').text(doc.data().first + ' ' + doc.data().last))
-          .append($('<td>').text(doc.data().gender))
-          .append($('<td>').text(age(doc.data().born.toDate())))
-          .append($('<td>').text(doc.data().group))
-          .append($('<td>').text(doc.data().atoll))
-          .append($('<td>').text(doc.data().island))
-          .append($('<td>').text(doc.data().phone))
-          .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
-        );
-      });
-      $(progressElement).hide();
-    });
+    if(includeOnlyDonatable) {
+      query = db.collection(collectionName).where('donated', '<', threeMonthsBack).limit(recordsPerPage);
+    } else {
+      query = db.collection(collectionName).limit(recordsPerPage);
+    }    
   }
+  query.get().then((querySnapshot) => {
+    lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+    querySnapshot.forEach((doc) => {
+      $('#donors > tbody').append($('<tr>')
+        .append($('<td scope="row">').text(doc.data().first + ' ' + doc.data().last))
+        .append($('<td>').text(doc.data().gender))
+        .append($('<td>').text(age(doc.data().born.toDate())))
+        .append($('<td>').text(doc.data().group))
+        .append($('<td>').text(doc.data().atoll))
+        .append($('<td>').text(doc.data().island))
+        .append($('<td>').text(doc.data().phone))
+        .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
+      );
+    });
+    $(progressElement).hide();
+    $(loadMoreElement).show();
+    if(!lastVisible) {
+      $(loadMoreElement).off();
+      $(loadMoreElement + ' > a').addClass('disabled').html('<i class="material-icons right">more_horiz</i>End of the World');
+    } else {
+      $(loadMoreElement + ' > a').removeClass('disabled').html('<i class="material-icons right">expand_more</i>Load More');
+      $(loadMoreElement).off().on('click', function() {
+        loadBloodDonors(getKeyValueStore('includeOnlyDonatable'), true);
+      });
+    }
+  });    
 }
 
 $(document).ready($(topLoader).hide());

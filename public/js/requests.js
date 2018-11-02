@@ -51,13 +51,13 @@ function loadBloodRequests(includeFulfilled, loadMore) {
   $(loadMoreElement).off();
   var query;
   if(loadMore) {
-    if(includeFulfilled == true) {
+    if(includeFulfilled) {
       query = db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc').startAfter(lastVisible);
     } else {
       query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc').startAfter(lastVisible);
     }
   } else {
-    if(includeFulfilled == true) {
+    if(includeFulfilled) {
       query = db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc');
     } else {
       query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc');
