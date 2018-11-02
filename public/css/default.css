@@ -55,8 +55,14 @@
   left: 50%
 }
 
-.pagination.right {
-  width: auto;
+.load-more {
+  display: none;
+}
+
+.preloader {
+  left: -9999px;
+  position: absolute;
+  top: -9999px;
 }
 
 .fulf-enabled,
@@ -161,7 +167,7 @@ ul.subs-groups > li.sub-loading > label::before {
 /*  --------------------------------------------------------  */
 .a2hs-banner {
   bottom: 0;
-  box-shadow: 0 -2px 10px 0 #888;
+  box-shadow: 0 -2px 10px 0 #d1d1d1;
   background: #fff;
   color: #007bff;
   display: none;

@@ -2,6 +2,7 @@
 /*globals $, firebase, topLoader, M, db, performLogin, authStatusUpdated */
 
 var progressElement = '#form-spinner';
+var collectionName = 'requests'
 
 initializeSelects();
 
@@ -26,6 +27,7 @@ $(document).ready(function() {
 
 // Add request to database
 $('#addRequest').on('click', function(event) {
+  $(progressElement).show();
   if(!firebase.auth().currentUser) {
     event.preventDefault();
     $('#result').html('Please <a id="logineasy">Login</a> with a Google account.');
@@ -33,6 +35,7 @@ $('#addRequest').on('click', function(event) {
       event.preventDefault();
       performLogin();
     });
+    $(progressElement).hide();
   } else {
     if($('#mainForm')[0].checkValidity()) {
       event.preventDefault();
@@ -42,7 +45,7 @@ $('#addRequest').on('click', function(event) {
         $('#addRequest').attr('disabled', 'disabled');
         $('#result').text('');
         $('#spinner').show();
-        db.collection('requests').add({
+        db.collection(collectionName).add({
           group: $('#group').val(),
           phone: $('#phone').val(),
           place: $('#place').val(),
@@ -61,9 +64,11 @@ $('#addRequest').on('click', function(event) {
           console.error(error);
         });
         $('#addDonor').removeAttr('disabled');
+        $(progressElement).hide();
       } else {
         $('#result').text('Please fill all details!');
         $('#result').addClass('red-text');
+        $(progressElement).hide();
       }
     }
   }
