@@ -2,7 +2,7 @@
 /*globals $, firebase, topLoader, M, db, performLogin, authStatusUpdated */
 
 var progressElement = '#form-spinner';
-var collectionName = 'requests'
+var collectionName = 'requests';
 
 initializeSelects();
 

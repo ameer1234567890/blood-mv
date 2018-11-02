@@ -49,17 +49,18 @@ $(loadMoreElement).on('click', function() {
 
 function loadBloodRequests(includeFulfilled, loadMore) {
   $(loadMoreElement).off();
+  var query;
   if(loadMore) {
     if(includeFulfilled == true) {
-      var query = db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc').startAfter(lastVisible);
+      query = db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc').startAfter(lastVisible);
     } else {
-      var query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc').startAfter(lastVisible);
+      query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc').startAfter(lastVisible);
     }
   } else {
     if(includeFulfilled == true) {
-      var query = db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc');
+      query = db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc');
     } else {
-      var query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc');
+      query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc');
     }    
   }
   query.get().then((querySnapshot) => {
