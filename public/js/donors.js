@@ -1,11 +1,12 @@
 /*jshint esversion: 6 */
-/*globals $, tableSearch, setKeyValueStore, getKeyValueStore, age, humanDate, db, topLoader */
+/*globals $, tableSearch, setKeyValueStore, getKeyValueStore, age, humanDate, db, topLoader, matIconMoreHoriz, matIconExpandMore */
 
 var progressElement = '#table-spinner';
 var loadMoreElement = '.load-more';
 var collectionName = 'donors';
 var recordsPerPage = 10;
 var lastVisible;
+
 
 // Search the table when something is entered in search box
 $('#search').on('keyup', function(event) {
@@ -85,9 +86,9 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
     $(loadMoreElement).show();
     if(!lastVisible) {
       $(loadMoreElement).off();
-      $(loadMoreElement + ' > a').addClass('disabled').html('<i class="material-icons right">more_horiz</i>End of the World');
+      $(loadMoreElement + ' > a').addClass('disabled').html(matIconMoreHoriz + 'End of the World' + matIconMoreHoriz);
     } else {
-      $(loadMoreElement + ' > a').removeClass('disabled').html('<i class="material-icons right">expand_more</i>Load More');
+      $(loadMoreElement + ' > a').removeClass('disabled').html('Load More' + matIconExpandMore);
       $(loadMoreElement).off().on('click', function() {
         loadBloodDonors(getKeyValueStore('includeOnlyDonatable'), true);
       });

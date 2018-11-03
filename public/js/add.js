@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-/*globals $, firebase, topLoader, authStatusUpdated, M, db, htmlDate, performLogin */
+/*globals $, firebase, topLoader, authStatusUpdated, M, db, htmlDate, performLogin, matIconEdit */
 
 var progressElement = '#form-spinner';
 var theDocId;
@@ -53,7 +53,7 @@ function loadExistingData() {
         });
         $('#mainForm #phone').val(doc.data().phone).focus();
         $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false)).focus();
-        $('#addDonor').html('Update Record<i class="material-icons right">edit</i>');
+        $('#addDonor').html('Update Record' + matIconEdit);
         $('#mainForm #first').focus().blur();
       });
     });

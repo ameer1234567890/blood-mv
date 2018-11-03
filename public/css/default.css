@@ -9,29 +9,65 @@
 .icon-block {
   padding: 0 15px;
 }
-.icon-block .material-icons {
-	font-size: inherit;
+
+.btn > svg {
+  fill: #fff;
+  height: 1.3rem;
+  margin-bottom: -4px;
 }
 
-#nav-mobile > li > div > i {
-  font-size: 80px;
+.btn.disabled > svg {
+  fill: #9f9f9f;
+}
+
+nav > a > svg {
+  fill: #fff;
+  height: 64px;
+}
+
+#nav-mobile > li > div > svg,
+#nav-mobile > li > div > img {
+  fill: #fff;
+  height: 80px;
+  margin-bottom: -35px;
+  width: 80px;
 }
 
 #nav-mobile > li {
   width: 100%;
 }
 
+#nav-mobile > li > a > svg {
+  fill: #6f6f6f;
+  fill: rgba(0,0,0,0.54);
+  float: left;
+  height: 48px;
+  margin: 0 32px 0 0;
+}
+
+#nav-d-sign > a > svg {
+  fill: #fff;
+  margin-top: 20px;
+  margin-bottom: -6px;
+}
+
 #drop-acc {
-  width: 350px !important;
   top: 64px !important;
+  width: 350px !important;
 }
 
 #drop-acc > li > .title, #drop-acc > li > .email {
   padding: 0;
 }
 
-#drop-acc > li.avatar > i {
-  font-size: 42px;
+#drop-acc > li.avatar > svg {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  left: 15px;
+  fill: #fff;
+  background-color: #6f6f6f;
+  border-radius: 50%;
 }
 
 #drop-acc > li.avatar:hover {
@@ -41,7 +77,6 @@
 
 #drop-acc > li > img,
 #nav-mobile > li > div.user-view > img {
-  width: 72px;
   border-radius: 50%;
 }
 
@@ -49,6 +84,7 @@
   left: 15px;
   position: absolute;
   width: 50px;
+  height: 50px;
 }
 
 #table-spinner {
@@ -59,32 +95,26 @@
   display: none;
 }
 
-.preloader {
-  left: -9999px;
-  position: absolute;
-  top: -9999px;
-}
-
 .fulf-enabled,
 #logineasy,
-#display-toggle > i {
-  color: #009688;
+#display-toggle > span > svg {
+  fill: #009688;
   cursor: pointer;
 }
 
 .fulf-enabled:hover,
 #logineasy:hover,
-#display-toggle > i:hover {
-  color: #00796b;
+#display-toggle > span > svg:hover {
+  fill: #00796b;
 }
 
 .fulf-disabled,
-#display-toggle > i.disabled {
-  color: #9e9e9e;
+#display-toggle > span.disabled > svg {
+  fill: #9e9e9e;
   cursor: default;
 }
 
-#display-toggle > i {
+#display-toggle > span > svg {
   vertical-align: bottom;
 }
 
@@ -95,6 +125,14 @@
 /*  --------------------------------------------------------  */
 /*  Styles for the notifications page                         */
 /*  --------------------------------------------------------  */
+:root {
+  --material-icon-refresh: url('data:image/svg+xml;charset=UTF-8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="%23009688"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  --material-icon-refresh-white: url('data:image/svg+xml;charset=UTF-8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="%23fff"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  --material-icon-add: url('data:image/svg+xml;charset=UTF-8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="%23009688"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  --material-icon-add-disabled: url('data:image/svg+xml;charset=UTF-8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="%239e9e9e"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  --material-icon-check: url('data:image/svg+xml;charset=UTF-8, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="%23fff"/></svg>');
+}
+
 ul.subs-groups > li > input[type="checkbox"] {
   display: none;
 }
@@ -116,22 +154,19 @@ ul.subs-groups > li > label {
   color: #009688;
   padding: 0 20px 0 5px;
   cursor: pointer;
+  font-size: 16px;
   line-height: 32px;
   margin-bottom: 0;
   transition: all 1s;
 }
 
 ul.subs-groups > li > label::before {
-  color: #009688;
-  content: attr(data-icon);
+  content: var(--material-icon-add);
   display: inline-block;
-  font-family: 'Material Icons';
-  font-size: 24px;
   line-height: 14px;
   padding: 2px 30px 2px 2px;
-  text-indent: 2px;
   width: 13px;
-  vertical-align: text-bottom;
+  vertical-align: middle;
   transition: all 1s;
 }
 
@@ -141,25 +176,34 @@ ul.subs-groups > li.sub-selected {
   transition: all 1s;
 }
 
-ul.subs-groups > li.sub-selected > label,
-ul.subs-groups > li.sub-selected > label:before {
+ul.subs-groups > li.sub-selected > label {
   color: #fff;
   transition: all 1s;
+}
+ul.subs-groups > li.sub-selected > label:before {
+  content: var(--material-icon-check);
 }
 
 ul.subs-groups.disabled > li {
   border-color: #9e9e9e;
 }
 
-ul.subs-groups.disabled > li > label,
-ul.subs-groups.disabled > li > label::before {
+ul.subs-groups.disabled > li > label {
   color: #9e9e9e;
-  cursor: default;
+  cursor: default;  
+}
+
+ul.subs-groups.disabled > li > label::before {
+  content: var(--material-icon-add-disabled);
+}
+
+ul.subs-groups > li.sub-selected.sub-loading > label:before {
+  content: var(--material-icon-refresh-white);
 }
 
 ul.subs-groups > li.sub-loading > label::before {
+  content: var(--material-icon-refresh);
   animation: icon-spin 2s infinite linear;
-  content: attr(data-icon);
 }
 
 /*  --------------------------------------------------------  */
@@ -194,17 +238,17 @@ ul.subs-groups > li.sub-loading > label::before {
 }
 
 .a2hs-close {
-  color: #888;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  height: 50px;
-  line-height: 50px;
   position: absolute;
   right: 0;
   text-align: center;
   top: 0;
   width: 50px;
+}
+
+.a2hs-close > svg {
+  fill: #888;
+  height: 50px;
 }
 
 .a2hs-close:hover {
@@ -214,11 +258,13 @@ ul.subs-groups > li.sub-loading > label::before {
 /*  --------------------------------------------------------  */
 /*  The infamous icon spin & pulse                            */
 /*  --------------------------------------------------------  */
-.icon-spin {
+.icon-spin,
+.icon-spin > svg {
   animation: icon-spin 2s infinite linear;
 }
 
-.icon-pulse {
+.icon-pulse,
+.icon-pulse > svg {
   animation: icon-spin 1s infinite steps(8);
 }
 

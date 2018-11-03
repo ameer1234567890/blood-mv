@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-/*globals $, topLoader, messaging, setKeyValueStore, getKeyValueStore, M */
+/*globals $, topLoader, messaging, setKeyValueStore, getKeyValueStore, M, matIconCheckBox, matIconCheckBoxOutline, matIconRefresh */
 /*exported showNotification */
 
 // Set global token
@@ -66,8 +66,8 @@ function startProcess() {
     console.warn('The user has blocked notifications.');
     $('#result').text('Notification permission has been blocked!');
     $('#result').removeAttr('class').addClass('red-text');
-    $('#display-toggle i').addClass('disabled');
-    $('#display-toggle').off('click');
+    $('#display-toggle span').addClass('disabled');
+    $('#display-toggle').off();
   } else if(Notification.permission == 'granted') {
     if(getKeyValueStore('notificationStatus') == false) {
       console.log('Notifications were turned off. So, not requesting a token.');
@@ -86,24 +86,24 @@ function startProcess() {
 
 $('#display-toggle').on('click', function(event) {
   if(Notification.permission == 'default') {
-    $('#display-toggle i').text('refresh').addClass('icon-spin');
+    $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
     requestPermission();
   }
-  if($('#display-toggle i').text() == 'check_box_outline_blank') {
+  if(!$('#display-toggle span').attr('data-checked')) {
     if(getKeyValueStore('notificationStatus') == true) {
-      $('#display-toggle i').text('refresh').addClass('icon-spin');
+      $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
       startProcess();
       $('#allFields').removeAttr('disabled');
-      $('#display-toggle i').text('check_box').removeClass('icon-spin');
+      $('#display-toggle span').html(matIconCheckBox).removeClass('icon-spin').attr('data-checked', 'checked');
     } else {
-      $('#display-toggle i').text('refresh').addClass('icon-spin');
+      $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
       setKeyValueStore('notificationStatus', true);
       startProcess();
     }
-  } else if($('#display-toggle i').text() == 'check_box') {
-    $('#display-toggle i').text('refresh').addClass('icon-spin');
+  } else if($('#display-toggle span').attr('data-checked') == 'checked') {
+    $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
     deleteToken();
-  } else {
+  } else if($('#display-toggle span').attr('data-checked') == 'loading') {
     console.warn('Some action is happening. Wait for a while!');
   }
 });
@@ -111,8 +111,8 @@ $('#display-toggle').on('click', function(event) {
 
 $('#mainForm input[type=checkbox]').on('click', function(event) {
   var theTopic = $(event.target).attr('id');
-  if($(event.target.nextSibling).attr('data-icon') != 'refresh') {
-    $(event.target.nextSibling).attr('data-icon', 'refresh');
+  if($(event.target).attr('data-status') != 'loading') {
+    $(event.target).attr('data-status', 'loading');
     $(event.target.parentNode).addClass('sub-loading');
     if(event.target.checked) {
       $.ajax({
@@ -127,7 +127,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
           $('#result').removeAttr('class').addClass('green-text');
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).addClass('sub-selected');
-          $(event.target.nextSibling).attr('data-icon', 'check');
+          $(event.target).attr('data-status', 'checked');
         },
         error: function(xhr, status, error) {
           console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
@@ -135,7 +135,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
           $('#result').removeAttr('class').addClass('red-text');
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).removeClass('sub-selected');
-          $(event.target.nextSibling).attr('data-icon', 'add');
+          $(event.target).removeAttr('data-status');
           $(event.target).prop('checked', '');
         },
       });
@@ -152,7 +152,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
           $('#result').removeAttr('class').addClass('green-text');
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).removeClass('sub-selected');
-          $(event.target.nextSibling).attr('data-icon', 'add');
+          $(event.target).removeAttr('data-status');
         },
         error: function(xhr, status, error) {
           console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
@@ -160,7 +160,7 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
           $('#result').removeAttr('class').addClass('red-text');
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).addClass('sub-selected');
-          $(event.target.nextSibling).attr('data-icon', 'check');
+          $(event.target).attr('data-status', 'checked');
           $(event.target).prop('checked', 'checked');
         },
       });
@@ -177,11 +177,11 @@ function getSubscritions() {
     var theTopic = $(this).attr('id');
     if(getKeyValueStore(theTopic)) {
       $(this).prop('checked', 'checked');
-      $(this.nextSibling).attr('data-icon', 'check');
+      $(this).attr('data-status', 'checked');
       $(this.parentNode).addClass('sub-selected');
     } else {
       $(this).prop('checked', '');
-      $(this.nextSibling).attr('data-icon', 'add');
+      $(this).removeAttr('data-status');
       $(this.parentNode).removeClass('sub-selected');
     }
   });
@@ -190,13 +190,13 @@ function getSubscritions() {
 
 function resetSubscritions() {
   $('#mainForm input[type=checkbox]').each(function() {
-    $(this).attr('data-icon', 'refresh').addClass('icon-spin');
+    $(this).attr('data-status', 'loading').addClass('icon-spin');
     var theTopic = $(this).attr('id');
     if(getKeyValueStore(theTopic)) {
       setKeyValueStore(theTopic, false);
       $(this).prop('checked', 'checked');
     }
-    $(this.nextSibling).attr('data-icon', 'add');
+    $(this).removeAttr('data-icon');
     $(this.parentNode).removeClass('sub-selected');
   });
 }
@@ -208,7 +208,7 @@ function resetSubscritions() {
 function sendTokenToServer(currentToken) {
   if (!getKeyValueStore('sentToServer')) {
     boxUnChecked();
-    $('#display-toggle i').text('refresh').addClass('icon-spin');
+    $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
     console.log('Sending token to server...');
     setKeyValueStore('notificationStatus', false);
     $.ajax({
@@ -243,14 +243,14 @@ function sendTokenToServer(currentToken) {
 function boxChecked() {
   $('#allFields').removeAttr('disabled');
   $('ul.subs-groups').removeClass('disabled');
-  $('#display-toggle i').text('check_box').removeClass('icon-spin');
+  $('#display-toggle span').html(matIconCheckBox).removeClass('icon-spin').attr('data-checked', 'checked');
 }
 
 
 function boxUnChecked() {
   $('#allFields').attr('disabled', 'disabled');
   $('ul.subs-groups').addClass('disabled');
-  $('#display-toggle i').text('check_box_outline_blank').removeClass('icon-spin');
+  $('#display-toggle span').html(matIconCheckBoxOutline).removeClass('icon-spin').removeAttr('data-checked');
   $('input:checkbox').prop('checked', '');
 }
 
