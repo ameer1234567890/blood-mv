@@ -1,10 +1,10 @@
 /*jshint esversion: 6 */
 /*globals caches, Promise, importScripts, firebase, self */
 
-var VERSION = '30';
+var VERSION = '31';
 
-importScripts('/__/firebase/5.0.0/firebase-app.js');
-importScripts('/__/firebase/5.0.0/firebase-messaging.js');
+importScripts('/__/firebase/5.5.7/firebase-app.js');
+importScripts('/__/firebase/5.5.7/firebase-messaging.js');
 importScripts('/__/firebase/init.js');
 var messaging = firebase.messaging();
 
@@ -19,6 +19,7 @@ this.addEventListener('install', function(e) {
       '/notify/',
       '/css/default.css',
       '/css/materialize.min.css',
+      '/js/jquery.min.js',
       '/js/add.js',
       '/js/donors.js',
       '/js/init.js',
@@ -27,7 +28,8 @@ this.addEventListener('install', function(e) {
       '/js/requests.js',
       '/js/requestsadd.js',
       '/add/atolls.min.json',
-      '/add/islands.min.json'
+      '/add/islands.min.json',
+      '/favicon.png'
     ]);
   }));
 });
