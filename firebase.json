@@ -8,7 +8,7 @@
     ],
     "predeploy": [
       "firebase target",
-      "jshint --exclude **/*.min.js,**/materialize.js public/**/*.js",
+      "jshint --exclude **/*.min.js,**/materialize.js,**/jquery.js public/**/*.js",
 
       "mv public/css/default.css public/css/default.max.css",
       "csso public/css/default.max.css public/css/default.css",
