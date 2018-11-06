@@ -14,6 +14,10 @@ body {
   padding: 0 15px;
 }
 
+.sidenav-trigger {
+  cursor: pointer;
+}
+
 .btn > svg {
   fill: #fff;
   height: 1.3rem;
