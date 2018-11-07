@@ -332,6 +332,7 @@ function addToHomeScreen() {
 $('.a2hs-close').on('click', function() {
   setSessionStore('hideA2HS', true);
   $('.a2hs-banner').hide();
+  ga('send', 'event', 'A2H', 'closed');
 });
 
 
@@ -356,3 +357,11 @@ ga('create', 'UA-128907524-1', 'auto');
 ga('set', 'dimension1', 'online');
 ga('send', 'pageview');
 /* jshint ignore:end */
+
+if ('storage' in navigator && 'estimate' in navigator.storage) {
+  navigator.storage.estimate().then(({usage, quota}) => {
+    console.log(`Using ${usage} out of ${quota} bytes.`);
+    ga('send', 'event', 'StorageQuota', quota);
+    ga('send', 'event', 'StorageUsage', usage);
+  });
+}
