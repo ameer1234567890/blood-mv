@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 /*globals caches, Promise, importScripts, firebase, self */
 
-var VERSION = '32';
+var VERSION = '33';
 
 importScripts('/__/firebase/5.5.7/firebase-app.js');
 importScripts('/__/firebase/5.5.7/firebase-messaging.js');
@@ -84,7 +84,7 @@ function handleNoCacheMatch(e) {
 
 
 messaging.setBackgroundMessageHandler(function(payload) {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  console.log('[SW] Received background message ', payload);
   var notificationTitle = 'Background Message Title';
   var notificationOptions = {
     body: 'Background Message body.',
@@ -106,19 +106,4 @@ workbox.googleAnalytics.initialize({
     const queueTimeInSeconds = Math.round(params.get('qt') / 1000);
     params.set('metric1', queueTimeInSeconds);
   },
-});
-
-
-self.addEventListener('push', function(e) {
-  ga('send', 'event', 'notification', 'received');
-});
-
-
-self.addEventListener('notificationclick', function(e) {
-  ga('send', 'event', 'notification', 'clicked');
-});
-
-
-self.addEventListener('notificationclose', function(e) {
-  ga('send', 'event', 'notification', 'dismissed');
 });
