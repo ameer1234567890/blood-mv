@@ -69,7 +69,7 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
       notification: {
         title: 'Blood MV',
         body: messageBody,
-        icon: "/favicon.png",
+        icon: '/favicon.png',
       },
     },
     apns: {

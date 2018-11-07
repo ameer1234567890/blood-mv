@@ -301,9 +301,9 @@ function showNotification(payload) {
   var notificationTitle = payload.notification.title;
   var notificationOptions = {
     body: payload.notification.body,
-    icon: payload.notification.icon,
-    badge: payload.notification.badge,
-    click_action: payload.notification.click_action
+    icon: '/favicon.png',
+    badge: '/icons/badge.png',
+    click_action: '/request/'
   };
   return new Notification(notificationTitle, notificationOptions);
 }
