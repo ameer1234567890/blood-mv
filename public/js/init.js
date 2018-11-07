@@ -299,6 +299,7 @@ window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   deferredPrompt = e;
   console.log('beforeinstallprompt triggered');
+  ga('send', 'event', 'A2H', 'triggered');
   if(getSessionStore('hideA2HS')) {
     console.log('User has closed A2HS banner before. It is hiiden for this session.');
   } else {
@@ -317,6 +318,7 @@ function addToHomeScreen() {
   $('.a2hs-banner').hide();
   deferredPrompt.prompt();
   deferredPrompt.userChoice.then(function(choiceResult) {
+    ga('send', 'event', 'A2H', choiceResult.outcome);
     if (choiceResult.outcome === 'accepted') {
       console.log('User accepted the A2HS prompt');
     } else {
