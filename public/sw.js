@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 /*globals caches, Promise, importScripts, firebase, self */
 
-var VERSION = '31';
+var VERSION = '32';
 
 importScripts('/__/firebase/5.5.7/firebase-app.js');
 importScripts('/__/firebase/5.5.7/firebase-messaging.js');
@@ -96,6 +96,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
   return self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
+
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.1/workbox-sw.js');
 workbox.googleAnalytics.initialize({
   parameterOverrides: {
@@ -105,4 +106,19 @@ workbox.googleAnalytics.initialize({
     const queueTimeInSeconds = Math.round(params.get('qt') / 1000);
     params.set('metric1', queueTimeInSeconds);
   },
+});
+
+
+self.addEventListener('push', function(e) {
+  ga('send', 'event', 'notification', 'received');
+});
+
+
+self.addEventListener('notificationclick', function(e) {
+  ga('send', 'event', 'notification', 'clicked');
+});
+
+
+self.addEventListener('notificationclose', function(e) {
+  ga('send', 'event', 'notification', 'dismissed');
 });

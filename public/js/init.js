@@ -301,10 +301,15 @@ window.addEventListener('beforeinstallprompt', function(e) {
   console.log('beforeinstallprompt triggered');
   ga('send', 'event', 'A2H', 'triggered');
   if(getSessionStore('hideA2HS')) {
-    console.log('User has closed A2HS banner before. It is hiiden for this session.');
+    console.log('User has closed A2HS banner before. It is hidden for this session.');
   } else {
     showAddToHomeScreen();
   }
+});
+
+
+window.addEventListener('appinstalled', function(event) {
+  ga('send', 'event', 'A2H', 'installed');
 });
 
 
