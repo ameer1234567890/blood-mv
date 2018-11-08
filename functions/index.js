@@ -60,37 +60,12 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
   messageBody = group + ' requested at ' + place + '\nContact ' + phone;
   
   var message = {
-    notification: {
+    data: {
       title: 'Blood MV',
       body: messageBody,
-    },
-    android: {
-      priority: 'normal',
-      notification: {
-        title: 'Blood MV',
-        body: messageBody,
-        icon: '/favicon.png',
-      },
-    },
-    apns: {
-      headers: {
-        'apns-priority': '10',
-      },
-      payload: {
-        aps: {
-          alert: {
-            title: 'Blood MV',
-            body: messageBody,
-          },
-        },
-      },
-    },
-    webpush: {
-      notification: {
-        title: 'Blood MV',
-        body: messageBody,
-        icon: '/favicon.png'
-      },
+      icon: '/favicon.png',
+      badge: '/icons/badge.png',
+      click_action: '/request/'
     },
     topic: groups[group]
   };

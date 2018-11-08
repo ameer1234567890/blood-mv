@@ -300,7 +300,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 messaging.onMessage(function(payload) {
   console.log('Message received. ', payload);
   M.toast({
-    html: payload.notification.body.replace('\n', '<br>'),
+    html: payload.data.body.replace('\n', '<br>'),
     displayLength: 10000
   });
 });

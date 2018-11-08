@@ -85,15 +85,6 @@ function handleNoCacheMatch(e) {
 
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log('[SW] Received background message ', payload);
-  //var notificationTitle = 'Background Message Title';
-  //var notificationOptions = {
-    //body: 'Background Message body.',
-    //icon: '/favicon.png',
-    //badge: '/icons/badge.png',
-    //click_action: '/request/'
-  //};
-
-  //return self.registration.showNotification(notificationTitle, notificationOptions);
   return self.registration.showNotification(payload.data.title, {
     body: payload.data.body,
     icon: payload.data.icon,
