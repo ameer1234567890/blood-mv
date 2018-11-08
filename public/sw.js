@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 /*globals caches, Promise, importScripts, firebase, self */
 
-var VERSION = '33';
+var VERSION = '34';
 
 importScripts('/__/firebase/5.5.7/firebase-app.js');
 importScripts('/__/firebase/5.5.7/firebase-messaging.js');
@@ -85,15 +85,21 @@ function handleNoCacheMatch(e) {
 
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log('[SW] Received background message ', payload);
-  var notificationTitle = 'Background Message Title';
-  var notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/favicon.png',
-    badge: '/icons/badge.png',
-    click_action: '/request/'
-  };
+  //var notificationTitle = 'Background Message Title';
+  //var notificationOptions = {
+    //body: 'Background Message body.',
+    //icon: '/favicon.png',
+    //badge: '/icons/badge.png',
+    //click_action: '/request/'
+  //};
 
-  return self.registration.showNotification(notificationTitle, notificationOptions);
+  //return self.registration.showNotification(notificationTitle, notificationOptions);
+  return self.registration.showNotification(payload.data.title, {
+    body: payload.data.body,
+    icon: payload.data.icon,
+    badge: payload.data.badge,
+    click_action: payload.data.click_action
+  });
 });
 
 
