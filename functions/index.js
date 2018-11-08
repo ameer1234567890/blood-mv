@@ -84,3 +84,25 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
     return message;
 
 });
+
+
+exports.addAdminClaim = functions.https.onRequest((req, res) => {
+  const idToken = req.body.idToken;
+  admin.auth().verifyIdToken(idToken).then((claims) => {
+    if (claims.email === 'ameer1234567890@gmail.com') {
+      admin.auth().setCustomUserClaims(claims.sub, {
+        admin: true
+      }).then(() => {
+        res.end(JSON.stringify({status: 'success'}));
+        return true;
+      }).catch((error) => {
+        res.end(JSON.stringify({error: error}));
+      });
+    } else {
+      res.end(JSON.stringify({status: 'ineligible'}));
+    }
+    return true;
+  }).catch((error) => {
+    res.end(JSON.stringify({error: error}));
+  });
+});

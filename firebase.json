@@ -16,6 +16,9 @@
       "mv public/js/add.js public/js/add.max.js",
       "google-closure-compiler --js=public/js/add.max.js --js_output_file=public/js/add.js --create_source_map=public/js/add.js.map",
 
+      "mv public/js/admin.js public/js/admin.max.js",
+      "google-closure-compiler --js=public/js/admin.max.js --js_output_file=public/js/admin.js --create_source_map=public/js/admin.js.map",
+
       "mv public/js/donors.js public/js/donors.max.js",
       "google-closure-compiler --js=public//js/donors.max.js --js_output_file=public/js/donors.js --create_source_map=public/js/donors.js.map",
 
@@ -41,6 +44,10 @@
       "rm public/js/add.js",
       "rm public/js/add.js.map",
       "mv public/js/add.max.js public/js/add.js",
+
+      "rm public/js/admin.js",
+      "rm public/js/admin.js.map",
+      "mv public/js/admin.max.js public/js/admin.js",
 
       "rm public/js/donors.js",
       "rm public/js/donors.js.map",
@@ -72,6 +79,9 @@
       },
       {
         "source": "/notify/unsubscribe", "function": "unsubscribeFromTopic"
+      },
+      {
+        "source": "/admin/addclaim", "function": "addAdminClaim"
       }
     ],
     "headers": [
