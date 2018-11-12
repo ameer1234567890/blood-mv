@@ -130,6 +130,11 @@ nav > a > svg {
   border: none;
 }
 
+.admin-loader {
+  display: none;
+  vertical-align: bottom;
+}
+
 /*  --------------------------------------------------------  */
 /*  Styles for the notifications page                         */
 /*  --------------------------------------------------------  */

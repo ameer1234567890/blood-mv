@@ -26,10 +26,11 @@
       <div class="nav-wrapper container"><a id="logo-container" class="brand-logo">Blood MV</a>
         <ul class="right hide-on-med-and-down">
           <li class="waves-effect" id="nav-d-donors"><a href="/">Donors</a></li>
-          <li class="waves-effect active" id="nav-d-requests"><a href="/requests/">Requests</a></li>
+          <li class="waves-effect" id="nav-d-requests"><a href="/requests/">Requests</a></li>
           <li class="waves-effect" id="nav-d-requestsadd"><a href="/requests/add/">Add Request</a></li>
           <li class="waves-effect" id="nav-d-add"><a href="/add/">Add Donor</a></li>
           <li class="waves-effect" id="nav-d-notify"><a href="/notify/">Notify</a></li>
+          <li class="waves-effect active" id="nav-d-admin"><a href="/admin/">Admin</a></li>
           <li id="nav-d-sign">
             <a class="dropdown-trigger" data-target="drop-acc">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -75,7 +76,7 @@
         Donors
       </a>
     </li>
-    <li class="waves-effect waves-orange active" id="nav-m-requests">
+    <li class="waves-effect waves-orange" id="nav-m-requests">
       <a href="/requests/">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
@@ -111,7 +112,16 @@
         Notify
       </a>
     </li>
-    <li class="waves-effect waves-orange" id="nav-m-sign">
+   <li class="waves-effect waves-orange active" id="nav-m-requests">
+      <a href="/requests/">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+        </svg>
+        Admin
+      </a>
+    </li>
+     <li class="waves-effect waves-orange" id="nav-m-sign">
       <a>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M0 0h24v24H0z" fill="none"/>
@@ -126,6 +136,52 @@
       <br>
       <div>
         <a class="waves-effect waves-light btn" id="add-claim">Add Claim</a>
+      </div>
+      <br>
+      <div>
+        <a class="waves-effect waves-light btn" id="mark-fulfilled">Mark Old Requests as Fulfilled</a>
+        &nbsp;&nbsp;
+        <span id="mark-fulfilled-result"></span>
+        &nbsp;&nbsp;
+        <div class="preloader-wrapper small active admin-loader" id="mark-fulfilled-loader">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div>
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="subscribe-token-token" type="text" class="validate" required>
+              <label for="subscribe-token-token">Token</label>
+            </div>
+            <div class="input-field col s6">
+              <a class="waves-effect waves-light btn" id="subscribe-token">Subscribe Token to Topic</a>
+            </div>
+            &nbsp;&nbsp;
+            <span id="subscribe-token-result"></span>
+            &nbsp;&nbsp;
+            <div class="preloader-wrapper small active admin-loader" id="subscribe-token-loader">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
       <br>
     </div>
