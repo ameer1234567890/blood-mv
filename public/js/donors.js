@@ -57,7 +57,7 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
   var threeMonthsBack = new Date(d.setMonth(d.getMonth() - 3));
   if(loadMore) {
     if(includeOnlyDonatable) {
-      query = db.collection(collectionName).where('donated', '<', threeMonthsBack).startAfter(lastVisible);
+      query = db.collection(collectionName).where('donated', '<', threeMonthsBack).limit(recordsPerPage).startAfter(lastVisible);
     } else {
       query = db.collection(collectionName).limit(recordsPerPage).startAfter(lastVisible);
     }
