@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 /*globals caches, Promise, importScripts, firebase, self */
 
-var VERSION = '34';
+var VERSION = '35';
 
 importScripts('/__/firebase/5.5.7/firebase-app.js');
 importScripts('/__/firebase/5.5.7/firebase-messaging.js');
@@ -72,7 +72,9 @@ function fetchFromNetworkAndCache(e) {
 
     return caches.open(VERSION).then(cache => {
       // TODO: figure out if the content is new and therefore the page needs a reload.
-      cache.put(e.request, res.clone());
+      if(e.request.method == 'GET') {
+        cache.put(e.request, res.clone());
+      }
       return res;
     });
   }).catch(err => console.error(e.request.url, err));
