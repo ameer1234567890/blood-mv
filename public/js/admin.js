@@ -107,11 +107,47 @@ $('#mark-fulfilled').on('click', function() {
 $('#subscribe-token').on('click', function() {
   $('#subscribe-token').attr('disabled', 'disabled');
   $('#subscribe-token-loader').css('display', 'inline-block');
-  console.log($('#subscribe-token-token').val());
+  $('#subscribe-token-result').text('Processing...').addClass('blue-text');
   setTimeout(function() {
-    $('#mark-fulfilled-result').text('Someting happened.');
+    $('#subscribe-token-result').text('Someting happened.');
     $('#subscribe-token-loader').hide();
     $('#subscribe-token').removeAttr('disabled');
+  }, 3000);
+});
+
+
+$('#token-details').on('click', function() {
+  $('#token-details').attr('disabled', 'disabled');
+  $('#token-details-loader').css('display', 'inline-block');
+  $('#token-details-result').text('Processing...').addClass('blue-text');
+  setTimeout(function() {
+    $('#token-details-result').text('Someting happened.');
+    $('#token-details-loader').hide();
+    $('#token-details').removeAttr('disabled');
+  }, 3000);
+});
+
+
+$('#send-message').on('click', function() {
+  $('#send-message').attr('disabled', 'disabled');
+  $('#send-message-loader').css('display', 'inline-block');
+  $('#send-message-result').text('Processing...').addClass('blue-text');
+  setTimeout(function() {
+    $('#send-message-result').text('Someting happened.');
+    $('#send-message-loader').hide();
+    $('#send-message').removeAttr('disabled');
+  }, 3000);
+});
+
+
+$('#list-users').on('click', function() {
+  $('#list-users').attr('disabled', 'disabled');
+  $('#list-users-loader').css('display', 'inline-block');
+  $('#list-users-result').text('Processing...').addClass('blue-text');
+  setTimeout(function() {
+    $('#list-users-result').text('Someting happened.');
+    $('#list-users-loader').hide();
+    $('#list-users').removeAttr('disabled');
   }, 3000);
 });
 
