@@ -134,11 +134,13 @@
   <div class="section no-pad-bot" id="content">
     <div class="container">
       <br>
-      <div>
+      <div class="section">
+        <p>Adds the signed in user as an admin, provided that it is allowed by the backend.</p>
         <a class="waves-effect waves-light btn" id="add-claim">Add Claim</a>
       </div>
       <br>
-      <div>
+      <div class="section">
+        <p>Mark blood requests older than a week, as fulfilled. This can be done to reduce the clutter of people not marking requests as fulfilled.</p>
         <a class="waves-effect waves-light btn" id="mark-fulfilled">Mark Old Requests as Fulfilled</a>
         &nbsp;&nbsp;
         <span id="mark-fulfilled-result"></span>
@@ -156,7 +158,8 @@
         </div>
       </div>
       <br>
-      <div>
+      <div class="section">
+        <p>Subscribe a token to a specific topic. Tokens can be manually subscribed to topics this way. It can be useful for testing purposes, such as subscribing a token to "test" topic.</p>
         <form class="col s12">
           <div class="row">
             <div class="input-field col s6">
@@ -164,7 +167,11 @@
               <label for="subscribe-token-token">Token</label>
             </div>
             <div class="input-field col s6">
-              <a class="waves-effect waves-light btn" id="subscribe-token">Subscribe Token to Topic</a>
+              <input id="subscribe-token-topic" type="text" class="validate" required>
+              <label for="subscribe-token-topic">Topic</label>
+            </div>
+            <div class="input-field col s6">
+              <a class="waves-effect waves-light btn" id="subscribe-token">Subscribe</a>
             </div>
             &nbsp;&nbsp;
             <span id="subscribe-token-result"></span>
@@ -182,6 +189,83 @@
             </div>
           </div>
         </form>
+      </div>
+      <br>
+      <div class="section">
+        <p>Display subscription details about a token. This is useful for checking if a token has been subscribed to specific topics or not, also other details.</p>
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="token-details-token" type="text" class="validate" required>
+              <label for="token-details-token">Token</label>
+            </div>
+            <div class="input-field col s6">
+              <a class="waves-effect waves-light btn" id="token-details">Show Token Details</a>
+            </div>
+            &nbsp;&nbsp;
+            <span id="token-details-result"></span>
+            &nbsp;&nbsp;
+            <div class="preloader-wrapper small active admin-loader" id="token-details-loader">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <br>
+      <div class="section">
+        <p>Send a push message to a specific topic. This can be useful for testing purposes.</p>
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="send-message-topic" type="text" class="validate" required>
+              <label for="send-message-topic">Topic</label>
+            </div>
+            <div class="input-field col s6">
+              <a class="waves-effect waves-light btn" id="send-message">Send Message</a>
+            </div>
+            &nbsp;&nbsp;
+            <span id="send-message-result"></span>
+            &nbsp;&nbsp;
+            <div class="preloader-wrapper small active admin-loader" id="send-message-loader">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <br>
+      <div class="section">
+        <p>Show list of users. This shows the list of signed up users by their email addresses and user IDs.</p>
+        <a class="waves-effect waves-light btn" id="list-users">List Users</a>
+        &nbsp;&nbsp;
+        <span id="list-users-result"></span>
+        &nbsp;&nbsp;
+        <div class="preloader-wrapper small active admin-loader" id="list-users-loader">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
       </div>
       <br>
     </div>

@@ -71,7 +71,7 @@
 
       "rm public/sw.js",
       "rm public/sw.js.map",
-      "mv public/sw.max.js public/js/sw.js"
+      "mv public/sw.max.js public/sw.js"
     ],
     "rewrites": [
       {
