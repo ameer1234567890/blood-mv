@@ -141,7 +141,7 @@
       <br>
       <div class="section">
         <p>Mark blood requests older than a week, as fulfilled. This can be done to reduce the clutter of people not marking requests as fulfilled.</p>
-        <a class="waves-effect waves-light btn" id="mark-fulfilled">Mark Old Requests as Fulfilled</a>
+        <a class="waves-effect waves-light btn" id="mark-fulfilled">Purge Old Requests</a>
         &nbsp;&nbsp;
         <span id="mark-fulfilled-result"></span>
         &nbsp;&nbsp;
@@ -162,15 +162,15 @@
         <p>Subscribe a token to a specific topic. Tokens can be manually subscribed to topics this way. It can be useful for testing purposes, such as subscribing a token to "test" topic.</p>
         <form class="col s12">
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s5">
               <input id="subscribe-token-token" type="text" class="validate" required>
               <label for="subscribe-token-token">Token</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s5">
               <input id="subscribe-token-topic" type="text" class="validate" required>
               <label for="subscribe-token-topic">Topic</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s2">
               <a class="waves-effect waves-light btn" id="subscribe-token">Subscribe</a>
             </div>
             &nbsp;&nbsp;

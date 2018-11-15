@@ -74,7 +74,7 @@ $('#add-claim').on('click', function() {
 
 
 $('#mark-fulfilled').on('click', function() {
-  $('#mark-fulfilled').attr('disabled', 'disabled').text('Processing Request Right Now.');
+  $('#mark-fulfilled').attr('disabled', 'disabled');
   $('#mark-fulfilled-loader').css('display', 'inline-block');
   $('#mark-fulfilled-result').text('Processing...').addClass('blue-text');
   var query;
@@ -99,13 +99,13 @@ $('#mark-fulfilled').on('click', function() {
     });
     $('#mark-fulfilled-result').text('Done processing ' + i + ' records.');
     $('#mark-fulfilled-loader').hide();
-    $('#mark-fulfilled').removeAttr('disabled').text('Mark Old Requests as Fulfilled');
+    $('#mark-fulfilled').removeAttr('disabled');
   });
 });
 
 
 $('#subscribe-token').on('click', function() {
-  $('#subscribe-token').attr('disabled', 'disabled').text('Processing Your Request.');
+  $('#subscribe-token').attr('disabled', 'disabled');
   $('#subscribe-token-loader').css('display', 'inline-block');
   console.log($('#subscribe-token-token').val());
 
