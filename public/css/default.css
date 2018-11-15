@@ -217,6 +217,7 @@ ul.subs-groups > li.sub-selected.sub-loading > label:before {
 ul.subs-groups > li.sub-loading > label::before {
   animation: icon-spin 2s infinite linear;
   content: var(--material-icon-refresh);
+  padding: 0 29px 0 5px;
 }
 
 /*  --------------------------------------------------------  */
