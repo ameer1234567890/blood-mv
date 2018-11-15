@@ -177,7 +177,7 @@ ul.subs-groups > li > label::before {
   content: var(--material-icon-add);
   display: inline-block;
   line-height: 14px;
-  padding: 2px 30px 2px 2px;
+  padding: 0 29px 0 5px;
   transition: all 1s;
   vertical-align: middle;
   width: 13px;
