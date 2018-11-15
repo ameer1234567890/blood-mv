@@ -108,9 +108,11 @@ $('#subscribe-token').on('click', function() {
   $('#subscribe-token').attr('disabled', 'disabled');
   $('#subscribe-token-loader').css('display', 'inline-block');
   console.log($('#subscribe-token-token').val());
-
-  //$('#subscribe-token-loader').hide();
-  //$('#subscribe-token').removeAttr('disabled').text('Subscribe Token to Topic');
+  setTimeout(function() {
+    $('#mark-fulfilled-result').text('Someting happened.');
+    $('#subscribe-token-loader').hide();
+    $('#subscribe-token').removeAttr('disabled');
+  }, 3000);
 });
 
 
