@@ -143,8 +143,6 @@
         <p>Mark blood requests older than a week, as fulfilled. This can be done to reduce the clutter of people not marking requests as fulfilled.</p>
         <a class="waves-effect waves-light btn" id="mark-fulfilled">Purge Old Requests</a>
         &nbsp;&nbsp;
-        <span id="mark-fulfilled-result"></span>
-        &nbsp;&nbsp;
         <div class="preloader-wrapper small active admin-loader" id="mark-fulfilled-loader">
           <div class="spinner-layer spinner-blue-only">
             <div class="circle-clipper left">
@@ -156,25 +154,24 @@
             </div>
           </div>
         </div>
+        <br>
+        <br>
+        <span id="mark-fulfilled-result"></span>
       </div>
       <br>
       <div class="section">
         <p>Subscribe a token to a specific topic. Tokens can be manually subscribed to topics this way. It can be useful for testing purposes, such as subscribing a token to "test" topic.</p>
         <form class="col s12">
           <div class="row">
-            <div class="input-field col s4">
+            <div class="input-field col s6">
               <input id="subscribe-token-token" type="text" class="validate" required>
               <label for="subscribe-token-token">Token</label>
             </div>
-            <div class="input-field col s4">
+            <div class="input-field col s6">
               <input id="subscribe-token-topic" type="text" class="validate" required>
               <label for="subscribe-token-topic">Topic</label>
             </div>
-            <div class="input-field col s2">
-              <a class="waves-effect waves-light btn" id="subscribe-token">Subscribe</a>
-            </div>
-            &nbsp;&nbsp;
-            <span id="subscribe-token-result"></span>
+            <a class="waves-effect waves-light btn" id="subscribe-token">Subscribe</a>
             &nbsp;&nbsp;
             <div class="preloader-wrapper small active admin-loader" id="subscribe-token-loader">
               <div class="spinner-layer spinner-blue-only">
@@ -187,6 +184,9 @@
                 </div>
               </div>
             </div>
+            <br>
+            <br>
+            <span id="subscribe-token-result"></span>
           </div>
         </form>
       </div>
@@ -253,8 +253,6 @@
         <p>Show list of users. This shows the list of signed up users by their email addresses and user IDs.</p>
         <a class="waves-effect waves-light btn" id="list-users">List Users</a>
         &nbsp;&nbsp;
-        <span id="list-users-result"></span>
-        &nbsp;&nbsp;
         <div class="preloader-wrapper small active admin-loader" id="list-users-loader">
           <div class="spinner-layer spinner-blue-only">
             <div class="circle-clipper left">
@@ -266,6 +264,9 @@
             </div>
           </div>
         </div>
+        <br>
+        <br>
+        <span id="list-users-result"></span>
       </div>
       <br>
     </div>
