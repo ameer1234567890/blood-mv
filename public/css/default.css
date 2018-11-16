@@ -353,3 +353,11 @@ only screen and (max-width: 760px),
   #requests td:nth-of-type(4):before { content: "Requested at"; }
   #requests td:nth-of-type(5):before { content: "Fulfilled"; }
 }
+
+/*  --------------------------------------------------------  */
+/*  Scrollbar styling - for Chrome, Safari, Opera             */
+/*  --------------------------------------------------------  */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #888; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
