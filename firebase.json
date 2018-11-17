@@ -84,6 +84,9 @@
         "source": "/notify/tokendetails", "function": "tokenDetails"
       },
       {
+        "source": "/notify/sendmsg", "function": "sendMessageViaWeb"
+      },
+      {
         "source": "/admin/addclaim", "function": "addAdminClaim"
       }
     ],

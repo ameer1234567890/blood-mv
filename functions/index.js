@@ -67,6 +67,34 @@ exports.tokenDetails = functions.https.onRequest((req, res) => {
 });
 
 
+exports.sendMessageViaWeb = functions.https.onRequest((req, res) => {
+  var topic = req.body.topic;
+  var messageBody = req.body.message;
+  var message = {
+    data: {
+      title: 'Blood MV',
+      body: messageBody,
+      icon: '/favicon.png',
+      badge: '/icons/badge.png',
+      click_action: '/request/'
+    },
+    topic: topic
+  };
+  console.log(message);
+  admin.messaging().send(message)
+    .then((response) => {
+      console.log('Successfully sent message: ', response);
+      res.status(200).send(response);
+      return true;
+    })
+    .catch((error) => {
+      console.log('Error sending message: ', error);
+      res.status(500).send('{"status": "ERROR", "message": "Error sending message"}');
+      return false;
+    });
+});
+
+
 exports.sendNotification = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
   console.log(snap.data());
   const group = snap.data().group;

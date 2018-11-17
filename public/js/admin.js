@@ -163,11 +163,26 @@ $('#send-message').on('click', function() {
   $('#send-message').attr('disabled', 'disabled');
   $('#send-message-loader').css('display', 'inline-block');
   $('#send-message-result').text('Processing...').addClass('blue-text');
-  setTimeout(function() {
-    $('#send-message-result').text('Someting happened.');
-    $('#send-message-loader').hide();
-    $('#send-message').removeAttr('disabled');
-  }, 3000);
+  var theTopic = $('#send-message-topic').val();
+  var theMessage = $('#send-message-message').val();
+  $.ajax({
+    method: 'POST',
+    dataType: 'json',
+    url: '/notify/sendmsg',
+    data: { topic: theTopic, message: theMessage },
+    success: function(data) {
+      console.log('Message sent: ', data);
+      $('#send-message-result').text('Message sent: ' + JSON.stringify(data)).removeAttr('class').addClass('green-text');
+      $('#send-message-loader').hide();
+      $('#send-message').removeAttr('disabled');
+    },
+    error: function(xhr, status, error) {
+      console.error('Something went wrong! ', status,' ', error);
+      $('#send-message-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      $('#send-message-loader').hide();
+      $('#send-message').removeAttr('disabled');
+    },
+  });
 });
 
 
