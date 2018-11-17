@@ -84,12 +84,43 @@ exports.sendMessageViaWeb = functions.https.onRequest((req, res) => {
   admin.messaging().send(message)
     .then((response) => {
       console.log('Successfully sent message: ', response);
-      res.status(200).send(response);
+      res.status(200).send('{"status": "OK", "message": "Message sent"}');
       return true;
     })
     .catch((error) => {
       console.log('Error sending message: ', error);
       res.status(500).send('{"status": "ERROR", "message": "Error sending message"}');
+      return false;
+    });
+});
+
+
+exports.listUsers = functions.https.onRequest((req, res) => {
+  var users = '{';
+  console.log('v14');
+  admin.auth().listUsers(1000)
+    .then((listUsersResult) => {
+      numUsers = 0;
+      listUsersResult.users.forEach((userRecord) => {
+        numUsers++
+      });
+      numRecords = 0;
+      listUsersResult.users.forEach((userRecord) => {
+        numRecords++;
+        users += '"' + userRecord.uid + '":';
+        users += JSON.stringify(userRecord.toJSON());
+        if(numRecords !== numUsers) {
+          users += ',';
+        }
+      });
+      users += '}';
+      console.log(users);
+      res.status(200).send(users);
+      return true;
+    })
+    .catch((error) => {
+      console.log('Error listing users: ', error);
+      res.status(500).send('{"status": "ERROR", "message": "Error listing users"}');
       return false;
     });
 });

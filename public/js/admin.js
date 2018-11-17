@@ -7,10 +7,8 @@ $(document).ready(function() {
   if(authStatusUpdated) {
     firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
       if (!!idTokenResult.claims.admin) {
-        console.log('You are admin');
         $('#content').show();
       } else {
-        console.log('You are not admin');
         $('#content').html(nonAdminMessage).show();
       }
     })
@@ -22,10 +20,8 @@ $(document).ready(function() {
       if (user) {
         firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
           if (!!idTokenResult.claims.admin) {
-            console.log('You are admin');
             $('#content').show();
           } else {
-            console.log('You are not admin');
             $('#content').html(nonAdminMessage).show();
           }
         })
@@ -33,7 +29,6 @@ $(document).ready(function() {
           console.log(error);
         });
       } else {
-        console.log('You are not admin');
         $('#content').html(nonAdminMessage).show();
       }
     });
@@ -190,11 +185,37 @@ $('#list-users').on('click', function() {
   $('#list-users').attr('disabled', 'disabled');
   $('#list-users-loader').css('display', 'inline-block');
   $('#list-users-result').text('Processing...').addClass('blue-text');
-  setTimeout(function() {
-    $('#list-users-result').text('Someting happened.');
-    $('#list-users-loader').hide();
-    $('#list-users').removeAttr('disabled');
-  }, 3000);
+  $.ajax({
+    method: 'GET',
+    dataType: 'json',
+    url: '/admin/listusers',
+    success: function(data) {
+      usersObj = data;
+      var usersTable = '<table id="users" class="striped"><thead><tr><th>Name</th><th>Email</th><th>Avatar</th><th>Admin?</th></tr></thead><tobody>';
+      for (user in usersObj) {
+          usersTable += '<tr>';
+          usersTable += '<td>' + usersObj[user].displayName + '</td>';
+          usersTable += '<td>' + usersObj[user].email + '</td>';
+          usersTable += '<td><img src="' + usersObj[user].photoURL + '" width="25" alt="Avatar"></td>';
+          if(usersObj[user].customClaims && usersObj[user].customClaims.admin) {
+            usersTable += '<td>' + usersObj[user].customClaims.admin + '</td>';
+          } else {
+            usersTable += '<td>&nbsp;</td>';
+          }
+          usersTable += '</tr>';
+      }
+      usersTable += '</tobody></table>';
+      $('#list-users-result').html(usersTable).removeAttr('class');
+      $('#list-users-loader').hide();
+      $('#list-users').removeAttr('disabled');
+    },
+    error: function(xhr, status, error) {
+      console.error('Something went wrong! ', status,' ', error);
+      $('#list-users-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      $('#list-users-loader').hide();
+      $('#list-users').removeAttr('disabled');
+    },
+  });
 });
 
 

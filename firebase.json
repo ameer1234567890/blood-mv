@@ -87,6 +87,9 @@
         "source": "/notify/sendmsg", "function": "sendMessageViaWeb"
       },
       {
+        "source": "/admin/listusers", "function": "listUsers"
+      },
+      {
         "source": "/admin/addclaim", "function": "addAdminClaim"
       }
     ],
