@@ -2366,7 +2366,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         // Use capture phase event handler to prevent click
         document.body.addEventListener('click', this._handleDocumentClickBound, true);
         document.body.addEventListener('touchend', this._handleDocumentClickBound);
-        document.body.addEventListener('touchmove', this._handleDocumentTouchmoveBound);
+        document.body.addEventListener('touchmove', this._handleDocumentTouchmoveBound, true);
         this.dropdownEl.addEventListener('keydown', this._handleDropdownKeydownBound);
       }
     }, {
@@ -5270,7 +5270,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         // Add event handler
         container.addEventListener('touchstart', Toast._onDragStart);
-        container.addEventListener('touchmove', Toast._onDragMove);
+        container.addEventListener('touchmove', Toast._onDragMove, true);
         container.addEventListener('touchend', Toast._onDragEnd);
 
         container.addEventListener('mousedown', Toast._onDragStart);
@@ -5560,11 +5560,11 @@ $jscomp.polyfill = function (e, r, p, m) {
         this._handleCloseReleaseBound = this._handleCloseRelease.bind(this);
         this._handleCloseTriggerClickBound = this._handleCloseTriggerClick.bind(this);
 
-        this.dragTarget.addEventListener('touchmove', this._handleDragTargetDragBound);
+        this.dragTarget.addEventListener('touchmove', this._handleDragTargetDragBound, true);
         this.dragTarget.addEventListener('touchend', this._handleDragTargetReleaseBound);
-        this._overlay.addEventListener('touchmove', this._handleCloseDragBound);
+        this._overlay.addEventListener('touchmove', this._handleCloseDragBound, true);
         this._overlay.addEventListener('touchend', this._handleCloseReleaseBound);
-        this.el.addEventListener('touchmove', this._handleCloseDragBound);
+        this.el.addEventListener('touchmove', this._handleCloseDragBound, true);
         this.el.addEventListener('touchend', this._handleCloseReleaseBound);
         this.el.addEventListener('click', this._handleCloseTriggerClickBound);
 
@@ -9759,7 +9759,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         // Mousemove on document
         document.addEventListener('mousemove', this._handleDocumentClickMoveBound);
-        document.addEventListener('touchmove', this._handleDocumentClickMoveBound);
+        document.addEventListener('touchmove', this._handleDocumentClickMoveBound, true);
 
         // Mouseup on document
         document.addEventListener('mouseup', this._handleDocumentClickEndBound);
@@ -10575,7 +10575,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         if (typeof window.ontouchstart !== 'undefined') {
           this.el.addEventListener('touchstart', this._handleCarouselTapBound);
-          this.el.addEventListener('touchmove', this._handleCarouselDragBound);
+          this.el.addEventListener('touchmove', this._handleCarouselDragBound, true);
           this.el.addEventListener('touchend', this._handleCarouselReleaseBound);
         }
 
@@ -12109,7 +12109,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         this.el.addEventListener('input', this._handleRangeInputMousemoveTouchmoveBound);
         this.el.addEventListener('mousemove', this._handleRangeInputMousemoveTouchmoveBound);
-        this.el.addEventListener('touchmove', this._handleRangeInputMousemoveTouchmoveBound);
+        this.el.addEventListener('touchmove', this._handleRangeInputMousemoveTouchmoveBound, true);
 
         this.el.addEventListener('mouseup', this._handleRangeMouseupTouchendBound);
         this.el.addEventListener('touchend', this._handleRangeMouseupTouchendBound);

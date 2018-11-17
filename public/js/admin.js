@@ -8,9 +8,10 @@ $(document).ready(function() {
     firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
       if (!!idTokenResult.claims.admin) {
         console.log('You are admin');
+        $('#content').show();
       } else {
         console.log('You are not admin');
-        $('#content').html(nonAdminMessage);
+        $('#content').html(nonAdminMessage).show();
       }
     })
     .catch((error) => {
@@ -22,9 +23,10 @@ $(document).ready(function() {
         firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
           if (!!idTokenResult.claims.admin) {
             console.log('You are admin');
+            $('#content').show();
           } else {
             console.log('You are not admin');
-            $('#content').html(nonAdminMessage);
+            $('#content').html(nonAdminMessage).show();
           }
         })
         .catch((error) => {
@@ -32,7 +34,7 @@ $(document).ready(function() {
         });
       } else {
         console.log('You are not admin');
-        $('#content').html(nonAdminMessage);        
+        $('#content').html(nonAdminMessage).show();
       }
     });
   }
@@ -97,7 +99,7 @@ $('#mark-fulfilled').on('click', function() {
         console.error(error);
       });
     });
-    $('#mark-fulfilled-result').text('Done processing ' + i + ' records.');
+    $('#mark-fulfilled-result').text('Done processing ' + i + ' records.').removeAttr('class').addClass('green-text');
     $('#mark-fulfilled-loader').hide();
     $('#mark-fulfilled').removeAttr('disabled');
   });
@@ -108,11 +110,26 @@ $('#subscribe-token').on('click', function() {
   $('#subscribe-token').attr('disabled', 'disabled');
   $('#subscribe-token-loader').css('display', 'inline-block');
   $('#subscribe-token-result').text('Processing...').addClass('blue-text');
-  setTimeout(function() {
-    $('#subscribe-token-result').text('Someting happened.');
-    $('#subscribe-token-loader').hide();
-    $('#subscribe-token').removeAttr('disabled');
-  }, 3000);
+  var theToken = $('#subscribe-token-token').val();
+  var theTopic = $('#subscribe-token-topic').val();
+  $.ajax({
+    method: 'POST',
+    dataType: 'json',
+    url: '/notify/subscribe',
+    data: { topic: theTopic, token: theToken },
+    success: function(data) {
+      console.log('Subscribed to topic: ', theTopic, ' ', data);
+      $('#subscribe-token-result').text('Subscribed to: ' + theTopic).removeAttr('class').addClass('green-text');
+      $('#subscribe-token-loader').hide();
+      $('#subscribe-token').removeAttr('disabled');
+    },
+    error: function(xhr, status, error) {
+      console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
+      $('#subscribe-token-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      $('#subscribe-token-loader').hide();
+      $('#subscribe-token').removeAttr('disabled');
+    },
+  });
 });
 
 
@@ -120,11 +137,25 @@ $('#token-details').on('click', function() {
   $('#token-details').attr('disabled', 'disabled');
   $('#token-details-loader').css('display', 'inline-block');
   $('#token-details-result').text('Processing...').addClass('blue-text');
-  setTimeout(function() {
-    $('#token-details-result').text('Someting happened.');
-    $('#token-details-loader').hide();
-    $('#token-details').removeAttr('disabled');
-  }, 3000);
+  var theToken = $('#token-details-token').val();
+  $.ajax({
+    method: 'POST',
+    dataType: 'json',
+    url: '/notify/tokendetails',
+    data: { token: theToken },
+    success: function(data) {
+      console.log(data);
+      $('#token-details-result').text(JSON.stringify(data)).removeAttr('class').addClass('green-text');
+      $('#token-details-loader').hide();
+      $('#token-details').removeAttr('disabled');
+    },
+    error: function(xhr, status, error) {
+      console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
+      $('#token-details-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      $('#token-details-loader').hide();
+      $('#token-details').removeAttr('disabled');
+    },
+  });
 });
 
 

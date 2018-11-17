@@ -81,6 +81,9 @@
         "source": "/notify/unsubscribe", "function": "unsubscribeFromTopic"
       },
       {
+        "source": "/notify/tokendetails", "function": "tokenDetails"
+      },
+      {
         "source": "/admin/addclaim", "function": "addAdminClaim"
       }
     ],

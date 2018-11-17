@@ -73,7 +73,8 @@ var pages = {
   requests: { title: 'Requests :: Blood MV', menu_element: 'requests', script: '/js/requests.js' },
   requestsadd: { title: 'Add Request :: Blood MV', menu_element: 'requestsadd', script: '/js/requestsadd.js' },
   add: { title: 'Add Donor :: Blood MV', menu_element: 'add', script: '/js/add.js' },
-  notify: { title: 'Notify :: Blood MV', menu_element: 'notify', script: '/js/notify.js' }
+  notify: { title: 'Notify :: Blood MV', menu_element: 'notify', script: '/js/notify.js' },
+  admin: { title: 'Admin :: Blood MV', menu_element: 'admin', script: '/js/admin.js' }
 };
 
 var navLinks = document.querySelectorAll('nav .container > ul > li > a, #nav-mobile > li > a');

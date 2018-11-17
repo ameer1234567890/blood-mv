@@ -130,9 +130,16 @@ nav > a > svg {
   border: none;
 }
 
+/*  --------------------------------------------------------  */
+/*  Styles for the admin page                                 */
+/*  --------------------------------------------------------  */
 .admin-loader {
   display: none;
   vertical-align: bottom;
+}
+
+.admin-page {
+  display: none;
 }
 
 /*  --------------------------------------------------------  */

@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 var db = admin.firestore();
 db.settings({timestampsInSnapshots: true});
+const https = require('https');
 
 
 exports.subscribeToTopic = functions.https.onRequest((req, res) => {
@@ -39,14 +40,38 @@ exports.unsubscribeFromTopic = functions.https.onRequest((req, res) => {
 });
 
 
-exports.sendNotification = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
-  
-  console.log(snap.data());
+exports.tokenDetails = functions.https.onRequest((req, res) => {
+  var token = req.body.token;
+  var authHeader = 'key=' + functions.config().fcm.serverkey;
+  console.log(req.body); // Uncomment this line for debugging
+  var options = {
+    host: 'iid.googleapis.com',
+    port: 443,
+    path: '/iid/info/' + token + '?details=true',
+    method: 'GET',
+    headers: { 'Authorization': authHeader }
+  };
+  https.get(options, (resp) => {
+    let data = '';
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+    resp.on('end', () => {
+      console.log(data);
+      res.status(200).send(data);
+    });
+  }).on('error', (err) => {
+    console.log('Error: ' + err.message);
+    res.status(500).send('{"status": "ERROR", "message": "Error getting token details"}');
+  });
+});
 
+
+exports.sendNotification = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
+  console.log(snap.data());
   const group = snap.data().group;
   const place = snap.data().place;
   const phone = snap.data().phone;
-
   groups = new Object();
   groups['A+'] = 'apositive';
   groups['A-'] = 'anegative';
@@ -56,9 +81,7 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
   groups['O-'] = 'onegative';
   groups['AB+'] = 'abpositive';
   groups['AB-'] = 'abnegative';
-
   messageBody = group + ' requested at ' + place + '\nContact ' + phone;
-  
   var message = {
     data: {
       title: 'Blood MV',
@@ -70,7 +93,6 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
     topic: groups[group]
   };
   console.log(message);
-  
   admin.messaging().send(message)
     .then((response) => {
       console.log('Successfully sent message: ', response);
@@ -80,9 +102,7 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
       console.log('Error sending message: ', error);
       return false;
     });
-    
     return message;
-
 });
 
 
