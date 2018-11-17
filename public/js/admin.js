@@ -190,19 +190,20 @@ $('#list-users').on('click', function() {
     dataType: 'json',
     url: '/admin/listusers',
     success: function(data) {
-      usersObj = data;
       var usersTable = '<table id="users" class="striped"><thead><tr><th>Name</th><th>Email</th><th>Avatar</th><th>Admin?</th></tr></thead><tobody>';
-      for (user in usersObj) {
+      for (var user in data) {
+        if(user) {
           usersTable += '<tr>';
-          usersTable += '<td>' + usersObj[user].displayName + '</td>';
-          usersTable += '<td>' + usersObj[user].email + '</td>';
-          usersTable += '<td><img src="' + usersObj[user].photoURL + '" width="25" alt="Avatar"></td>';
-          if(usersObj[user].customClaims && usersObj[user].customClaims.admin) {
-            usersTable += '<td>' + usersObj[user].customClaims.admin + '</td>';
+          usersTable += '<td>' + data[user].displayName + '</td>';
+          usersTable += '<td>' + data[user].email + '</td>';
+          usersTable += '<td><img src="' + data[user].photoURL + '" width="25" alt="Avatar"></td>';
+          if(data[user].customClaims && data[user].customClaims.admin) {
+            usersTable += '<td>' + data[user].customClaims.admin + '</td>';
           } else {
             usersTable += '<td>&nbsp;</td>';
           }
           usersTable += '</tr>';
+        }
       }
       usersTable += '</tobody></table>';
       $('#list-users-result').html(usersTable).removeAttr('class');
