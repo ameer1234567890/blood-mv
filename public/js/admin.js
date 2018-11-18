@@ -98,8 +98,8 @@ $('#mark-fulfilled').on('click', function() {
       db.collection(collectionName).doc(doc.id).update({
         fulfilled: 'true'
       })
-      .then(function(docRef) {
-        console.log('Marked ' + docRef + ' as fulfilled');
+      .then(function() {
+        console.log('Marked ' + doc.id + ' as fulfilled');
       })
       .catch(function(error) {
         console.error(error);
