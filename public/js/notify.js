@@ -53,8 +53,7 @@ function startProcess() {
   if (Notification.permission == 'denied') {
     boxUnChecked();
     console.warn('The user has blocked notifications.');
-    $('#result').text('Notification permission has been blocked!');
-    $('#result').removeAttr('class').addClass('red-text');
+    $('#result').text('Notification permission has been blocked!').removeAttr('class').addClass('red-text');
     $('#display-toggle span').addClass('disabled');
     $('#display-toggle').off();
   } else if(Notification.permission == 'granted') {
@@ -67,32 +66,33 @@ function startProcess() {
       getToken();
     }
   } else {
-    getSubscritions();
-    getToken();
+    console.log('Notification permission has not been requested / set');
+    boxUnChecked();
+    resetSubscritions();
   }
 }
 
 
 $('#display-toggle').on('click', function(event) {
   if(Notification.permission == 'default') {
-    $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
+    $('#display-toggle > span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
     requestPermission();
   }
-  if(!$('#display-toggle span').attr('data-checked')) {
+  if(!$('#display-toggle > span').attr('data-checked')) {
     if(getKeyValueStore('notificationStatus') == true) {
-      $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
+      $('#display-toggle > span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
       startProcess();
       $('#allFields').removeAttr('disabled');
-      $('#display-toggle span').html(matIconCheckBox).removeClass('icon-spin').attr('data-checked', 'checked');
+      $('#display-toggle > span').html(matIconCheckBox).removeClass('icon-spin').attr('data-checked', 'checked');
     } else {
-      $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
+      $('#display-toggle > span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
       setKeyValueStore('notificationStatus', true);
       startProcess();
     }
-  } else if($('#display-toggle span').attr('data-checked') == 'checked') {
-    $('#display-toggle span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
+  } else if($('#display-toggle > span').attr('data-checked') == 'checked') {
+    $('#display-toggle > span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
     deleteToken();
-  } else if($('#display-toggle span').attr('data-checked') == 'loading') {
+  } else if($('#display-toggle > span').attr('data-checked') == 'loading') {
     console.warn('Some action is happening. Wait for a while!');
   }
 });
@@ -239,7 +239,7 @@ function boxChecked() {
 function boxUnChecked() {
   $('#allFields').attr('disabled', 'disabled');
   $('ul.subs-groups').addClass('disabled');
-  $('#display-toggle span').html(matIconCheckBoxOutline).removeClass('icon-spin').removeAttr('data-checked');
+  $('#display-toggle > span').html(matIconCheckBoxOutline).removeClass('icon-spin').removeAttr('data-checked');
   $('input:checkbox').prop('checked', '');
 }
 

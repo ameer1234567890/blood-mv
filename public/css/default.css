@@ -109,7 +109,7 @@ nav > a > svg {
 
 .fulf-enabled,
 #logineasy,
-#display-toggle > span > svg {
+#display-toggle {
   cursor: pointer;
   fill: #009688;
 }
