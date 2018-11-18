@@ -84,12 +84,15 @@ $('#add-claim').on('click', function() {
 $('#mark-fulfilled').on('click', function() {
   $('#mark-fulfilled').attr('disabled', 'disabled');
   $('#mark-fulfilled-loader').css('display', 'inline-block');
+  $('#mark-fulfilled-progress').html('<div class="progress"><div class="determinate"></div></div>');
   $('#mark-fulfilled-result').text('Processing...').addClass('blue-text');
   var query;
   var d = new Date();
   var collectionName = 'requests';
   var oneWeekBack = new Date(d.setDate(d.getDate() - 7));
   var i = 0;
+  var processedRecords = 0;
+  var progressPercentage = 0;
   query = db.collection(collectionName).where('fulfilled', '==', 'false').where('datetime', '<', oneWeekBack);
   query.get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
@@ -100,12 +103,23 @@ $('#mark-fulfilled').on('click', function() {
       })
       .then(function() {
         console.log('Marked ' + doc.id + ' as fulfilled');
+        processedRecords++;
+        progressPercentage = Math.round((processedRecords / i) * 100);
+        $('#mark-fulfilled-progress > .progress > .determinate').css('width', progressPercentage + '%');
+        if(processedRecords === i) {
+          $('#mark-fulfilled-progress > .progress > .determinate').css('width', '100%');
+        }
       })
       .catch(function(error) {
         console.error(error);
       });
     });
-    $('#mark-fulfilled-result').text('Done processing ' + i + ' records.').removeAttr('class').addClass('green-text');
+    if(i === 0) {
+      $('#mark-fulfilled-progress > .progress > .determinate').css('width', '100%');
+      $('#mark-fulfilled-result').text('No records to process!').removeAttr('class').addClass('green-text');
+    } else {
+      $('#mark-fulfilled-result').text('Done processing ' + i + ' records.').removeAttr('class').addClass('green-text');
+    }
     $('#mark-fulfilled-loader').hide();
     $('#mark-fulfilled').removeAttr('disabled');
   });
