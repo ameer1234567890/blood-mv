@@ -95,7 +95,7 @@ exports.sendMessageViaWeb = functions.https.onRequest((req, res) => {
             body: messageBody,
             icon: '/favicon.png',
             badge: '/icons/badge.png',
-            click_action: '/request/'
+            click_action: '/requests/'
           },
           topic: topic
         };
@@ -225,7 +225,7 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
       body: messageBody,
       icon: '/favicon.png',
       badge: '/icons/badge.png',
-      click_action: '/request/'
+      click_action: '/requests/'
     },
     topic: groups[group]
   };
