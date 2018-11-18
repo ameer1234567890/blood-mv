@@ -1,5 +1,6 @@
-/*jshint esversion: 6 */
-/*globals $, firebase, topLoader, M, db, performLogin, authStatusUpdated */
+/* jshint esversion: 6 */
+/* jshint browser: true */
+/* globals $, firebase, topLoader, M, db, performLogin, authStatusUpdated */
 
 var progressElement = '#form-spinner';
 var collectionName = 'requests';

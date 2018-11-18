@@ -41,87 +41,165 @@ exports.unsubscribeFromTopic = functions.https.onRequest((req, res) => {
 
 
 exports.tokenDetails = functions.https.onRequest((req, res) => {
-  var token = req.body.token;
-  var authHeader = 'key=' + functions.config().fcm.serverkey;
-  console.log(req.body); // Uncomment this line for debugging
-  var options = {
-    host: 'iid.googleapis.com',
-    port: 443,
-    path: '/iid/info/' + token + '?details=true',
-    method: 'GET',
-    headers: { 'Authorization': authHeader }
-  };
-  https.get(options, (resp) => {
-    let data = '';
-    resp.on('data', (chunk) => {
-      data += chunk;
+  const idToken = req.body.idToken;
+  admin.auth().verifyIdToken(idToken)
+    .then((claims) => {
+      if (claims.admin) {
+        var token = req.body.token;
+        var authHeader = 'key=' + functions.config().fcm.serverkey;
+        var options = {
+          host: 'iid.googleapis.com',
+          port: 443,
+          path: '/iid/info/' + token + '?details=true',
+          method: 'GET',
+          headers: { 'Authorization': authHeader }
+        };
+        https.get(options, (resp) => {
+          let data = '';
+          resp.on('data', (chunk) => {
+            data += chunk;
+          });
+          resp.on('end', () => {
+            console.log(data);
+            res.status(200).send(data);
+          });
+        }).on('error', (err) => {
+          console.log('Error: ' + err.message);
+          res.status(500).send('{"status": "ERROR", "message": "Error getting token details"}');
+        });
+      } else {
+        console.log('Error: Not an admin user!');
+        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+        return false;
+      }
+      return true;
+    })
+    .catch((error) => {
+        console.log('Error: Not an admin user!');
+        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+        return false;
     });
-    resp.on('end', () => {
-      console.log(data);
-      res.status(200).send(data);
-    });
-  }).on('error', (err) => {
-    console.log('Error: ' + err.message);
-    res.status(500).send('{"status": "ERROR", "message": "Error getting token details"}');
-  });
 });
 
 
 exports.sendMessageViaWeb = functions.https.onRequest((req, res) => {
-  var topic = req.body.topic;
-  var messageBody = req.body.message;
-  var message = {
-    data: {
-      title: 'Blood MV',
-      body: messageBody,
-      icon: '/favicon.png',
-      badge: '/icons/badge.png',
-      click_action: '/request/'
-    },
-    topic: topic
-  };
-  console.log(message);
-  admin.messaging().send(message)
-    .then((response) => {
-      console.log('Successfully sent message: ', response);
-      res.status(200).send('{"status": "OK", "message": "Message sent"}');
+  const idToken = req.body.idToken;
+  admin.auth().verifyIdToken(idToken)
+    .then((claims) => {
+      if (claims.admin) {
+        var topic = req.body.topic;
+        var messageBody = req.body.message;
+        var message = {
+          data: {
+            title: 'Blood MV',
+            body: messageBody,
+            icon: '/favicon.png',
+            badge: '/icons/badge.png',
+            click_action: '/request/'
+          },
+          topic: topic
+        };
+        console.log(message);
+        admin.messaging().send(message)
+          .then((response) => {
+            console.log('Successfully sent message: ', response);
+            res.status(200).send('{"status": "OK", "message": "Message sent"}');
+            return true;
+          })
+          .catch((error) => {
+            console.log('Error sending message: ', error);
+            res.status(500).send('{"status": "ERROR", "message": "Error sending message"}');
+            return false;
+          });
+      } else {
+        console.log('Error: Not an admin user!');
+        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+        return false;
+      }
       return true;
     })
     .catch((error) => {
-      console.log('Error sending message: ', error);
-      res.status(500).send('{"status": "ERROR", "message": "Error sending message"}');
-      return false;
+        console.log('Error: Not an admin user!');
+        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+        return false;
     });
 });
 
 
 exports.listUsers = functions.https.onRequest((req, res) => {
-  var users = '{';
-  console.log('v14');
-  admin.auth().listUsers(1000)
-    .then((listUsersResult) => {
-      numUsers = 0;
-      listUsersResult.users.forEach((userRecord) => {
-        numUsers++
-      });
-      numRecords = 0;
-      listUsersResult.users.forEach((userRecord) => {
-        numRecords++;
-        users += '"' + userRecord.uid + '":';
-        users += JSON.stringify(userRecord.toJSON());
-        if(numRecords !== numUsers) {
-          users += ',';
-        }
-      });
-      users += '}';
-      console.log(users);
-      res.status(200).send(users);
+  const idToken = req.body.idToken;
+  admin.auth().verifyIdToken(idToken)
+    .then((claims) => {
+      if (claims.admin) {
+        var users = '{';
+        admin.auth().listUsers(1000)
+          .then((listUsersResult) => {
+            numUsers = 0;
+            listUsersResult.users.forEach((userRecord) => {
+              numUsers++
+            });
+            numRecords = 0;
+            listUsersResult.users.forEach((userRecord) => {
+              numRecords++;
+              users += '"' + userRecord.uid + '":';
+              users += JSON.stringify(userRecord.toJSON());
+              if(numRecords !== numUsers) {
+                users += ',';
+              }
+            });
+            users += '}';
+            console.log(users);
+            res.status(200).send(users);
+            return true;
+          })
+          .catch((error) => {
+            console.log('Error listing users: ', error);
+            res.status(500).send('{"status": "ERROR", "message": "Error listing users"}');
+            return false;
+          });
+      } else {
+        console.log('Error: Not an admin user!');
+        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+        return false;
+      }
       return true;
     })
     .catch((error) => {
-      console.log('Error listing users: ', error);
-      res.status(500).send('{"status": "ERROR", "message": "Error listing users"}');
-      return false;
+        console.log('Error: Not an admin user!');
+        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+        return false;
+    });
+});
+
+
+exports.deleteUser = functions.https.onRequest((req, res) => {
+  const idToken = req.body.idToken;
+  admin.auth().verifyIdToken(idToken)
+    .then((claims) => {
+      if (claims.admin) {
+        var uid = req.body.uid;
+        admin.auth().deleteUser(uid)
+          .then( () => {
+            console.log('Successfully deleted user');
+            res.status(200).send('{"status": "OK", "message": "User deleted successfully"}');
+            return true;
+          })
+          .catch((error) => {
+            console.log('Error deleting user: ', error);
+            res.status(500).send('{"status": "ERROR", "message": "Error deleting user"}');
+            return false;
+          });
+      } else {
+        console.log('Error: Not an admin user!');
+        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+        return false;
+      }
+      return true;
+    })
+    .catch((error) => {
+        console.log('Error: Not an admin user!');
+        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+        return false;
     });
 });
 

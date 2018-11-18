@@ -1,6 +1,7 @@
-/*jshint esversion: 6 */
-/*globals $, topLoader, messaging, setKeyValueStore, getKeyValueStore, M, matIconCheckBox, matIconCheckBoxOutline, matIconRefresh */
-/*exported showNotification */
+/* jshint esversion: 6 */
+/* jshint browser: true */
+/* globals $, topLoader, messaging, setKeyValueStore, getKeyValueStore, matIconCheckBox, matIconCheckBoxOutline, matIconRefresh */
+/* exported showNotification */
 
 // Set global token
 var theToken;

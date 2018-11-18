@@ -1,6 +1,7 @@
-/*jshint esversion: 6 */
-/*globals $, firebase, topLoader, setKeyValueStore, getKeyValueStore, db, tableSearch, humanDate,
-  matIconCheckBox, matIconCheckBoxOutline, matIconMoreHoriz, matIconExpandMore, matIconRefresh */
+/* jshint esversion: 6 */
+/* jshint browser: true */
+/* globals $, firebase, topLoader, setKeyValueStore, getKeyValueStore, db, tableSearch, humanDate,
+   matIconCheckBox, matIconCheckBoxOutline, matIconMoreHoriz, matIconExpandMore, matIconRefresh */
 
 var progressElement = '#table-spinner';
 var loadMoreElement = '.load-more';

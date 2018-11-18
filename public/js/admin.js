@@ -1,13 +1,18 @@
-/*jshint esversion: 6 */
-/*globals $, firebase, db, provider, topLoader, authStatusUpdated */
+/* jshint esversion: 6 */
+/* jshint browser: true */
+/* globals $, firebase, db, provider, topLoader, authStatusUpdated, matIconDelete, matIconRefresh, matIconCheck, humanDate */
 
 var nonAdminMessage = '<div class="container"><br><br>Please login with an admin capable user!<br><br><br><br><br><br><br></div>';
+var theIdToken;
 
 $(document).ready(function() {
   if(authStatusUpdated) {
     firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
       if (!!idTokenResult.claims.admin) {
         $('#content').show();
+        firebase.auth().currentUser.getIdToken().then(function(idToken) {
+          theIdToken = idToken;
+        });
       } else {
         $('#content').html(nonAdminMessage).show();
       }
@@ -18,6 +23,9 @@ $(document).ready(function() {
   } else {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
+        user.getIdToken().then(function(idToken) {
+          theIdToken = idToken;
+        });
         firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
           if (!!idTokenResult.claims.admin) {
             $('#content').show();
@@ -36,36 +44,39 @@ $(document).ready(function() {
 });
 
 $('#add-claim').on('click', function() {
-  firebase.auth().signInWithPopup(provider)
-  .then((result) => {
-    return result.user.getIdToken();
-  })
-  .then((idToken) => {
-    $.post(
-      '/admin/addclaim',
-      {idToken: idToken},
-      (data, status) => {
-        if (status == 'success' && data) {
-          const json = JSON.parse(data);
-          if (json && json.status == 'success') {
-            firebase.auth().currentUser.getIdToken(true);
-            console.log('User token refreshed');
-            firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
-              console.log(idTokenResult.claims.admin);
-               if (!!idTokenResult.claims.admin) {
-                 console.log('You are admin');
-               } else {
-                 console.log('You are not admin');
-               }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-          }
-        }
+  $('#add-claim').attr('disabled', 'disabled');
+  $('#add-claim-loader').css('display', 'inline-block');
+  $('#add-claim-result').text('Processing...').addClass('blue-text');
+  $.ajax({
+    method: 'POST',
+    dataType: 'json',
+    url: '/admin/addclaim',
+    data: { idToken: theIdToken },
+    success: function(data) {
+      console.log('Admin claim added: ', data);
+      $('#add-claim-result').text('Admin claim added').removeAttr('class').addClass('green-text');
+      $('#add-claim-loader').hide();
+      $('#add-claim').removeAttr('disabled');
+      firebase.auth().currentUser.getIdToken(true);
+      console.log('User token refreshed');
+      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+        console.log(idTokenResult.claims.admin);
+         if (!!idTokenResult.claims.admin) {
+           console.log('You are admin');
+         } else {
+           console.log('You are not admin');
+         }
+      })
+      .catch((error) => {
+        console.log(error);
       });
-  }).catch((error) => {
-    console.log(error);
+    },
+    error: function(xhr, status, error) {
+      console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
+      $('#add-claim-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      $('#add-claim-loader').hide();
+      $('#add-claim').removeAttr('disabled');
+    },
   });
 });
 
@@ -137,7 +148,7 @@ $('#token-details').on('click', function() {
     method: 'POST',
     dataType: 'json',
     url: '/notify/tokendetails',
-    data: { token: theToken },
+    data: { idToken: theIdToken, token: theToken },
     success: function(data) {
       console.log(data);
       $('#token-details-result').text(JSON.stringify(data)).removeAttr('class').addClass('green-text');
@@ -164,7 +175,7 @@ $('#send-message').on('click', function() {
     method: 'POST',
     dataType: 'json',
     url: '/notify/sendmsg',
-    data: { topic: theTopic, message: theMessage },
+    data: { idToken: theIdToken, topic: theTopic, message: theMessage },
     success: function(data) {
       console.log('Message sent: ', data);
       $('#send-message-result').text('Message sent: ' + JSON.stringify(data)).removeAttr('class').addClass('green-text');
@@ -186,27 +197,58 @@ $('#list-users').on('click', function() {
   $('#list-users-loader').css('display', 'inline-block');
   $('#list-users-result').text('Processing...').addClass('blue-text');
   $.ajax({
-    method: 'GET',
+    method: 'POST',
     dataType: 'json',
     url: '/admin/listusers',
+    data: { idToken: theIdToken },
     success: function(data) {
-      var usersTable = '<table id="users" class="striped"><thead><tr><th>Name</th><th>Email</th><th>Avatar</th><th>Admin?</th></tr></thead><tobody>';
+      var usersTable = '<table id="users" class="striped"><thead><tr>';
+      usersTable += '<th>Name</th><th>Email</th><th>Avatar</th><th>Admin?</th><th>Signed Up</th><th>Last Login</th><th>Delete</th>';
+      usersTable += '</tr></thead><tbody>';
       for (var user in data) {
         if(user) {
           usersTable += '<tr>';
+          usersTable += '<td><img src="' + data[user].photoURL + '" width="25" alt="Avatar"></td>';
           usersTable += '<td>' + data[user].displayName + '</td>';
           usersTable += '<td>' + data[user].email + '</td>';
-          usersTable += '<td><img src="' + data[user].photoURL + '" width="25" alt="Avatar"></td>';
           if(data[user].customClaims && data[user].customClaims.admin) {
-            usersTable += '<td>' + data[user].customClaims.admin + '</td>';
+            usersTable += '<td>' + matIconCheck + '</td>';
           } else {
-            usersTable += '<td>&nbsp;</td>';
+            usersTable += '<td>' + matIconClear + '</td>';
           }
+          usersTable += '<td>' + humanDate(data[user].metadata.creationTime, true) + '</td>';
+          usersTable += '<td>' + humanDate(data[user].metadata.lastSignInTime, true) + '</td>';
+          usersTable += '<td><a class="user-delete" data-user="' + data[user].uid + '">' + matIconDelete + '</a></td>';
           usersTable += '</tr>';
         }
       }
-      usersTable += '</tobody></table>';
+      usersTable += '</tbody></table>';
       $('#list-users-result').html(usersTable).removeAttr('class');
+      $('.user-delete').on('click', function(event) {
+        event.preventDefault();
+        var displayName = $($(event.target).parent().parent().find('td')[1]).text();
+        if(confirm('Are you sure you want to delete the user "' + displayName + '"?')) {
+          $(event.target).html(matIconRefresh).addClass('icon-spin');
+          var uid = $(event.target).attr('data-user');
+          $.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: '/admin/deleteuser',
+            data: { idToken: theIdToken, uid: uid },
+            success: function(data) {
+              console.log(data);
+              $(event.target).parent().parent().addClass('deleted');
+              setTimeout(function() { $(event.target).parent().parent().remove(); }, 1500);
+            },
+            error: function(xhr, status, error) {
+              console.error('Something went wrong! ', status,' ', error);
+              $(event.target).html(matIconDelete).removeClass('icon-spin');
+            },
+          });
+        } else {
+          console.log('Delete dialog dismissed');
+        }
+      });
       $('#list-users-loader').hide();
       $('#list-users').removeAttr('disabled');
     },

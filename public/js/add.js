@@ -1,5 +1,6 @@
-/*jshint esversion: 6 */
-/*globals $, firebase, topLoader, authStatusUpdated, M, db, htmlDate, performLogin, matIconEdit */
+/* jshint esversion: 6 */
+/* jshint browser: true */
+/* globals $, firebase, topLoader, authStatusUpdated, M, db, htmlDate, performLogin, matIconEdit */
 
 var progressElement = '#form-spinner';
 var theDocId;

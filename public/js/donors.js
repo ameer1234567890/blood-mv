@@ -1,5 +1,6 @@
-/*jshint esversion: 6 */
-/*globals $, tableSearch, setKeyValueStore, getKeyValueStore, age, humanDate, db, topLoader, matIconMoreHoriz, matIconExpandMore */
+/* jshint esversion: 6 */
+/* jshint browser: true */
+/* globals $, tableSearch, setKeyValueStore, getKeyValueStore, age, humanDate, db, topLoader, matIconMoreHoriz, matIconExpandMore */
 
 var progressElement = '#table-spinner';
 var loadMoreElement = '.load-more';

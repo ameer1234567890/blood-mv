@@ -137,6 +137,21 @@
       <div class="section">
         <p>Adds the signed in user as an admin, provided that it is allowed by the backend.</p>
         <a class="waves-effect waves-light btn" id="add-claim">Add Claim</a>
+        &nbsp;&nbsp;
+        <div class="preloader-wrapper small active admin-loader" id="add-claim-loader">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <span id="add-claim-result">&nbsp;</span>
       </div>
       <div class="section">
         <p>Mark blood requests older than a week, as fulfilled. This can be done to reduce the clutter of people not marking requests as fulfilled.</p>
