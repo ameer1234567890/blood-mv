@@ -313,7 +313,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 messaging.onMessage(function(payload) {
   console.log('Message received. ', payload);
   M.toast({
-    html: payload.data.body.replace('\n', '<br>'),
+    html: '<a href="' + payload.data.click_action + '">' + payload.data.body.replace('\n', '<br>') + '</a>',
     displayLength: 10000
   });
 });
