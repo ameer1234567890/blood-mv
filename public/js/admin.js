@@ -87,7 +87,7 @@ $('#mark-fulfilled').on('click', function() {
   $('#mark-fulfilled-result').text('Processing...').addClass('blue-text');
   var query;
   var d = new Date();
-  var collectionName = 'requests.bak';
+  var collectionName = 'requests';
   var oneWeekBack = new Date(d.setDate(d.getDate() - 7));
   var i = 0;
   query = db.collection(collectionName).where('fulfilled', '==', 'false').where('datetime', '<', oneWeekBack);
