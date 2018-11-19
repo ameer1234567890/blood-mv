@@ -27,7 +27,7 @@ var sidenavInstance = document.querySelectorAll('.sidenav')[0].M_Sidenav;
 $('.dropdown-trigger').dropdown();
 
 // Some global variables
-var topLoader = '.progress';
+var topLoader = '.navbar-fixed > .progress';
 var authStatusUpdated = false;
 var isAdmin = false;
 var theIdToken;
