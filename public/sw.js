@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 /*globals caches, Promise, importScripts, firebase, self */
 
-var VERSION = '35';
+var VERSION = '36';
 
 importScripts('/__/firebase/5.5.7/firebase-app.js');
 importScripts('/__/firebase/5.5.7/firebase-messaging.js');
@@ -9,6 +9,7 @@ importScripts('/__/firebase/init.js');
 var messaging = firebase.messaging();
 
 this.addEventListener('install', function(e) {
+  self.skipWaiting();
   e.waitUntil(caches.open(VERSION).then(cache => {
     return cache.addAll([
       '/',
