@@ -1,7 +1,7 @@
 /* jshint esversion: 6 */
 /* jshint browser: true */
 /* globals $, firebase, topLoader, setKeyValueStore, getKeyValueStore, db, tableSearch, humanDate, isAdmin,
-   matIconCheckBox, matIconCheckBoxOutline, matIconMoreHoriz, matIconExpandMore, matIconRefresh, matIconDelete */
+   matIconCheckBox, matIconCheckBoxOutline, matIconMoreHoriz, matIconExpandMore, matIconRefresh, matIconDelete, matIconShare */
 
 var progressElement = '#table-spinner';
 var loadMoreElement = '.load-more';
@@ -90,6 +90,14 @@ function loadBloodRequests(includeFulfilled, loadMore) {
           $('#requests tbody tr:last-child').append($('<td>').html('<span class="fulf-disabled">' + matIconCheckBoxOutline + '</span>'));
         }
       }
+      if(doc.data().fulfilled == 'false') {
+        $('#requests tbody tr:last-child').append($('<td>').html('<a class="share-link" id="share-' + doc.id + '">' + matIconShare + '</a>'));
+        $('#share-' + doc.id).on('click', function(event) {
+          shareRequest(doc.data().group, doc.data().place, doc.data().phone);
+        });
+      } else {
+        $('#requests tbody tr:last-child').append($('<td>').html('&nbsp;'));
+      }
       if(isAdmin) {
         $('#requests tbody tr:last-child').append($('<td>').html('<span class="delete" id="delete-' + doc.id + '">' + matIconDelete + '</span>'));
         $('#delete-' + doc.id).on('click', function(event) {
@@ -175,6 +183,30 @@ function deleteRequest(docId) {
   } else {
     $('#delete-' + docId).html(matIconDelete).removeClass('icon-spin');
     console.log('Delete dialog dismissed');
+  }
+}
+
+
+function shareRequest(group, place, phone) {
+  if (navigator.share) {
+    var title = 'Blood MV';
+    var text = group + ' requested at ' + place + '. Contact ' + phone + ' (via Blood MV)';
+    navigator.share({
+      title: title,
+      text: text
+    })
+    .then(() => {
+      console.log('Successful share');
+    })
+    .catch((error) => {
+      console.error('Error sharing:', error);
+    });
+  } else {
+    M.toast({
+      html: 'Sharing is not supported by this browser!',
+      displayLength: 5000
+    });
+    console.warn('Web Share API not supported.');
   }
 }
 
