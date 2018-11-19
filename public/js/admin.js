@@ -233,7 +233,7 @@ $('#list-users').on('click', function() {
       }
       usersTable += '</tbody></table>';
       $('#list-users-result').html(usersTable).removeAttr('class');
-      $('.user-delete').on('click', function(event) {
+      $('.delete').on('click', function(event) {
         event.preventDefault();
         var displayName = $($(event.target).parent().parent().find('td')[1]).text();
         if(confirm('Are you sure you want to delete the user "' + displayName + '"?')) {
