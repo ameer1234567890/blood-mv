@@ -71,6 +71,9 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
   }
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+    if(isAdmin) {
+      $('#donors thead tr:last-child').append($('<th>').html('Delete'));
+    }
     querySnapshot.forEach((doc) => {
       $('#donors > tbody').append($('<tr>')
         .append($('<td scope="row">').text(doc.data().first + ' ' + doc.data().last))
@@ -82,6 +85,13 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
         .append($('<td>').text(doc.data().phone))
         .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
       );
+      if(isAdmin) {
+        $('#donors tbody tr:last-child').append($('<td>').html('<span class="delete" id="delete-' + doc.id + '">' + matIconDelete + '</span>'));
+        $('#delete-' + doc.id).on('click', function(event) {
+          $('#delete-' + doc.id).html(matIconRefresh).addClass('icon-spin');
+          deleteDonor(doc.id);
+        });
+      }
     });
     $(progressElement).hide();
     $(loadMoreElement).show();
@@ -96,5 +106,24 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
     }
   });    
 }
+
+
+function deleteDonor(docId, donorName) {
+  if(confirm('Are you sure you want to delete the donor "' + donorName + '"?')) {
+    db.collection(collectionName).doc(docId).delete()
+    .then(function(docRef) {
+      $('#delete-' + docId).parent().parent().addClass('deleted');
+      setTimeout(function() { $('#delete-' + docId).parent().parent().remove(); }, 1500);
+    })
+    .catch(function(error) {
+      $('#delete-' + docId).html(matIconDelete).removeClass('icon-spin');
+      console.error(error);
+    });
+  } else {
+    $('#delete-' + docId).html(matIconDelete).removeClass('icon-spin');
+    console.log('Delete dialog dismissed');
+  }
+}
+
 
 $(document).ready($(topLoader).hide());

@@ -69,7 +69,6 @@ function loadBloodRequests(includeFulfilled, loadMore) {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
     if(isAdmin) {
       $('#requests thead tr:last-child').append($('<th>').html('Delete'));
-      $('<style>@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px){#requests td:nth-of-type(6):before { content: "Delete"; }}</style>').appendTo('head');
     }
     querySnapshot.forEach((doc) => {
       $('#requests tbody').append($('<tr>')
