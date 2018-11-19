@@ -145,6 +145,11 @@ body > .progress {
 /*  --------------------------------------------------------  */
 /*  Styles for the admin page                                 */
 /*  --------------------------------------------------------  */
+#nav-d-admin,
+#nav-m-admin {
+  display: none;
+}
+
 .admin-loader {
   display: none;
   vertical-align: bottom;

@@ -298,6 +298,8 @@ firebase.auth().onAuthStateChanged(function(user) {
         user.getIdToken().then(function(idToken) {
           theIdToken = idToken;
         });
+        $('#nav-d-admin').show();
+        $('#nav-m-admin').show();
         $('#drop-acc > li > .title').text(trim(user.displayName, 17) + ' (Admin)');
         $('#nav-mobile > li > div.user-view > .name').text(trim(user.displayName, 17) + ' (Admin)');
       }
