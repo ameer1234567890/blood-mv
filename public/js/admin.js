@@ -1,40 +1,35 @@
 /* jshint esversion: 6 */
 /* jshint browser: true */
-/* globals $, firebase, db, provider, topLoader, authStatusUpdated, matIconDelete, matIconRefresh, matIconCheck, humanDate */
+/* globals $, firebase, db, topLoader, theIdToken:true, authStatusUpdated, isAdmin:true,
+   matIconDelete, matIconRefresh, matIconCheck, matIconClear, humanDate */
+
 
 var nonAdminMessage = '<div class="container"><br><br>Please login with an admin capable user!<br><br><br><br><br><br><br></div>';
-var theIdToken;
 
 $(document).ready(function() {
   if(authStatusUpdated) {
-    firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
-      if (!!idTokenResult.claims.admin) {
-        $('#content').show();
-        firebase.auth().currentUser.getIdToken().then(function(idToken) {
-          theIdToken = idToken;
-        });
-      } else {
-        $('#content').html(nonAdminMessage).show();
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    if(isAdmin) {
+      $('#content').show();
+    } else {
+      $('#content').html(nonAdminMessage).show();
+    }
   } else {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        user.getIdToken().then(function(idToken) {
-          theIdToken = idToken;
-        });
         firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
           if (!!idTokenResult.claims.admin) {
             $('#content').show();
+            isAdmin = true;
+            user.getIdToken().then(function(idToken) {
+              theIdToken = idToken;
+            });
           } else {
             $('#content').html(nonAdminMessage).show();
           }
         })
         .catch((error) => {
           console.log(error);
+          $('#content').html('Something went wrong!').show();
         });
       } else {
         $('#content').html(nonAdminMessage).show();

@@ -29,6 +29,8 @@ $('.dropdown-trigger').dropdown();
 // Some global variables
 var topLoader = '.progress';
 var authStatusUpdated = false;
+var isAdmin = false;
+var theIdToken;
 
 // Turn on jQuery Ajax caching
 $.ajaxSetup({ cache: true });
@@ -289,6 +291,17 @@ firebase.auth().onAuthStateChanged(function(user) {
         $('#nav-d-add > a').text('Edit my details');
         $('#nav-m-add > a').html(matIconEdit + 'Edit my details');
       });
+    });
+    firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+      if (!!idTokenResult.claims.admin) {
+        isAdmin = true;
+        user.getIdToken().then(function(idToken) {
+          theIdToken = idToken;
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
   } else {
     $('#drop-acc > li > .title').text('Not Signed in');
