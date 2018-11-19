@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 /* jshint browser: true */
-/* globals $, firebase, topLoader, setKeyValueStore, getKeyValueStore, db, tableSearch, humanDate,
+/* globals $, firebase, topLoader, setKeyValueStore, getKeyValueStore, db, tableSearch, humanDate, isAdmin,
    matIconCheckBox, matIconCheckBoxOutline, matIconMoreHoriz, matIconExpandMore, matIconRefresh */
 
 var progressElement = '#table-spinner';
@@ -74,7 +74,7 @@ function loadBloodRequests(includeFulfilled, loadMore) {
         .append($('<td>').text(doc.data().place))
         .append($('<td>').text(humanDate(doc.data().datetime.toDate(), true)))
       );
-      if(doc.data().user == firebase.auth().getUid()) {
+      if(doc.data().user == firebase.auth().getUid() || isAdmin) {
         if(doc.data().fulfilled == 'true') {
           $('#requests tbody tr:last-child').append($('<td>').html('<span class="fulf-enabled" id="checkbox-' + doc.id + '" data-fulfilled="' + doc.data().fulfilled + '">' + matIconCheckBox + '</span>'));
         } else {
