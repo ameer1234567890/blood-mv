@@ -1,7 +1,7 @@
 /* jshint esversion: 6 */
 /* jshint browser: true */
 /* globals $, firebase, topLoader, setKeyValueStore, getKeyValueStore, db, tableSearch, humanDate, isAdmin,
-   matIconCheckBox, matIconCheckBoxOutline, matIconMoreHoriz, matIconExpandMore, matIconRefresh */
+   matIconCheckBox, matIconCheckBoxOutline, matIconMoreHoriz, matIconExpandMore, matIconRefresh, matIconDelete */
 
 var progressElement = '#table-spinner';
 var loadMoreElement = '.load-more';
@@ -67,6 +67,10 @@ function loadBloodRequests(includeFulfilled, loadMore) {
   }
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+    if(isAdmin) {
+      $('#requests thead tr:last-child').append($('<th>').html('Delete'));
+      $('<style>@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px){#requests td:nth-of-type(6):before { content: "Delete"; }}</style>').appendTo('head');
+    }
     querySnapshot.forEach((doc) => {
       $('#requests tbody').append($('<tr>')
         .append($('<td scope="row">').text(doc.data().group))
@@ -84,8 +88,15 @@ function loadBloodRequests(includeFulfilled, loadMore) {
         if(doc.data().fulfilled == 'true') {
           $('#requests tbody tr:last-child').append($('<td>').html('<span class="fulf-disabled">' + matIconCheckBox + '</span>'));
         } else {
-          $('#requests tbody tr:last-child').append($('<td>').html('<span class="fulf-disabled">' + matIconCheckBoxOutline + '</span>'));          
+          $('#requests tbody tr:last-child').append($('<td>').html('<span class="fulf-disabled">' + matIconCheckBoxOutline + '</span>'));
         }
+      }
+      if(isAdmin) {
+        $('#requests tbody tr:last-child').append($('<td>').html('<span class="delete" id="delete-' + doc.id + '">' + matIconDelete + '</span>'));
+        $('#delete-' + doc.id).on('click', function(event) {
+          $('#delete-' + doc.id).html(matIconRefresh).addClass('icon-spin');
+          deleteRequest(doc.id);
+        });
       }
       $('#checkbox-' + doc.id).on('click', function(event) {
         var isFulfilled = $('#checkbox-' + doc.id).attr('data-fulfilled');
@@ -147,6 +158,24 @@ function toggleFullfillment(docId, isFulfilled) {
       });
       console.error(error);
     });
+  }
+}
+
+
+function deleteRequest(docId) {
+  if(confirm('Are you sure you want to delete the request "' + docId + '"?')) {
+    db.collection(collectionName).doc(docId).delete()
+    .then(function(docRef) {
+      $('#delete-' + docId).parent().parent().addClass('deleted');
+      setTimeout(function() { $('#delete-' + docId).parent().parent().remove(); }, 1500);
+    })
+    .catch(function(error) {
+      $('#delete-' + docId).html(matIconDelete).removeClass('icon-spin');
+      console.error(error);
+    });
+  } else {
+    $('#delete-' + docId).html(matIconDelete).removeClass('icon-spin');
+    console.log('Delete dialog dismissed');
   }
 }
 

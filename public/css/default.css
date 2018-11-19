@@ -143,7 +143,7 @@ body > .progress {
 }
 
 /*  --------------------------------------------------------  */
-/*  Styles for the admin page                                 */
+/*  Styles for admin interfac                                 */
 /*  --------------------------------------------------------  */
 #nav-d-admin,
 #nav-m-admin {
@@ -159,12 +159,12 @@ body > .progress {
   display: none;
 }
 
-.user-delete {
+.delete {
   cursor: pointer;
   fill: #009688;
 }
 
-.user-delete:hover {
+.delete:hover {
   fill: #00796b;
 }
 

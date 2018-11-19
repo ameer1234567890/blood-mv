@@ -227,7 +227,7 @@ $('#list-users').on('click', function() {
           }
           usersTable += '<td>' + humanDate(data[user].metadata.creationTime, true) + '</td>';
           usersTable += '<td>' + humanDate(data[user].metadata.lastSignInTime, true) + '</td>';
-          usersTable += '<td><a class="user-delete" data-user="' + data[user].uid + '">' + matIconDelete + '</a></td>';
+          usersTable += '<td><a class="delete" data-user="' + data[user].uid + '">' + matIconDelete + '</a></td>';
           usersTable += '</tr>';
         }
       }
