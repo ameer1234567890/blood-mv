@@ -89,7 +89,7 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
         $('#donors tbody tr:last-child').append($('<td>').html('<span class="delete" id="delete-' + doc.id + '">' + matIconDelete + '</span>'));
         $('#delete-' + doc.id).on('click', function(event) {
           $('#delete-' + doc.id).html(matIconRefresh).addClass('icon-spin');
-          deleteDonor(doc.id, doc.data().first + ' ' + doc.data().last));
+          deleteDonor(doc.id, doc.data().first + ' ' + doc.data().last);
         });
       }
     });
