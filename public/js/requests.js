@@ -59,6 +59,9 @@ function loadBloodRequests(includeFulfilled, loadMore) {
       query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc').startAfter(lastVisible);
     }
   } else {
+    if(isAdmin) {
+      $('#requests thead tr:last-child').append($('<th>').html('Delete'));
+    }
     if(includeFulfilled) {
       query = db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc');
     } else {
@@ -67,9 +70,6 @@ function loadBloodRequests(includeFulfilled, loadMore) {
   }
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
-    if(isAdmin) {
-      $('#requests thead tr:last-child').append($('<th>').html('Delete'));
-    }
     querySnapshot.forEach((doc) => {
       $('#requests tbody').append($('<tr>')
         .append($('<td scope="row">').text(doc.data().group))
