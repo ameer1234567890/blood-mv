@@ -7,6 +7,6 @@
     "firebase-tools": "^6.1.0",
     "google-closure-compiler": "^20181028.0.1",
     "jshint": "^2.9.6"
-  }
+  },
   "private": true
 }
