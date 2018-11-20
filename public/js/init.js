@@ -210,7 +210,7 @@ function age(dob) {
 }
 
 
-// Dates for the humans
+// Dates for homo sapiens
 function humanDate(date, returnTime) {
   date = new Date(date);
   var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -342,12 +342,13 @@ messaging.onMessage(function(payload) {
 });
 
 
+ga('set', 'dimension2', 'No');
 var deferredPrompt;
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   deferredPrompt = e;
   console.log('beforeinstallprompt triggered');
-  ga('send', 'event', 'A2H', 'triggered');
+  ga('set', 'dimension2', 'Yes');
   if(getSessionStore('hideA2HS')) {
     console.log('User has closed A2HS banner before. It is hidden for this session.');
   } else {
@@ -356,8 +357,9 @@ window.addEventListener('beforeinstallprompt', function(e) {
 });
 
 
+ga('set', 'dimension3', 'No');
 window.addEventListener('appinstalled', function(event) {
-  ga('send', 'event', 'A2H', 'installed');
+  ga('set', 'dimension3', 'Yes');
 });
 
 
@@ -371,7 +373,7 @@ function addToHomeScreen() {
   $('.a2hs-banner').hide();
   deferredPrompt.prompt();
   deferredPrompt.userChoice.then(function(choiceResult) {
-    ga('send', 'event', 'A2H', choiceResult.outcome);
+    ga('set', 'dimension4', choiceResult.outcome);
     if (choiceResult.outcome === 'accepted') {
       console.log('User accepted the A2HS prompt');
     } else {
@@ -408,14 +410,13 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 ga('create', 'UA-128907524-1', 'auto');
 ga('set', 'dimension1', 'online');
-ga('send', 'pageview');
-/* jshint ignore:end */
-
 if ('storage' in navigator && 'estimate' in navigator.storage) {
   navigator.storage.estimate().then(({usage, quota}) => {
     var usageInMB = (usage / 1024 / 1024).toFixed(2);
     var quotaInMB = (quota / 1024 / 1024).toFixed(2);
-    ga('send', 'event', 'StorageQuota', quotaInMB);
-    ga('send', 'event', 'StorageUsage', usageInMB);
+    ga('set', 'metric2', quotaInMB);
+    ga('set', 'metric3', usageInMB);
   });
 }
+ga('send', 'pageview');
+/* jshint ignore:end */
