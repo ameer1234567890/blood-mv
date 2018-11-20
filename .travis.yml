@@ -6,7 +6,8 @@ cache:
     - "node_modules"
     - "functions/node_modules"
 install:
-  - npm install
+#  - npm install
+  - yarn install
 # Comment below if functions are not to be deployed
 # before_script:
 #  - cd functions
