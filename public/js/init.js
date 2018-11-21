@@ -414,8 +414,8 @@ ga('create', 'UA-128907524-1', 'auto');
 ga('set', 'dimension1', 'online');
 if ('storage' in navigator && 'estimate' in navigator.storage) {
   navigator.storage.estimate().then(({usage, quota}) => {
-    var usageInMB = (usage / 1024 / 1024).toFixed(2);
-    var quotaInMB = (quota / 1024 / 1024).toFixed(2);
+    var usageInMB = Math.round(usage / 1024 / 1024);
+    var quotaInMB = Math.round(quota / 1024 / 1024);
     ga('set', 'metric2', quotaInMB);
     ga('set', 'metric3', usageInMB);
   });
