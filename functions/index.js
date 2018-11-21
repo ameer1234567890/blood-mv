@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
@@ -136,7 +137,7 @@ exports.listUsers = functions.https.onRequest((req, res) => {
           .then((listUsersResult) => {
             numUsers = 0;
             listUsersResult.users.forEach((userRecord) => {
-              numUsers++
+              numUsers++;
             });
             numRecords = 0;
             listUsersResult.users.forEach((userRecord) => {
@@ -209,7 +210,7 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
   const group = snap.data().group;
   const place = snap.data().place;
   const phone = snap.data().phone;
-  groups = new Object();
+  groups = new {};
   groups['A+'] = 'apositive';
   groups['A-'] = 'anegative';
   groups['B+'] = 'bpositive';
