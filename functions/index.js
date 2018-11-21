@@ -2,46 +2,47 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
-var db = admin.firestore();
+const db = admin.firestore();
 db.settings({timestampsInSnapshots: true});
 const https = require('https');
 
 
 exports.subscribeToTopic = functions.https.onRequest((req, res) => {
+  console.log('Function Version: v1');
   var registrationTokens = [ req.body.token ];
   var topic = req.body.topic;
   console.log(req.body); // Uncomment this line for debugging
   admin.messaging().subscribeToTopic(registrationTokens, topic)
     .then((response) => {
       console.log('Successfully subscribed to topic:', response);
-      res.status(200).send('{"status": "OK", "message": "Successfully subscribed to topic"}');
-      return true;
+      return res.status(200).send('{"status": "OK", "message": "Successfully subscribed to topic"}');
     })
     .catch((error) => {
       console.log('Error subscribing to topic:', error);
-      res.status(500).send('{"status": "ERROR", "message": "Error subscribing to topic"}');
+      return res.status(500).send('{"status": "ERROR", "message": "Error subscribing to topic"}');
     });
 });
 
 
 exports.unsubscribeFromTopic = functions.https.onRequest((req, res) => {
+  console.log('Function Version: v1');
   var registrationTokens = [ req.body.token ];
   var topic = req.body.topic;
   console.log(req.body); // Uncomment this line for debugging
   admin.messaging().unsubscribeFromTopic(registrationTokens, topic)
     .then((response) => {
       console.log('Successfully unsubscribed from topic:', response);
-      res.status(200).send('{"status": "OK", "message": "Successfully unsubscribed from topic"}');
-      return true;
+      return res.status(200).send('{"status": "OK", "message": "Successfully unsubscribed from topic"}');
     })
     .catch((error) => {
       console.log('Error unsubscribing to topic:', error);
-      res.status(500).send('{"status": "ERROR", "message": "Error unsubscribing from topic"}');
+      return res.status(500).send('{"status": "ERROR", "message": "Error unsubscribing from topic"}');
     });
 });
 
 
 exports.tokenDetails = functions.https.onRequest((req, res) => {
+  console.log('Function Version: v1');
   const idToken = req.body.idToken;
   admin.auth().verifyIdToken(idToken)
     .then((claims) => {
@@ -62,28 +63,27 @@ exports.tokenDetails = functions.https.onRequest((req, res) => {
           });
           resp.on('end', () => {
             console.log(data);
-            res.status(200).send(data);
+            return res.status(200).send(data);
           });
         }).on('error', (err) => {
           console.log('Error: ' + err.message);
-          res.status(500).send('{"status": "ERROR", "message": "Error getting token details"}');
+          return res.status(500).send('{"status": "ERROR", "message": "Error getting token details"}');
         });
       } else {
         console.log('Error: Not an admin user!');
-        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
-        return false;
+        return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
       }
       return true;
     })
     .catch((error) => {
         console.log('Error: Not an admin user!');
-        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
-        return false;
+        return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
     });
 });
 
 
 exports.sendMessageViaWeb = functions.https.onRequest((req, res) => {
+  console.log('Function Version: v1');
   const idToken = req.body.idToken;
   admin.auth().verifyIdToken(idToken)
     .then((claims) => {
@@ -101,111 +101,91 @@ exports.sendMessageViaWeb = functions.https.onRequest((req, res) => {
           topic: topic
         };
         console.log(message);
-        admin.messaging().send(message)
-          .then((response) => {
-            console.log('Successfully sent message: ', response);
-            res.status(200).send('{"status": "OK", "message": "Message sent"}');
-            return true;
-          })
-          .catch((error) => {
-            console.log('Error sending message: ', error);
-            res.status(500).send('{"status": "ERROR", "message": "Error sending message"}');
-            return false;
-          });
+        return admin.messaging().send(message);
       } else {
         console.log('Error: Not an admin user!');
-        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
-        return false;
+        return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
       }
-      return true;
+    })
+    .then((response) => {
+      console.log('Successfully sent message: ', response);
+      return res.status(200).send('{"status": "OK", "message": "Message sent"}');
     })
     .catch((error) => {
-        console.log('Error: Not an admin user!');
-        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
-        return false;
+      console.log('Error sending message: ', error);
+      return res.status(500).send('{"status": "ERROR", "message": "Error sending message"}');
     });
 });
 
 
 exports.listUsers = functions.https.onRequest((req, res) => {
+  console.log('Function Version: v4');
   const idToken = req.body.idToken;
+  var users = '{';
   admin.auth().verifyIdToken(idToken)
     .then((claims) => {
       if (claims.admin) {
-        var users = '{';
-        admin.auth().listUsers(1000)
-          .then((listUsersResult) => {
-            numUsers = 0;
-            listUsersResult.users.forEach((userRecord) => {
-              numUsers++;
-            });
-            numRecords = 0;
-            listUsersResult.users.forEach((userRecord) => {
-              numRecords++;
-              users += '"' + userRecord.uid + '":';
-              users += JSON.stringify(userRecord.toJSON());
-              if(numRecords !== numUsers) {
-                users += ',';
-              }
-            });
-            users += '}';
-            console.log(users);
-            res.status(200).send(users);
-            return true;
-          })
-          .catch((error) => {
-            console.log('Error listing users: ', error);
-            res.status(500).send('{"status": "ERROR", "message": "Error listing users"}');
-            return false;
-          });
+        return admin.auth().listUsers(1000);
       } else {
         console.log('Error: Not an admin user!');
-        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
-        return false;
+        return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
       }
-      return true;
+    })
+    .then((listUsersResult) => {
+      numUsers = 0;
+      listUsersResult.users.forEach((userRecord) => {
+        numUsers++;
+      });
+      numRecords = 0;
+      listUsersResult.users.forEach((userRecord) => {
+        numRecords++;
+        users += '"' + userRecord.uid + '":';
+        users += JSON.stringify(userRecord.toJSON());
+        if(numRecords !== numUsers) {
+          users += ',';
+        }
+      });
+      users += '}';
+      console.log(users);
+      return res.status(200).send(users);
+    })
+    .catch((error) => {
+      console.log('Error listing users: ', error);
+      return res.status(500).send('{"status": "ERROR", "message": "Error listing users"}');
     })
     .catch((error) => {
         console.log('Error: Not an admin user!');
-        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
-        return false;
+        return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
     });
 });
 
 
 exports.deleteUser = functions.https.onRequest((req, res) => {
+  console.log('Function Version: v1');
   const idToken = req.body.idToken;
   admin.auth().verifyIdToken(idToken)
     .then((claims) => {
       if (claims.admin) {
         var uid = req.body.uid;
-        admin.auth().deleteUser(uid)
-          .then( () => {
-            console.log('Successfully deleted user');
-            res.status(200).send('{"status": "OK", "message": "User deleted successfully"}');
-            return true;
-          })
-          .catch((error) => {
-            console.log('Error deleting user: ', error);
-            res.status(500).send('{"status": "ERROR", "message": "Error deleting user"}');
-            return false;
-          });
+        return admin.auth().deleteUser(uid);
       } else {
         console.log('Error: Not an admin user!');
-        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
-        return false;
+        return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
       }
-      return true;
+    })
+    .then( () => {
+      console.log('Successfully deleted user');
+      return res.status(200).send('{"status": "OK", "message": "User deleted successfully"}');
     })
     .catch((error) => {
-        console.log('Error: Not an admin user!');
-        res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
-        return false;
+      console.log('Error deleting user: ', error);
+      return res.status(500).send('{"status": "ERROR", "message": "Error deleting user"}');
     });
 });
 
 
 exports.sendNotification = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
+  console.log('Function Version: v1');
   console.log(snap.data());
   const group = snap.data().group;
   const place = snap.data().place;
@@ -233,34 +213,27 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
   console.log(message);
   admin.messaging().send(message)
     .then((response) => {
-      console.log('Successfully sent message: ', response);
-      return true;
+      return console.log('Successfully sent message: ', response);
     })
     .catch((error) => {
-      console.log('Error sending message: ', error);
-      return false;
+      return console.log('Error sending message: ', error);
     });
-    return message;
 });
 
 
 exports.addAdminClaim = functions.https.onRequest((req, res) => {
+  console.log('Function Version: v1');
   const idToken = req.body.idToken;
-  admin.auth().verifyIdToken(idToken).then((claims) => {
-    if (claims.email === 'ameer1234567890@gmail.com') {
-      admin.auth().setCustomUserClaims(claims.sub, {
-        admin: true
-      }).then(() => {
-        res.end(JSON.stringify({status: 'success'}));
-        return true;
-      }).catch((error) => {
-        res.end(JSON.stringify({error: error}));
-      });
-    } else {
-      res.end(JSON.stringify({status: 'ineligible'}));
-    }
-    return true;
-  }).catch((error) => {
-    res.end(JSON.stringify({error: error}));
-  });
+  admin.auth().verifyIdToken(idToken)
+    .then((claims) => {
+      if (claims.email === 'ameer1234567890@gmail.com') {
+        return admin.auth().setCustomUserClaims(claims.sub, { admin: true });
+      } else {
+        return res.end(JSON.stringify({status: 'ineligible'}));
+      }
+    }).then(() => {
+      return res.end(JSON.stringify({status: 'success'}));
+    }).catch((error) => {
+      return res.end(JSON.stringify({error: error}));
+    });
 });

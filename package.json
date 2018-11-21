@@ -4,7 +4,7 @@
     "csso-cli": "^1.1.0",
     "firebase-admin": "^6.2.0",
     "firebase-functions": "^2.1.0",
-    "firebase-tools": "^6.1.0",
+    "firebase-tools": "^6.1.1",
     "google-closure-compiler": "^20181028.0.1",
     "jshint": "^2.9.6"
   },
