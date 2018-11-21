@@ -86,36 +86,31 @@ $('#mark-fulfilled').on('click', function() {
   var collectionName = 'requests';
   var oneWeekBack = new Date(d.setDate(d.getDate() - 7));
   var i = 0;
-  var processedRecords = 0;
-  var progressPercentage = 0;
+  var batch = db.batch();
   query = db.collection(collectionName).where('fulfilled', '==', 'false').where('datetime', '<', oneWeekBack);
   query.get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       i++;
       console.log('Processing ' + doc.id + '...');
-      db.collection(collectionName).doc(doc.id).update({
-        fulfilled: 'true'
-      })
-      .then(function() {
-        console.log('Marked ' + doc.id + ' as fulfilled');
-        processedRecords++;
-        progressPercentage = Math.round((processedRecords / i) * 100);
-        $('#mark-fulfilled-progress > .progress > .determinate').css('width', progressPercentage + '%');
-        if(processedRecords === i) {
-          $('#mark-fulfilled-progress > .progress > .determinate').css('width', '100%');
-        }
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
+      batch.update(db.collection(collectionName).doc(doc.id), {'fulfilled': 'true'});
     });
-    if(i === 0) {
-      $('#mark-fulfilled-progress > .progress > .determinate').css('width', '100%');
-      $('#mark-fulfilled-result').text('No records to process!').removeAttr('class').addClass('green-text');
-    } else {
-      $('#mark-fulfilled-result').text('Queued ' + i + ' records.').removeAttr('class').addClass('green-text');
-    }
+  })
+  .then(function(){
+    batch.commit().then(function () {
     $('#mark-fulfilled-loader').hide();
+    $('#mark-fulfilled').removeAttr('disabled');
+    if(i === 0) {
+        console.log('No records to process!');
+        $('#mark-fulfilled-result').text('No records to process!').removeAttr('class').addClass('green-text');
+      } else {
+        console.log('Processed ' + i + ' records.');
+        $('#mark-fulfilled-result').text('Marked ' + i + ' records as fulfilled.').removeAttr('class').addClass('green-text');
+      }
+    });
+  })
+  .catch(function(error){
+    console.error('Error: ', error);
+    $('#mark-fulfilled-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
     $('#mark-fulfilled').removeAttr('disabled');
   });
 });
