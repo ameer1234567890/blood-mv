@@ -86,6 +86,13 @@ var matIconShare = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="2
                    '</svg>';
 
 
+/* jshint ignore:start */
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+/* jshint ignore:end */
+
 // History API Magic: Lifted from https://codepen.io/matt-west/pen/FGHAK
 var defaultPage = 'donors';
 var pages = {
@@ -403,11 +410,6 @@ if ('serviceWorker' in navigator) {
 }
 
 
-/* jshint ignore:start */
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 ga('create', 'UA-128907524-1', 'auto');
 ga('set', 'dimension1', 'online');
 if ('storage' in navigator && 'estimate' in navigator.storage) {
@@ -419,4 +421,3 @@ if ('storage' in navigator && 'estimate' in navigator.storage) {
   });
 }
 ga('send', 'pageview');
-/* jshint ignore:end */
