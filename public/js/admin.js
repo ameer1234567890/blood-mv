@@ -113,7 +113,7 @@ $('#mark-fulfilled').on('click', function() {
       $('#mark-fulfilled-progress > .progress > .determinate').css('width', '100%');
       $('#mark-fulfilled-result').text('No records to process!').removeAttr('class').addClass('green-text');
     } else {
-      $('#mark-fulfilled-result').text('Done processing ' + i + ' records.').removeAttr('class').addClass('green-text');
+      $('#mark-fulfilled-result').text('Queued ' + i + ' records.').removeAttr('class').addClass('green-text');
     }
     $('#mark-fulfilled-loader').hide();
     $('#mark-fulfilled').removeAttr('disabled');
