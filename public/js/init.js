@@ -299,19 +299,20 @@ firebase.auth().onAuthStateChanged(function(user) {
       performLogout();
     });
     authStatusUpdated = true;
-    if(!getKeyValueStore('donorId')) {
+    if(!localStorage.getItem('donorId')) {
       db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           $('#nav-d-add > a').text('Edit my details');
           $('#nav-m-add > a').html(matIconEdit + 'Edit my details');
-          setKeyValueStore('donorId', doc.id);
-          donorId = doc.id;
+          localStorage.setItem('donorId', doc.id);
         });
+        if(!localStorage.getItem('donorId')) {
+          localStorage.setItem('donorId', 'none');
+        }
       });
-    } else {
-      if(getKeyValueStore('donorId') != 'none') {
-        donorId = getKeyValueStore('donorId');
-      }
+    } else if(localStorage.getItem('donorId') != 'none') {
+      $('#nav-d-add > a').text('Edit my details');
+      $('#nav-m-add > a').html(matIconEdit + 'Edit my details');
     }
     firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
       if (!!idTokenResult.claims.admin) {
