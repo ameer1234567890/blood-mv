@@ -20,14 +20,12 @@ $(document).ready(function() {
     islandsInstance.destroy();
     loadExistingData();
     initializeSelects();
-    $(progressElement).hide();
   } else {
     firebase.auth().onAuthStateChanged(function() {
       atollsInstance.destroy();
       islandsInstance.destroy();
       loadExistingData();
       initializeSelects();
-      $(progressElement).hide();
     });
   }
 });
@@ -56,6 +54,7 @@ function loadExistingData() {
         $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false)).focus();
         $('#addDonor').html('Update Record' + matIconEdit);
         $('#mainForm #first').focus().blur();
+        $(progressElement).hide();
       });
     } else if(!localStorage.getItem('donorId')) {
       db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
@@ -79,9 +78,14 @@ function loadExistingData() {
           $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false)).focus();
           $('#addDonor').html('Update Record' + matIconEdit);
           $('#mainForm #first').focus().blur();
+          $(progressElement).hide();
         });
       });
+    } else {
+      $(progressElement).hide();
     }
+  } else {
+    $(progressElement).hide();
   }
 }
 
@@ -129,7 +133,6 @@ $('#atoll').on('change', function(event) {
 $('#addDonor').on('click', function(event) {
   if(!firebase.auth().currentUser) {
     event.preventDefault();
-    $('#spinner').hide();
     $('#result').html('Please <a id="logineasy">Login</a> with a Google account.');
     $('#result').addClass('red-text');
     $('#logineasy').on('click', function(event) {
@@ -139,16 +142,10 @@ $('#addDonor').on('click', function(event) {
   } else {
     if($('#mainForm')[0].checkValidity()) {
       event.preventDefault();
-      if($('#first').val() != '' ||
-         $('#last').val() != '' ||
-         $('#gender').val() != '' ||
-         $('#born').val() != '' ||
-         $('#group').val() != '' ||
-         $('#atoll').val() != '' ||
-         $('#island').val() != '' ||
-         $('#donated').val() != '' ||
-         $('#phone').val() != '') {
+      if($('#first').val() != '' || $('#last').val() != '' || $('#gender').val() != '' || $('#born').val() != '' || $('#group').val() != ''||
+         $('#atoll').val() != '' || $('#island').val() != '' || $('#donated').val() != '' || $('#phone').val() != '') {
         $('#addDonor').attr('disabled', 'disabled');
+        $(progressElement).show();
         $('#result').text('');
         if(isNewUser == true) {
           db.collection('donors').add({
@@ -168,10 +165,13 @@ $('#addDonor').on('click', function(event) {
             $('#result').text('Record added!');
             $('#result').addClass('green-text');
             $('#mainForm')[0].reset();
+            $('#addDonor').removeAttr('disabled');
+            $(progressElement).hide();
           })
           .catch(function(error) {
             $('#result').text('Error: Something went wrong!');
             $('#result').addClass('red-text');
+            $(progressElement).hide();
             console.error(error);
           });
         } else {
@@ -192,14 +192,17 @@ $('#addDonor').on('click', function(event) {
             $('#result').text('Record updated!');
             $('#result').addClass('green-text');
             $('#mainForm')[0].reset();
+            $('#addDonor').removeAttr('disabled');
+            $(progressElement).hide();
           })
           .catch(function(error) {
             $('#result').text('Error: Something went wrong!');
             $('#result').addClass('red-text');
+            $('#addDonor').removeAttr('disabled');
+            $(progressElement).hide();
             console.error(error);
           });
         }
-        $('#addDonor').removeAttr('disabled');
       } else {
         $('#result').text('Please fill all details!');
         $('#result').addClass('red-text');
