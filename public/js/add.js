@@ -38,26 +38,30 @@ function loadExistingData() {
   if (firebase.auth().currentUser) {
     $('#mainForm #email').val(firebase.auth().currentUser.email);
     $('#mainForm #user').val(firebase.auth().getUid());
-    db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        theDocId = doc.id;
-        isNewUser = false;
-        $('#mainForm #first').val(doc.data().first).focus();
-        $('#mainForm #last').val(doc.data().last).focus();
-        $('#mainForm #gender').val(doc.data().gender);
-        $('#mainForm #born').val(htmlDate(doc.data().born.toDate(), false)).focus();
-        $('#mainForm #group').val(doc.data().group);
-        $('#mainForm #atoll').val(doc.data().atoll);
-        $.when(loadIslands($('#mainForm #atoll').find(':selected').data('letter'))).done(function(){
-          $('#island').append($('<option/>').attr('value', doc.data().island).text(doc.data().island)); // This is just a temporary hack
-          $('#mainForm #island').val(doc.data().island);
+    if(getKeyValueStore('donorId')) {
+      if(getKeyValueStore('donorId') != 'none') {
+        db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            theDocId = doc.id;
+            isNewUser = false;
+            $('#mainForm #first').val(doc.data().first).focus();
+            $('#mainForm #last').val(doc.data().last).focus();
+            $('#mainForm #gender').val(doc.data().gender);
+            $('#mainForm #born').val(htmlDate(doc.data().born.toDate(), false)).focus();
+            $('#mainForm #group').val(doc.data().group);
+            $('#mainForm #atoll').val(doc.data().atoll);
+            $.when(loadIslands($('#mainForm #atoll').find(':selected').data('letter'))).done(function(){
+              $('#island').append($('<option/>').attr('value', doc.data().island).text(doc.data().island)); // This is just a temporary hack
+              $('#mainForm #island').val(doc.data().island);
+            });
+            $('#mainForm #phone').val(doc.data().phone).focus();
+            $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false)).focus();
+            $('#addDonor').html('Update Record' + matIconEdit);
+            $('#mainForm #first').focus().blur();
+          });
         });
-        $('#mainForm #phone').val(doc.data().phone).focus();
-        $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false)).focus();
-        $('#addDonor').html('Update Record' + matIconEdit);
-        $('#mainForm #first').focus().blur();
-      });
-    });
+      }
+    }
   }
 }
 

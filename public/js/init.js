@@ -298,13 +298,21 @@ firebase.auth().onAuthStateChanged(function(user) {
     $('#nav-m-sign > a').html(matIconExitToApp + 'Sign out').off().on('click', function(){
       performLogout();
     });
-    db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        authStatusUpdated = true;
-        $('#nav-d-add > a').text('Edit my details');
-        $('#nav-m-add > a').html(matIconEdit + 'Edit my details');
+    authStatusUpdated = true;
+    if(!getKeyValueStore('donorId')) {
+      db.collection('donors').where('user', '==', firebase.auth().getUid()).limit(1).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          $('#nav-d-add > a').text('Edit my details');
+          $('#nav-m-add > a').html(matIconEdit + 'Edit my details');
+          setKeyValueStore('donorId', doc.id);
+          donorId = doc.id;
+        });
       });
-    });
+    } else {
+      if(getKeyValueStore('donorId') != 'none') {
+        donorId = getKeyValueStore('donorId');
+      }
+    }
     firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
       if (!!idTokenResult.claims.admin) {
         isAdmin = true;
