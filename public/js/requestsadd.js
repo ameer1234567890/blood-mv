@@ -28,7 +28,6 @@ $(document).ready(function() {
 
 // Add request to database
 $('#addRequest').on('click', function(event) {
-  $(progressElement).show();
   if(!firebase.auth().currentUser) {
     event.preventDefault();
     $('#result').html('Please <a id="logineasy">Login</a> with a Google account.');
@@ -36,16 +35,13 @@ $('#addRequest').on('click', function(event) {
       event.preventDefault();
       performLogin();
     });
-    $(progressElement).hide();
   } else {
     if($('#mainForm')[0].checkValidity()) {
       event.preventDefault();
-      if($('#group').val() != '' ||
-         $('#phone').val() != '' ||
-         $('#place').val() != '') {
+      if($('#group').val() != '' || $('#phone').val() != '' || $('#place').val() != '') {
         $('#addRequest').attr('disabled', 'disabled');
         $('#result').text('');
-        $('#spinner').show();
+        $(progressElement).show();
         db.collection(collectionName).add({
           group: $('#group').val(),
           phone: $('#phone').val(),
@@ -59,17 +55,18 @@ $('#addRequest').on('click', function(event) {
           $('#result').text('Record added!');
           $('#result').addClass('green-text');
           $('#mainForm')[0].reset();
+          $('#addDonor').removeAttr('disabled');
+          $(progressElement).hide();
         })
         .catch(function(error) {
           $('#result').text('Error: Something went wrong!');
+          $('#addDonor').removeAttr('disabled');
+          $(progressElement).hide();
           console.error(error);
         });
-        $('#addDonor').removeAttr('disabled');
-        $(progressElement).hide();
       } else {
         $('#result').text('Please fill all details!');
         $('#result').addClass('red-text');
-        $(progressElement).hide();
       }
     }
   }
