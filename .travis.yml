@@ -19,4 +19,4 @@ deploy:
   - provider: script
     script: firebase deploy --only hosting --project blood-mv --token $FIREBASE_TOKEN
     on:
-      condition: $TRAVIS_COMMIT_MESSAGE =~ ^nodeploy.*
+      condition: $TRAVIS_COMMIT_MESSAGE =~ /^(nodeploy).*$/
