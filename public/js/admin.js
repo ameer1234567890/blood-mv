@@ -104,6 +104,7 @@ $('#mark-fulfilled').on('click', function() {
         $('#mark-fulfilled-result').text('No records to process!').removeAttr('class').addClass('green-text');
       } else {
         console.log('Processed ' + i + ' records.');
+        var pluralizer = '';
         if (i != 1) { pluralizer = 's'; }
         $('#mark-fulfilled-result').text('Marked ' + i + ' record' + pluralizer + ' as fulfilled.').removeAttr('class').addClass('green-text');
       }
