@@ -13,6 +13,8 @@ install:
 #  - cd functions
 #  - npm install
 #  - cd ..
+script:
+  - pwd
 deploy:
   - provider: script
     script: firebase deploy --only hosting --project blood-mv --token $FIREBASE_TOKEN
