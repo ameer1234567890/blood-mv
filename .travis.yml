@@ -17,5 +17,5 @@ script:
   - echo "Nothing to do here"
 stages:
   - name: deploy
-    if: nodeploy IN $TRAVIS_COMMIT_MESSAGE
+    if: nodeploy NOT IN $TRAVIS_COMMIT_MESSAGE
     script: firebase deploy --only hosting --project blood-mv --token $FIREBASE_TOKEN
