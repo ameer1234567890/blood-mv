@@ -105,7 +105,9 @@ $('#mark-fulfilled').on('click', function() {
       } else {
         console.log('Processed ' + i + ' records.');
         var pluralizer = '';
-        if (i != 1) { pluralizer = 's'; }
+        if (i != 1) {
+          pluralizer = 's';
+        }
         $('#mark-fulfilled-result').text('Marked ' + i + ' record' + pluralizer + ' as fulfilled.').removeAttr('class').addClass('green-text');
       }
     });
