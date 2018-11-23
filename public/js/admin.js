@@ -104,7 +104,7 @@ $('#mark-fulfilled').on('click', function() {
         $('#mark-fulfilled-result').text('No records to process!').removeAttr('class').addClass('green-text');
       } else {
         console.log('Processed ' + i + ' records.');
-        $('#mark-fulfilled-result').text('Marked ' + i + ' records as fulfilled.').removeAttr('class').addClass('green-text');
+        $('#mark-fulfilled-result').text('Marked ' + i + ' record' + (i != 1) ? 's' + ' as fulfilled.').removeAttr('class').addClass('green-text');
       }
     });
   })
