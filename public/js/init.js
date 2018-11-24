@@ -418,7 +418,9 @@ if ('serviceWorker' in navigator) {
 }
 
 
-ga('create', 'UA-128907524-1', 'auto');
+ga('create', 'UA-128907524-1', {'siteSpeedSampleRate': 100});
+ga('set', 'screenResolution', window.outerWidth + 'x' + window.outerHeight);
+ga('set', 'viewportSize', window.innerWidth + 'x' + window.innerHeight);
 ga('set', 'dimension1', 'online');
 if ('storage' in navigator && 'estimate' in navigator.storage) {
   navigator.storage.estimate().then(({usage, quota}) => {
