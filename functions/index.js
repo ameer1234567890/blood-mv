@@ -3,13 +3,13 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 const db = admin.firestore();
-db.settings({timestampsInSnapshots: true});
+db.settings({ timestampsInSnapshots: true });
 const https = require('https');
 
 
 exports.subscribeToTopic = functions.https.onRequest((req, res) => {
   console.log('Function Version: v1');
-  var registrationTokens = [ req.body.token ];
+  var registrationTokens = [req.body.token];
   var topic = req.body.topic;
   console.log(req.body); // Uncomment this line for debugging
   admin.messaging().subscribeToTopic(registrationTokens, topic)
@@ -26,7 +26,7 @@ exports.subscribeToTopic = functions.https.onRequest((req, res) => {
 
 exports.unsubscribeFromTopic = functions.https.onRequest((req, res) => {
   console.log('Function Version: v1');
-  var registrationTokens = [ req.body.token ];
+  var registrationTokens = [req.body.token];
   var topic = req.body.topic;
   console.log(req.body); // Uncomment this line for debugging
   admin.messaging().unsubscribeFromTopic(registrationTokens, topic)
@@ -76,8 +76,8 @@ exports.tokenDetails = functions.https.onRequest((req, res) => {
       return true;
     })
     .catch((error) => {
-        console.log('Error: Not an admin user!');
-        return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+      console.log('Error: Not an admin user!');
+      return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
     });
 });
 
@@ -141,7 +141,7 @@ exports.listUsers = functions.https.onRequest((req, res) => {
         numRecords++;
         users += '"' + userRecord.uid + '":';
         users += JSON.stringify(userRecord.toJSON());
-        if(numRecords !== numUsers) {
+        if (numRecords !== numUsers) {
           users += ',';
         }
       });
@@ -154,8 +154,8 @@ exports.listUsers = functions.https.onRequest((req, res) => {
       return res.status(500).send('{"status": "ERROR", "message": "Error listing users"}');
     })
     .catch((error) => {
-        console.log('Error: Not an admin user!');
-        return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
+      console.log('Error: Not an admin user!');
+      return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
     });
 });
 
@@ -173,7 +173,7 @@ exports.deleteUser = functions.https.onRequest((req, res) => {
         return res.status(500).send('{"status": "ERROR", "message": "Not an admin user"}');
       }
     })
-    .then( () => {
+    .then(() => {
       console.log('Successfully deleted user');
       return res.status(200).send('{"status": "OK", "message": "User deleted successfully"}');
     })
@@ -229,11 +229,11 @@ exports.addAdminClaim = functions.https.onRequest((req, res) => {
       if (claims.email === 'ameer1234567890@gmail.com') {
         return admin.auth().setCustomUserClaims(claims.sub, { admin: true });
       } else {
-        return res.end(JSON.stringify({status: 'ineligible'}));
+        return res.end(JSON.stringify({ status: 'ineligible' }));
       }
     }).then(() => {
-      return res.end(JSON.stringify({status: 'success'}));
+      return res.end(JSON.stringify({ status: 'success' }));
     }).catch((error) => {
-      return res.end(JSON.stringify({error: error}));
+      return res.end(JSON.stringify({ error: error }));
     });
 });
