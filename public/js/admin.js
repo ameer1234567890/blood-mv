@@ -162,6 +162,9 @@ $('#token-details').on('click', function() {
       $('#token-details-result').text(JSON.stringify(data)).removeAttr('class').addClass('green-text');
       $('#token-details-loader').hide();
       $('#token-details').removeAttr('disabled');
+      if(data.error) {
+        $('#token-details-result').removeAttr('class').addClass('red-text');
+      }
     },
     error: function(xhr, status, error) {
       console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
