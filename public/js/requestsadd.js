@@ -30,7 +30,7 @@ $(document).ready(function() {
 $('#addRequest').on('click', function(event) {
   if(!firebase.auth().currentUser) {
     event.preventDefault();
-    $('#result').html('Please <a id="logineasy">Login</a> with a Google account.');
+    $('#result').html('Please <a id="logineasy">Login</a> with a Google account.').addClass('red-text');
     $('#logineasy').on('click', function(event) {
       event.preventDefault();
       performLogin();
@@ -52,21 +52,19 @@ $('#addRequest').on('click', function(event) {
           user: $('#user').val()
         })
         .then(function(docRef) {
-          $('#result').text('Record added!');
-          $('#result').addClass('green-text');
+          $('#result').text('Record added!').addClass('green-text');
           $('#mainForm')[0].reset();
           $('#addDonor').removeAttr('disabled');
           $(progressElement).hide();
         })
         .catch(function(error) {
-          $('#result').text('Error: Something went wrong!');
+          $('#result').text('Error: Something went wrong!').addClass('red-text');
           $('#addDonor').removeAttr('disabled');
           $(progressElement).hide();
           console.error(error);
         });
       } else {
-        $('#result').text('Please fill all details!');
-        $('#result').addClass('red-text');
+        $('#result').text('Please fill all details!').addClass('red-text');
       }
     }
   }

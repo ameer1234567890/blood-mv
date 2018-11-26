@@ -132,15 +132,13 @@ function toggleFullfillment(docId, isFulfilled) {
       fulfilled: 'false'
     })
     .then(function(docRef) {
-      $('#checkbox-' + docId).html(matIconCheckBoxOutline).removeClass('icon-spin').attr('data-fulfilled', 'false');
-      $('#checkbox-' + docId).on('click', function(event) {
+      $('#checkbox-' + docId).html(matIconCheckBoxOutline).removeClass('icon-spin').attr('data-fulfilled', 'false').on('click', function(event) {
         isFulfilled = $('#checkbox-' + docId).attr('data-fulfilled');
         toggleFullfillment(docId, isFulfilled);
       });
     })
     .catch(function(error) {
-      $('#checkbox-' + docId).html(matIconCheckBox).removeClass('icon-spin').attr('data-fulfilled', 'true');
-      $('#checkbox-' + docId).on('click', function(event) {
+      $('#checkbox-' + docId).html(matIconCheckBox).removeClass('icon-spin').attr('data-fulfilled', 'true').on('click', function(event) {
         isFulfilled = $('#checkbox-' + docId).attr('data-fulfilled');
         toggleFullfillment(docId, isFulfilled);
       });
@@ -151,15 +149,13 @@ function toggleFullfillment(docId, isFulfilled) {
       fulfilled: 'true'
     })
     .then(function(docRef) {
-      $('#checkbox-' + docId).html(matIconCheckBox).removeClass('icon-spin').attr('data-fulfilled', 'true');
-      $('#checkbox-' + docId).on('click', function(event) {
+      $('#checkbox-' + docId).html(matIconCheckBox).removeClass('icon-spin').attr('data-fulfilled', 'true').on('click', function(event) {
         isFulfilled = $('#checkbox-' + docId).attr('data-fulfilled');
         toggleFullfillment(docId, isFulfilled);
       });
     })
     .catch(function(error) {
-      $('#checkbox-' + docId).html(matIconCheckBoxOutline).removeClass('icon-spin').attr('data-fulfilled', 'false');
-      $('#checkbox-' + docId).on('click', function(event) {
+      $('#checkbox-' + docId).html(matIconCheckBoxOutline).removeClass('icon-spin').attr('data-fulfilled', 'false').on('click', function(event) {
         isFulfilled = $('#checkbox-' + docId).attr('data-fulfilled');
         toggleFullfillment(docId, isFulfilled);
       });
