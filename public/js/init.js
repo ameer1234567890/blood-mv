@@ -118,7 +118,7 @@ function updateContent(stateObj, pageURL) {
       $('#nav-mobile > li.active').removeClass('active');
       $('#' + desktopMenuElement).addClass('active');
       $('#' + mobileMenuElement).addClass('active');
-      ga('send', 'pageview');
+      ga('send', 'pageview', pageURL);
     });
   }
 }
