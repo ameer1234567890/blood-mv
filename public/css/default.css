@@ -20,6 +20,11 @@ svg {
 
 .sidenav-trigger {
   cursor: pointer;
+  opacity: .54;
+}
+
+.sidenav-trigger:hover {
+  opacity: 1;
 }
 
 .btn > svg {
