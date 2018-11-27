@@ -249,7 +249,7 @@ $('#list-users').on('click', function() {
             success: function(data) {
               console.log(data);
               $(event.target).parent().parent().addClass('deleted');
-              setTimeout(function() { $(event.target).parent().parent().remove(); }, 1500);
+              setTimeout(function() { $(event.target).parent().parent().fadeout(); }, 1000);
             },
             error: function(xhr, status, error) {
               console.error('Something went wrong! ', status,' ', error);
