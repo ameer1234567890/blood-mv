@@ -41,7 +41,7 @@ $(document).ready(function() {
 $('#add-claim').on('click', function() {
   $('#add-claim').attr('disabled', 'disabled');
   $('#add-claim-loader').css('display', 'inline-block');
-  $('#add-claim-result').text('Processing...').addClass('blue-text');
+  M.toast({html: 'Processing...', classes: 'lime darken-3'});
   $.ajax({
     method: 'POST',
     dataType: 'json',
@@ -49,7 +49,7 @@ $('#add-claim').on('click', function() {
     data: { idToken: theIdToken },
     success: function(data) {
       console.log('Admin claim added: ', data);
-      $('#add-claim-result').text('Admin claim added').removeAttr('class').addClass('green-text');
+      M.toast({html: 'Admin claim added', classes: 'green lighten-1'});
       $('#add-claim-loader').hide();
       $('#add-claim').removeAttr('disabled');
       firebase.auth().currentUser.getIdToken(true);
@@ -57,9 +57,9 @@ $('#add-claim').on('click', function() {
       firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
         console.log(idTokenResult.claims.admin);
          if (!!idTokenResult.claims.admin) {
-           console.log('You are admin');
+          M.toast({html: 'You are admin', classes: 'green lighten-1'});
          } else {
-           console.log('You are not admin');
+          M.toast({html: 'You are not admin', classes: 'red lighten-1'});
          }
       })
       .catch((error) => {
@@ -68,7 +68,7 @@ $('#add-claim').on('click', function() {
     },
     error: function(xhr, status, error) {
       console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
-      $('#add-claim-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      M.toast({html: 'Something went wrong!', classes: 'red lighten-1'});
       $('#add-claim-loader').hide();
       $('#add-claim').removeAttr('disabled');
     },
@@ -80,7 +80,7 @@ $('#mark-fulfilled').on('click', function() {
   $('#mark-fulfilled').attr('disabled', 'disabled');
   $('#mark-fulfilled-loader').css('display', 'inline-block');
   $('#mark-fulfilled-progress').html('<div class="progress"><div class="determinate"></div></div>');
-  $('#mark-fulfilled-result').text('Processing...').addClass('blue-text');
+  M.toast({html: 'Processing...', classes: 'lime darken-3'});
   var query;
   var d = new Date();
   var collectionName = 'requests';
@@ -100,21 +100,19 @@ $('#mark-fulfilled').on('click', function() {
     $('#mark-fulfilled-loader').hide();
     $('#mark-fulfilled').removeAttr('disabled');
     if(i === 0) {
-        console.log('No records to process!');
-        $('#mark-fulfilled-result').text('No records to process!').removeAttr('class').addClass('green-text');
+        M.toast({html: 'No records to process!', classes: 'lime darken-3'});
       } else {
-        console.log('Processed ' + i + ' records.');
         var pluralizer = '';
         if (i != 1) {
           pluralizer = 's';
         }
-        $('#mark-fulfilled-result').text('Marked ' + i + ' record' + pluralizer + ' as fulfilled.').removeAttr('class').addClass('green-text');
+        M.toast({html: 'Marked ' + i + ' record' + pluralizer + ' as fulfilled.', classes: 'green'});
       }
     });
   })
   .catch(function(error){
     console.error('Error: ', error);
-    $('#mark-fulfilled-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+    M.toast({html: 'Something went wrong!', classes: 'red lighten-1'});
     $('#mark-fulfilled').removeAttr('disabled');
   });
 });
@@ -123,7 +121,7 @@ $('#mark-fulfilled').on('click', function() {
 $('#subscribe-token').on('click', function() {
   $('#subscribe-token').attr('disabled', 'disabled');
   $('#subscribe-token-loader').css('display', 'inline-block');
-  $('#subscribe-token-result').text('Processing...').addClass('blue-text');
+  M.toast({html: 'Processing...', classes: 'lime darken-3'});
   var theToken = $('#subscribe-token-token').val();
   var theTopic = $('#subscribe-token-topic').val();
   $.ajax({
@@ -133,13 +131,13 @@ $('#subscribe-token').on('click', function() {
     data: { topic: theTopic, token: theToken },
     success: function(data) {
       console.log('Subscribed to topic: ', theTopic, ' ', data);
-      $('#subscribe-token-result').text('Subscribed to: ' + theTopic).removeAttr('class').addClass('green-text');
+      M.toast({html: 'Subscribed to: ' + theTopic, classes: 'green lighten-1'});
       $('#subscribe-token-loader').hide();
       $('#subscribe-token').removeAttr('disabled');
     },
     error: function(xhr, status, error) {
       console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
-      $('#subscribe-token-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      M.toast({html: 'Something went wrong!', classes: 'red lighten-1'});
       $('#subscribe-token-loader').hide();
       $('#subscribe-token').removeAttr('disabled');
     },
@@ -150,7 +148,7 @@ $('#subscribe-token').on('click', function() {
 $('#token-details').on('click', function() {
   $('#token-details').attr('disabled', 'disabled');
   $('#token-details-loader').css('display', 'inline-block');
-  $('#token-details-result').text('Processing...').addClass('blue-text');
+  M.toast({html: 'Processing...', classes: 'lime darken-3'});
   var theToken = $('#token-details-token').val();
   $.ajax({
     method: 'POST',
@@ -159,16 +157,16 @@ $('#token-details').on('click', function() {
     data: { idToken: theIdToken, token: theToken },
     success: function(data) {
       console.log(data);
-      $('#token-details-result').text(JSON.stringify(data)).removeAttr('class').addClass('green-text');
+      M.toast({html: JSON.stringify(data), classes: 'green lighten-1'});
       $('#token-details-loader').hide();
       $('#token-details').removeAttr('disabled');
       if(data.error) {
-        $('#token-details-result').removeAttr('class').addClass('red-text');
+        $('#toast-container > toast').removeClass('green').addClass('red');
       }
     },
     error: function(xhr, status, error) {
       console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
-      $('#token-details-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      M.toast({html: 'Something went wrong!', classes: 'red lighten-1'});
       $('#token-details-loader').hide();
       $('#token-details').removeAttr('disabled');
     },
@@ -179,7 +177,7 @@ $('#token-details').on('click', function() {
 $('#send-message').on('click', function() {
   $('#send-message').attr('disabled', 'disabled');
   $('#send-message-loader').css('display', 'inline-block');
-  $('#send-message-result').text('Processing...').addClass('blue-text');
+  M.toast({html: 'Processing...', classes: 'lime darken-3'});
   var theTopic = $('#send-message-topic').val();
   var theMessage = $('#send-message-message').val();
   $.ajax({
@@ -189,13 +187,13 @@ $('#send-message').on('click', function() {
     data: { idToken: theIdToken, topic: theTopic, message: theMessage },
     success: function(data) {
       console.log('Message sent: ', data);
-      $('#send-message-result').text('Message sent: ' + JSON.stringify(data)).removeAttr('class').addClass('green-text');
+      M.toast({html: 'Message sent: ' + JSON.stringify(data), classes: 'green lighten-1'});
       $('#send-message-loader').hide();
       $('#send-message').removeAttr('disabled');
     },
     error: function(xhr, status, error) {
       console.error('Something went wrong! ', status,' ', error);
-      $('#send-message-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      M.toast({html: 'Something went wrong!', classes: 'red lighten-1'});
       $('#send-message-loader').hide();
       $('#send-message').removeAttr('disabled');
     },
@@ -206,7 +204,7 @@ $('#send-message').on('click', function() {
 $('#list-users').on('click', function() {
   $('#list-users').attr('disabled', 'disabled');
   $('#list-users-loader').css('display', 'inline-block');
-  $('#list-users-result').text('Processing...').addClass('blue-text');
+  M.toast({html: 'Processing...', classes: 'lime darken-3'});
   $.ajax({
     method: 'POST',
     dataType: 'json',
@@ -253,6 +251,7 @@ $('#list-users').on('click', function() {
             },
             error: function(xhr, status, error) {
               console.error('Something went wrong! ', status,' ', error);
+              M.toast({html: 'Something went wrong!', classes: 'red lighten-1'});
               $(event.target).html(matIconDelete).removeClass('icon-spin');
             },
           });
@@ -265,7 +264,7 @@ $('#list-users').on('click', function() {
     },
     error: function(xhr, status, error) {
       console.error('Something went wrong! ', status,' ', error);
-      $('#list-users-result').text('Something went wrong!').removeAttr('class').addClass('red-text');
+      M.toast({html: 'Something went wrong!', classes: 'red lighten-1'});
       $('#list-users-loader').hide();
       $('#list-users').removeAttr('disabled');
     },
