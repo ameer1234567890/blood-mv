@@ -161,7 +161,7 @@ $('#token-details').on('click', function() {
       $('#token-details-loader').hide();
       $('#token-details').removeAttr('disabled');
       if(data.error) {
-        $('#toast-container > toast').removeClass('green').addClass('red');
+        $('#toast-container > .toast').removeClass('green').addClass('red');
       }
     },
     error: function(xhr, status, error) {
