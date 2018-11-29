@@ -18,6 +18,16 @@ svg {
   padding: 0 15px;
 }
 
+nav .brand-logo {
+  font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 992px) {
+  nav .brand-logo {
+    left: 10%;
+  }
+}
+
 .sidenav-trigger {
   cursor: pointer;
 }
