@@ -10,8 +10,10 @@ $(document).ready(function() {
   if(authStatusUpdated) {
     if(isAdmin) {
       $('#content').show();
+      $(document).ready($(topLoader).hide());
     } else {
       $('#content').html(nonAdminMessage).show();
+      $(document).ready($(topLoader).hide());
     }
   } else {
     firebase.auth().onAuthStateChanged(function(user) {
@@ -19,20 +21,24 @@ $(document).ready(function() {
         firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
           if (!!idTokenResult.claims.admin) {
             $('#content').show();
+            $(document).ready($(topLoader).hide());
             isAdmin = true;
             user.getIdToken().then(function(idToken) {
               theIdToken = idToken;
             });
           } else {
             $('#content').html(nonAdminMessage).show();
+            $(document).ready($(topLoader).hide());
           }
         })
         .catch((error) => {
           console.log(error);
           $('#content').html('Something went wrong!').show();
+          $(document).ready($(topLoader).hide());
         });
       } else {
         $('#content').html(nonAdminMessage).show();
+        $(document).ready($(topLoader).hide());
       }
     });
   }
@@ -271,5 +277,3 @@ $('#list-users').on('click', function() {
   });
 });
 
-
-$(document).ready($(topLoader).hide());
