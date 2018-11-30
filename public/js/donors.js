@@ -63,15 +63,13 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
       query = db.collection(collectionName).limit(recordsPerPage).startAfter(lastVisible);
     }
   } else {
-    if(isAdmin) {
-      $('#donors thead tr:last-child').append($('<th>').html('Delete'));
-    }
     if(includeOnlyDonatable) {
       query = db.collection(collectionName).where('donated', '<', threeMonthsBack).limit(recordsPerPage);
     } else {
       query = db.collection(collectionName).limit(recordsPerPage);
     }    
   }
+  var i = 0;
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
     querySnapshot.forEach((doc) => {
@@ -86,6 +84,10 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
         .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
       );
       if(isAdmin) {
+        i++;
+        if(i == 1) {
+          $('#donors thead tr:last-child').append($('<th>').html('Delete'));
+        }
         $('#donors tbody tr:last-child').append($('<td>').html('<span class="delete" id="delete-' + doc.id + '">' + matIconDelete + '</span>'));
         $('#delete-' + doc.id).on('click', function(event) {
           $('#delete-' + doc.id).html(matIconRefresh).addClass('icon-spin');

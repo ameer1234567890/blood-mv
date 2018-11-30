@@ -59,15 +59,13 @@ function loadBloodRequests(includeFulfilled, loadMore) {
       query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc').startAfter(lastVisible);
     }
   } else {
-    if(isAdmin) {
-      $('#requests thead tr:last-child').append($('<th>').html('Delete'));
-    }
     if(includeFulfilled) {
       query = db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc');
     } else {
       query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc');
     }    
   }
+  var i = 0;
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
     querySnapshot.forEach((doc) => {
@@ -99,6 +97,10 @@ function loadBloodRequests(includeFulfilled, loadMore) {
         $('#requests tbody tr:last-child').append($('<td>').html('&nbsp;'));
       }
       if(isAdmin) {
+        i++;
+        if(i == 1) {
+          $('#requests thead tr:last-child').append($('<th>').html('Delete'));
+        }
         $('#requests tbody tr:last-child').append($('<td>').html('<span class="delete" id="delete-' + doc.id + '">' + matIconDelete + '</span>'));
         $('#delete-' + doc.id).on('click', function(event) {
           $('#delete-' + doc.id).html(matIconRefresh).addClass('icon-spin');
