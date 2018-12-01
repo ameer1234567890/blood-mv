@@ -33,6 +33,10 @@ svg {
   padding: 0 15px;
 }
 
+.btn {
+  background-color: #00796b;
+}
+
 .input-field > label {
   color: #636363;
 }
