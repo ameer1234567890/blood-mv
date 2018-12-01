@@ -194,6 +194,17 @@ body > .progress {
   color: #fff;
 }
 
+.btn-floating {
+  bottom: 24px;
+  position: fixed;
+  right: 34px;
+}
+
+.btn-floating > i > svg{
+  fill: #fff;
+  margin-top: 16px;
+}
+
 /*  --------------------------------------------------------  */
 /*  Styles for admin interface                                */
 /*  --------------------------------------------------------  */
