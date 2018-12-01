@@ -70,6 +70,10 @@ nav .brand-logo {
   height: 64px;
 }
 
+#drop-acc > li > a {
+  color: #00796b;
+}
+
 .btn > svg {
   fill: #fff;
   height: 1.3rem;
