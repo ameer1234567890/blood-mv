@@ -93,10 +93,9 @@ nav > a > svg {
   margin: 0 32px 0 0;
 }
 
-#nav-d-sign > a > svg {
-  fill: #fff;
+nav > .nav-wrapper svg {
   margin-top: 20px;
-  margin-bottom: -6px;
+  fill: #fff;
 }
 
 #drop-acc {
