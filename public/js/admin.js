@@ -252,8 +252,7 @@ $('#list-users').on('click', function() {
             data: { idToken: theIdToken, uid: uid },
             success: function(data) {
               console.log(data);
-              $(event.target).parent().parent().addClass('deleted');
-              $(event.target).parent().parent().fadeOut();
+              $(event.target).parent().parent().addClass('deleted').fadeOut();
             },
             error: function(xhr, status, error) {
               console.error('Something went wrong! ', status,' ', error);

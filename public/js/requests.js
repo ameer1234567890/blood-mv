@@ -171,8 +171,7 @@ function deleteRequest(docId) {
   if(confirm('Are you sure you want to delete the request "' + docId + '"?')) {
     db.collection(collectionName).doc(docId).delete()
     .then(function(docRef) {
-      $('#delete-' + docId).parent().parent().addClass('deleted');
-      setTimeout(function() { $('#delete-' + docId).parent().parent().remove(); }, 1500);
+      $('#delete-' + docId).parent().parent().addClass('deleted').fadeOut();
     })
     .catch(function(error) {
       $('#delete-' + docId).html(matIconDelete).removeClass('icon-spin');
