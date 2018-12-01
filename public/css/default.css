@@ -37,7 +37,8 @@ svg {
   background-color: #00796b;
 }
 
-label {
+.input-field > label,
+.lever {
   color: #636363;
 }
 
