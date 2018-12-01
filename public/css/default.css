@@ -37,9 +37,12 @@ svg {
   background-color: #00796b;
 }
 
-.input-field > label,
-.lever {
+.input-field > label {
   color: #636363;
+}
+
+.lever {
+  color: #4A4A4A;
 }
 
 nav .brand-logo {
