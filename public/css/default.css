@@ -66,6 +66,10 @@ nav .brand-logo {
   cursor: pointer;
 }
 
+.dropdown-trigger {
+  height: 64px;
+}
+
 .btn > svg {
   fill: #fff;
   height: 1.3rem;
