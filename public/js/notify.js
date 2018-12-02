@@ -28,20 +28,16 @@ function getToken() {
     if (currentToken) {
       sendTokenToServer(currentToken);
       console.log('Token: ' + currentToken);
-      $('#result').text('Notifications turned on.');
-      $('#result').removeAttr('class').addClass('green-text');
+      $('#result').text('Notifications turned on.').removeClass('red-text').addClass('green-text');
       theToken = currentToken;
     } else {
-      console.warn('No Instance ID token available. Request permission to generate one.');
-      $('#result').text('Notification permission not requested.');
-      $('#result').removeAttr('class').addClass('green-text');
+      console.warn('No Instance ID token available. Request permission to generate one.').removeClass('red-text').addClass('green-text');
       setKeyValueStore('notificationStatus', false);
       boxUnChecked();
     }
   }).catch(function(err) {
     console.error('An error occurred while retrieving token. ', err);
-    $('#result').text('Error retrieving Instance ID token.');
-    $('#result').removeAttr('class').addClass('red-text');
+    $('#result').text('Error retrieving Instance ID token.').removeClass('green-text').addClass('red-text');
     setKeyValueStore('notificationStatus', false);
     setKeyValueStore('sentToServer', false);
     boxUnChecked();
@@ -53,7 +49,7 @@ function startProcess() {
   if (Notification.permission == 'denied') {
     boxUnChecked();
     console.warn('The user has blocked notifications.');
-    $('#result').text('Notification permission has been blocked!').removeAttr('class').addClass('red-text');
+    $('#result').text('Notification permission has been blocked!').removeClass('green-text').addClass('red-text');
     $('#display-toggle span').addClass('disabled');
     $('#display-toggle').off();
   } else if(Notification.permission == 'granted') {
@@ -112,16 +108,14 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
         success: function(data) {
           setKeyValueStore(theTopic, true);
           console.log('Subscribed to topic: ', theTopic, ' ', data);
-          $('#result').text('Subscribed to: ' + theTopic);
-          $('#result').removeAttr('class').addClass('green-text');
+          $('#result').text('Subscribed to: ' + theTopic).removeClass('red-text').addClass('green-text');
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).addClass('sub-selected');
           $(event.target).attr('data-status', 'checked');
         },
         error: function(xhr, status, error) {
           console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
-          $('#result').text('Something went wrong!');
-          $('#result').removeAttr('class').addClass('red-text');
+          $('#result').text('Something went wrong!').removeClass('green-text').addClass('red-text');
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).removeClass('sub-selected');
           $(event.target).removeAttr('data-status');
@@ -137,16 +131,14 @@ $('#mainForm input[type=checkbox]').on('click', function(event) {
         success: function(data) {
           setKeyValueStore(theTopic, false);
           console.log('Unsubscribed from topic: ', theTopic, ' ', data);
-          $('#result').text('Unsubscribed from: ' + theTopic);
-          $('#result').removeAttr('class').addClass('green-text');
+          $('#result').text('Unsubscribed from: ' + theTopic).removeClass('red-text').addClass('green-text');
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).removeClass('sub-selected');
           $(event.target).removeAttr('data-status');
         },
         error: function(xhr, status, error) {
           console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
-          $('#result').text('Something went wrong!');
-          $('#result').removeAttr('class').addClass('red-text');
+          $('#result').text('Something went wrong!').removeClass('green-text').addClass('red-text');
           $(event.target.parentNode).removeClass('sub-loading');
           $(event.target.parentNode).addClass('sub-selected');
           $(event.target).attr('data-status', 'checked');
@@ -209,14 +201,12 @@ function sendTokenToServer(currentToken) {
         setKeyValueStore('sentToServer', true);
         setKeyValueStore('notificationStatus', true);
         console.log('Subscription successful. ', data);
-        $('#result').text('Subscription successful.');
-        $('#result').removeAttr('class').addClass('green-text');
+        $('#result').text('Subscription successful.').removeClass('red-text').addClass('green-text');
         boxChecked();
       },
       error: function(xhr, status, error) {
         console.error('Something went wrong! ', JSON.stringify(status),' ' , JSON.stringify(error));
-        $('#result').text('Something went wrong!');
-        $('#result').removeAttr('class').addClass('red-text');
+        $('#result').text('Something went wrong!').removeClass('green-text').addClass('red-text');
         boxUnChecked();
         setKeyValueStore('notificationStatus', false);
       },
@@ -248,14 +238,12 @@ function requestPermission() {
   console.log('Requesting permission...');
   messaging.requestPermission().then(function() {
     console.log('Notification permission granted.');
-    $('#result').text('Notification permission granted.');
-    $('#result').removeAttr('class').addClass('green-text');
+    $('#result').text('Notification permission granted.').removeClass('red-text').addClass('green-text');
     setKeyValueStore('notificationStatus', true);
     startProcess();
   }).catch(function(err) {
     console.error('Unable to get permission to notify.', err);
-    $('#result').text('Unable to get permission to notify.');
-    $('#result').removeAttr('class').addClass('red-text');
+    $('#result').text('Unable to get permission to notify.').removeClass('green-text').addClass('red-text');
     startProcess();
   });
 }
@@ -267,20 +255,17 @@ function deleteToken() {
       console.log('Token deleted.');
       setKeyValueStore('sentToServer', false);
       setKeyValueStore('notificationStatus', false);
-      $('#result').text('Notifications turned off.');
-      $('#result').removeAttr('class').addClass('green-text');
+      $('#result').text('Notifications turned off.').removeClass('red-text').addClass('green-text');
       resetSubscritions();
       boxUnChecked();
     }).catch(function(err) {
       console.error('Unable to delete token. ', err);
-      $('#result').text('Unable to delete token.');
-      $('#result').removeAttr('class').addClass('red-text');
+      $('#result').text('Unable to delete token.').removeClass('green-text').addClass('red-text');
       boxChecked();
     });
   }).catch(function(err) {
     console.error('Error retrieving Instance ID token. ', err);
-    $('#result').text('Error retrieving Instance ID token.');
-    $('#result').removeAttr('class').addClass('red-text');
+    $('#result').text('Error retrieving Instance ID token.').removeClass('green-text').addClass('red-text');
     boxChecked();
   });
 }

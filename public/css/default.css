@@ -262,7 +262,7 @@ ul.subs-groups {
 
 ul.subs-groups > li {
   background-color: #fff;
-  border: 1px solid #009688;
+  border: 1px solid #00796b;
   border-radius: 25px;
   display: inline-block;
   margin: 10px 10px;
@@ -270,7 +270,7 @@ ul.subs-groups > li {
 }
 
 ul.subs-groups > li > label {
-  color: #009688;
+  color: #00796b;
   cursor: pointer;
   font-size: 16px;
   line-height: 32px;
@@ -290,8 +290,8 @@ ul.subs-groups > li > label::before {
 }
 
 ul.subs-groups > li.sub-selected {
-  background-color: #009688;
-  border: 1px solid #009688;  
+  background-color: #00796b;
+  border: 1px solid #00796b;  
   transition: all 1s;
 }
 
