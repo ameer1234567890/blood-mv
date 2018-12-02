@@ -276,3 +276,7 @@ $('#list-users').on('click', function() {
   });
 });
 
+messaging.getToken().then(function(currentToken) {
+  $('#token-details-token').val(currentToken);
+  $('#subscribe-token-token').val(currentToken);
+});
