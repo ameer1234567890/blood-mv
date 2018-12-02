@@ -8,6 +8,7 @@ var loadMoreElement = '.load-more';
 var collectionName = 'requests';
 var recordsPerPage = 10;
 var lastVisible;
+var deleteHeaderShown = false;
 
 // Search the table when something is entered in search box
 $('#search').on('keyup', function(event) {
@@ -43,12 +44,6 @@ if(getKeyValueStore('includeFulfilled')) {
 }
 
 
-// Click handlers for pagination
-$(loadMoreElement).on('click', function() {
-  loadBloodRequests(getKeyValueStore('includeFulfilled'), true);
-});
-
-
 function loadBloodRequests(includeFulfilled, loadMore) {
   $(loadMoreElement).off();
   var query;
@@ -65,11 +60,11 @@ function loadBloodRequests(includeFulfilled, loadMore) {
       query = db.collection(collectionName).where('fulfilled', '==', 'false').limit(recordsPerPage).orderBy('datetime', 'desc');
     }    
   }
-  var i = 0;
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+    var firstDoc = querySnapshot.docs[0];
     querySnapshot.forEach((doc) => {
-      $('#requests tbody').append($('<tr>')
+      $('#requests tbody').append($('<tr id="request-' + doc.id + '">')
         .append($('<td scope="row">').text(doc.data().group))
         .append($('<td>').text(doc.data().phone))
         .append($('<td>').text(doc.data().place))
@@ -97,9 +92,9 @@ function loadBloodRequests(includeFulfilled, loadMore) {
         $('#requests tbody tr:last-child').append($('<td>').html('&nbsp;'));
       }
       if(isAdmin) {
-        i++;
-        if(i == 1) {
+        if(!deleteHeaderShown) {
           $('#requests thead tr:last-child').append($('<th>').html('Delete'));
+          deleteHeaderShown = true;
         }
         $('#requests tbody tr:last-child').append($('<td>').html('<span class="delete" id="delete-' + doc.id + '">' + matIconDelete + '</span>'));
         $('#delete-' + doc.id).on('click', function(event) {
@@ -111,15 +106,19 @@ function loadBloodRequests(includeFulfilled, loadMore) {
         var isFulfilled = $('#checkbox-' + doc.id).attr('data-fulfilled');
         toggleFullfillment(doc.id, isFulfilled);
       });
+      if(loadMore) {
+        $('html, body').stop().animate({scrollTop: $('#request-' + firstDoc.id).offset().top - 78}, 1000);
+      }
     });
     $(progressElement).hide();
     $(loadMoreElement).show();
     if(!lastVisible) {
       $(loadMoreElement).off();
-      $(loadMoreElement + ' > a').addClass('disabled').html(matIconMoreHoriz + 'End of the World' + matIconMoreHoriz);
+      $(loadMoreElement + ' > a').addClass('disabled').html(matIconMoreHoriz + ' End of the World ' + matIconMoreHoriz).removeClass('icon-spin');
     } else {
-      $(loadMoreElement + ' > a').removeClass('disabled').html('Load More' + matIconExpandMore);
+      $(loadMoreElement + ' > a').removeClass('disabled').html('Load More ' + matIconExpandMore).removeClass('icon-spin');
       $(loadMoreElement).off().on('click', function() {
+        $(loadMoreElement + ' > a').html('Load More ' + matIconRefresh).addClass('icon-spin');
         loadBloodRequests(getKeyValueStore('includeFulfilled'), true);
       });
     }

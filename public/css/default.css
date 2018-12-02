@@ -62,8 +62,27 @@ nav .brand-logo {
   }
 }
 
+.load-more > a,
 .sidenav-trigger {
   cursor: pointer;
+}
+
+.load-more > a.disabled {
+  cursor: default;
+  color: #9f9f9f;
+}
+
+.load-more > a.disabled > svg {
+  fill: #9f9f9f;
+}
+
+.load-more {
+  display: none;
+}
+
+.load-more > a > svg {
+  fill: #039be5;
+  vertical-align: top;
 }
 
 .dropdown-trigger,
@@ -157,10 +176,6 @@ body > .progress {
 
 #table-spinner {
   left: 50%
-}
-
-.load-more {
-  display: none;
 }
 
 .fulf-enabled,

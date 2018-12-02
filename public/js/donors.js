@@ -7,6 +7,7 @@ var loadMoreElement = '.load-more';
 var collectionName = 'donors';
 var recordsPerPage = 10;
 var lastVisible;
+var deleteHeaderShown = false;
 
 
 // Search the table when something is entered in search box
@@ -45,12 +46,6 @@ $(document).ready(function() {
 });
 
 
-// Click handlers for pagination
-$(loadMoreElement).on('click', function() {
-  loadBloodDonors(getKeyValueStore('includeOnlyDonatable'), true);
-});
-
-
 function loadBloodDonors(includeOnlyDonatable, loadMore) {
   $(loadMoreElement).off();
   var query;
@@ -69,11 +64,11 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
       query = db.collection(collectionName).limit(recordsPerPage);
     }    
   }
-  var i = 0;
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+    var firstDoc = querySnapshot.docs[0];
     querySnapshot.forEach((doc) => {
-      $('#donors > tbody').append($('<tr>')
+      $('#donors > tbody').append($('<tr id="request-' + doc.id + '">')
         .append($('<td scope="row">').text(doc.data().first + ' ' + doc.data().last))
         .append($('<td>').text(doc.data().gender))
         .append($('<td>').text(age(doc.data().born.toDate())))
@@ -84,9 +79,9 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
         .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
       );
       if(isAdmin) {
-        i++;
-        if(i == 1) {
+        if(!deleteHeaderShown) {
           $('#donors thead tr:last-child').append($('<th>').html('Delete'));
+          deleteHeaderShown = true;
         }
         $('#donors tbody tr:last-child').append($('<td>').html('<span class="delete" id="delete-' + doc.id + '">' + matIconDelete + '</span>'));
         $('#delete-' + doc.id).on('click', function(event) {
@@ -94,15 +89,19 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
           deleteDonor(doc.id, doc.data().first + ' ' + doc.data().last);
         });
       }
+      if(loadMore) {
+        $('html, body').stop().animate({scrollTop: $('#request-' + firstDoc.id).offset().top - 78}, 1000);
+      }
     });
     $(progressElement).hide();
     $(loadMoreElement).show();
     if(!lastVisible) {
       $(loadMoreElement).off();
-      $(loadMoreElement + ' > a').addClass('disabled').html(matIconMoreHoriz + 'End of the World' + matIconMoreHoriz);
+      $(loadMoreElement + ' > a').addClass('disabled').html(matIconMoreHoriz + ' End of the World ' + matIconMoreHoriz).removeClass('icon-spin');
     } else {
-      $(loadMoreElement + ' > a').removeClass('disabled').html('Load More' + matIconExpandMore);
+      $(loadMoreElement + ' > a').removeClass('disabled').html('Load More ' + matIconExpandMore).removeClass('icon-spin');
       $(loadMoreElement).off().on('click', function() {
+        $(loadMoreElement + ' > a').html('Load More ' + matIconRefresh).addClass('icon-spin');
         loadBloodDonors(getKeyValueStore('includeOnlyDonatable'), true);
       });
     }
