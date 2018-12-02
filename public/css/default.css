@@ -66,7 +66,8 @@ nav .brand-logo {
   cursor: pointer;
 }
 
-.dropdown-trigger {
+.dropdown-trigger,
+#nav-mobile-right > li {
   height: 64px;
 }
 
@@ -89,9 +90,6 @@ nav > a > svg {
   height: 64px;
 }
 
-#nav-mobile-right {
-  height: 64px;
-}
 #nav-mobile > li > div > svg,
 #nav-mobile > li > div > img {
   fill: #fff;
