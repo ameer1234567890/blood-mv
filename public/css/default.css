@@ -67,7 +67,7 @@ nav .brand-logo {
 }
 
 .dropdown-trigger,
-#nav-mobile-right > li {
+#nav-mobile-right > li > a {
   height: 64px;
 }
 
