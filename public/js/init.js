@@ -104,7 +104,7 @@ var pages = {
   admin: { title: 'Admin :: Blood MV', menu_element: 'admin', script: '/js/admin.js' }
 };
 
-var navLinks = document.querySelectorAll('nav .container > ul > li > a, #nav-mobile > li > a');
+var navLinks = document.querySelectorAll('#nav-desktop-right > li > a, #nav-mobile > li > a');
 var contentElement = '#content';
 
 function updateContent(stateObj, pageURL) {
@@ -281,6 +281,11 @@ function trim(textToTrim, numCharacters) {
     return textToTrim;
   }
 }
+
+
+$('#nav-mobile-right > li > .refresh').on('click', function() {
+  $('#nav-mobile-right > li > .refresh').addClass('icon-spin');
+});
 
 
 // Update auth details on load / when auth status changes
