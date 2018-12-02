@@ -89,6 +89,9 @@ nav > a > svg {
   height: 64px;
 }
 
+#nav-mobile-right {
+  height: 64px;
+}
 #nav-mobile > li > div > svg,
 #nav-mobile > li > div > img {
   fill: #fff;
