@@ -1,6 +1,6 @@
 {
   "name": "Blood MV Admin",
-  "short_name": "Blood MV Admin",
+  "short_name": "Blood MV Adm",
   "description": "Admin app for Blood MV",
   "start_url": "/admin/?utm_source=homescreen",
   "scope": "/admin/",
