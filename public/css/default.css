@@ -62,14 +62,18 @@ nav .brand-logo {
   }
 }
 
-.load-more > a,
 .sidenav-trigger {
   cursor: pointer;
 }
 
-.load-more > a.disabled {
-  cursor: default;
+.load-more > a {
   color: #9f9f9f;
+  cursor: pointer;
+}
+
+.load-more > a.disabled {
+  color: #9f9f9f;
+  cursor: default;
 }
 
 .load-more > a.disabled > svg {
@@ -81,7 +85,7 @@ nav .brand-logo {
 }
 
 .load-more > a > svg {
-  fill: #039be5;
+  fill: #00796b;
   vertical-align: top;
 }
 
