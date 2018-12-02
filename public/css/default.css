@@ -67,8 +67,13 @@ nav .brand-logo {
 }
 
 .load-more > a {
-  color: #00796b;
+  color: #00695c;
   cursor: pointer;
+}
+
+.load-more > a > svg {
+  fill: #00695c;
+  vertical-align: top;
 }
 
 .load-more > a.disabled {
@@ -82,11 +87,6 @@ nav .brand-logo {
 
 .load-more {
   display: none;
-}
-
-.load-more > a > svg {
-  fill: #00796b;
-  vertical-align: top;
 }
 
 .dropdown-trigger,
