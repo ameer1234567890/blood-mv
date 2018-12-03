@@ -112,6 +112,8 @@ function updateContent(stateObj, pageURL) {
     $(contentElement).load(pageURL + ' #content > *', function(){
       $.getScript(stateObj.script);
       document.title = stateObj.title;
+      $(contentElement).removeClass('slide');
+      setTimeout(function() {$(contentElement).addClass('slide');}, 0);
       var desktopMenuElement = 'nav-d-' + stateObj.menu_element;
       var mobileMenuElement = 'nav-m-' + stateObj.menu_element;
       $('nav > .container > ul > li.active').removeClass('active');
@@ -283,6 +285,7 @@ function trim(textToTrim, numCharacters) {
 }
 
 
+// Add an animation to the refresh icon in navbar
 $('#nav-mobile-right > li > .refresh').on('click', function() {
   $('#nav-mobile-right > li > .refresh').addClass('icon-spin');
 });

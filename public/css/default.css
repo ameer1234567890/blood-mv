@@ -226,6 +226,20 @@ body > .progress {
 }
 
 /*  --------------------------------------------------------  */
+/*  Styles for page transitions                               */
+/*  --------------------------------------------------------  */
+#content.slide {
+  position: absolute;
+  width:100%;
+  left: -100%;
+  animation: slide 0.5s forwards;
+}
+
+@keyframes slide {
+  100% { left: 0; }
+}
+
+/*  --------------------------------------------------------  */
 /*  Styles for admin interface                                */
 /*  --------------------------------------------------------  */
 #nav-d-admin,
