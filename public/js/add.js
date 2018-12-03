@@ -40,20 +40,22 @@ function loadExistingData() {
       db.collection('donors').doc(localStorage.getItem('donorId')).get().then((doc) => {
         theDocId = doc.id;
         isNewUser = false;
-        $('#mainForm #first').val(doc.data().first).focus();
-        $('#mainForm #last').val(doc.data().last).focus();
+        $('#mainForm #first').val(doc.data().first);
+        $('label[for=first]').addClass('active');
+        $('#mainForm #last').val(doc.data().last);
+        $('label[for=last]').addClass('active');
         $('#mainForm #gender').val(doc.data().gender);
-        $('#mainForm #born').val(htmlDate(doc.data().born.toDate(), false)).focus();
+        $('#mainForm #born').val(htmlDate(doc.data().born.toDate(), false));
         $('#mainForm #group').val(doc.data().group);
         $('#mainForm #atoll').val(doc.data().atoll);
         $.when(loadIslands($('#mainForm #atoll').find(':selected').data('letter'))).done(function(){
           $('#island').append($('<option/>').attr('value', doc.data().island).text(doc.data().island)); // This is just a temporary hack
           $('#mainForm #island').val(doc.data().island);
         });
-        $('#mainForm #phone').val(doc.data().phone).focus();
-        $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false)).focus();
+        $('#mainForm #phone').val(doc.data().phone);
+        $('label[for=phone]').addClass('active');
+        $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false));
         $('#addDonor').html('Update Record' + matIconEdit);
-        $('#mainForm #first').focus().blur();
         $(progressElement).hide();
       });
     } else if(!localStorage.getItem('donorId')) {
@@ -64,20 +66,22 @@ function loadExistingData() {
           localStorage.setItem('donorId', doc.id);
           theDocId = doc.id;
           isNewUser = false;
-          $('#mainForm #first').val(doc.data().first).focus();
-          $('#mainForm #last').val(doc.data().last).focus();
+          $('#mainForm #first').val(doc.data().first);
+          $('label[for=first]').addClass('active');
+          $('#mainForm #last').val(doc.data().last);
+          $('label[for=last]').addClass('active');
           $('#mainForm #gender').val(doc.data().gender);
-          $('#mainForm #born').val(htmlDate(doc.data().born.toDate(), false)).focus();
+          $('#mainForm #born').val(htmlDate(doc.data().born.toDate(), false));
           $('#mainForm #group').val(doc.data().group);
           $('#mainForm #atoll').val(doc.data().atoll);
           $.when(loadIslands($('#mainForm #atoll').find(':selected').data('letter'))).done(function(){
             $('#island').append($('<option/>').attr('value', doc.data().island).text(doc.data().island)); // This is just a temporary hack
             $('#mainForm #island').val(doc.data().island);
           });
-          $('#mainForm #phone').val(doc.data().phone).focus();
-          $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false)).focus();
+          $('#mainForm #phone').val(doc.data().phone);
+          $('label[for=phone]').addClass('active');
+          $('#mainForm #donated').val(htmlDate(doc.data().donated.toDate(), false));
           $('#addDonor').html('Update Record' + matIconEdit);
-          $('#mainForm #first').focus().blur();
           $(progressElement).hide();
         });
       });
