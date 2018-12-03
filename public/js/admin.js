@@ -278,5 +278,7 @@ $('#list-users').on('click', function() {
 
 messaging.getToken().then(function(currentToken) {
   $('#token-details-token').val(currentToken);
+  $('label[for=token-details-token]').addClass('active');
   $('#subscribe-token-token').val(currentToken);
+  $('label[for=subscribe-token-token]').addClass('active');
 });
