@@ -104,7 +104,7 @@ var pages = {
   admin: { title: 'Admin :: Blood MV', menu_element: 'admin', script: '/js/admin.js' }
 };
 
-var navLinks = document.querySelectorAll('#nav-desktop-right > li > a, #nav-mobile > li > a');
+var navLinks = document.querySelectorAll('#nav-desktop-right > li > a, #nav-mobile > li > a, #fab-addrequest');
 var contentElement = '#content';
 
 function updateContent(stateObj, pageURL) {
