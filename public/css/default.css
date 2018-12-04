@@ -49,6 +49,10 @@ nav .brand-logo {
   font-size: 1.5rem;
 }
 
+.navbar-fixed {
+  height: 64px;
+}
+
 @media only screen and (max-width: 600px) {
   nav {
     line-height: 64px;
@@ -60,6 +64,11 @@ nav .brand-logo {
   nav .brand-logo {
     left: 85px;
   }
+}
+
+body > .progress {
+  position: fixed;
+  z-index: 1;
 }
 
 .sidenav-trigger {
