@@ -443,11 +443,6 @@ ul.subs-groups > li.sub-loading > label::before {
 /*  --------------------------------------------------------  */
 /*  Responsive table                                          */
 /*  --------------------------------------------------------  */
-/*
-Max width before this PARTICULAR table gets nasty
-This query will take effect for any screen smaller than 760px
-and also iPads specifically.
-*/
 @media only screen and (max-width: 992px) {
   /* Force table to not be like tables anymore */
   table, thead, tbody, th, td, tr {
@@ -500,7 +495,7 @@ and also iPads specifically.
   #requests td:nth-of-type(1):before { content: "Blood Group"; }
   #requests td:nth-of-type(2):before { content: "Contact Number"; }
   #requests td:nth-of-type(3):before { content: "Place"; }
-  #requests td:nth-of-type(4):before { content: "Requested at"; }
+  #requests td:nth-of-type(4):before { content: "Requested"; }
   #requests td:nth-of-type(5):before { content: "Fulfilled"; }
   #requests td:nth-of-type(6):before { content: "Share"; }
   #requests td:nth-of-type(7):before { content: "Delete"; }
