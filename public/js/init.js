@@ -255,7 +255,7 @@ function htmlDate(date, returnTime) {
 }
 
 
-// Relative dates
+// Relative dates: Lifted from https://github.com/azer/relative-date
 var SECOND = 1000,
     MINUTE = 60 * SECOND,
     HOUR = 60 * MINUTE,
@@ -281,9 +281,9 @@ var formats = [
 ];
 
 function relativeDate(input,reference){
-  !reference && ( reference = (new Date).getTime() );
-  reference instanceof Date && ( reference = reference.getTime() );
-  input instanceof Date && ( input = input.getTime() );
+  !reference && ( reference = (new Date()).getTime() ); // jshint ignore:line
+  reference instanceof Date && ( reference = reference.getTime() ); // jshint ignore:line
+  input instanceof Date && ( input = input.getTime() ); // jshint ignore:line
   var delta = reference - input,
       format, i, len;
   for(i = -1, len=formats.length; ++i < len; ){
@@ -291,7 +291,7 @@ function relativeDate(input,reference){
     if(delta < format[0]){
       return format[2] == undefined ? format[1] : Math.round(delta/format[2]) + ' ' + format[1];
     }
-  };
+  }
 }
 
 
