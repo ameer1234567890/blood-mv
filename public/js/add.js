@@ -147,7 +147,7 @@ $('#addDonor').on('click', function(event) {
         $('#addDonor').attr('disabled', 'disabled');
         $(progressElement).show();
         $('#result').text('');
-        if(isNewUser == true) {
+        if(isNewUser === true) {
           db.collection('donors').add({
             first: $('#first').val(),
             last: $('#last').val(),

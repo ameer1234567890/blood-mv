@@ -53,7 +53,7 @@ function startProcess() {
     $('#display-toggle span').addClass('disabled');
     $('#display-toggle').off();
   } else if(Notification.permission == 'granted') {
-    if(getKeyValueStore('notificationStatus') == false) {
+    if(getKeyValueStore('notificationStatus') === false) {
       console.log('Notifications were turned off. So, not requesting a token.');
       boxUnChecked();
       resetSubscritions();
@@ -75,7 +75,7 @@ $('#display-toggle').on('click', function(event) {
     requestPermission();
   }
   if(!$('#display-toggle > span').attr('data-checked')) {
-    if(getKeyValueStore('notificationStatus') == true) {
+    if(getKeyValueStore('notificationStatus') === true) {
       $('#display-toggle > span').html(matIconRefresh).addClass('icon-spin').attr('data-checked', 'loading');
       startProcess();
       $('#allFields').removeAttr('disabled');
