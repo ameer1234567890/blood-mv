@@ -327,7 +327,7 @@ function trim(textToTrim, numCharacters) {
 
 // Add an animation to the refresh icon in navbar
 $('#nav-mobile-right > li > .refresh').on('click', function() {
-  $('#nav-mobile-right > li > .refresh').addClass('icon-spin');
+  $('#nav-mobile-right > li > .refresh').find('svg').addClass('icon-spin');
 });
 
 
