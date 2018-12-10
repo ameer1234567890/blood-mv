@@ -76,7 +76,7 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
         .append($('<td>').text(doc.data().atoll))
         .append($('<td>').text(doc.data().island))
         .append($('<td>').text(doc.data().phone))
-        .append($('<td>').text(humanDate(doc.data().donated.toDate(), false)))
+        .append($('<td>').text(relativeDate(doc.data().donated.toDate())).addClass('tooltipped').attr('data-tooltip', humanDate(doc.data().donated.toDate(), false)))
       );
       if(isAdmin) {
         if(!deleteHeaderShown) {
@@ -92,6 +92,7 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
       if(loadMore) {
         $('html, body').stop().animate({scrollTop: $('#request-' + firstDoc.id).offset().top - 78}, 1000);
       }
+      $('.tooltipped').tooltip();
     });
     $(progressElement).hide();
     $(loadMoreElement).show();

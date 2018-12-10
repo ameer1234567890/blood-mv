@@ -68,7 +68,7 @@ function loadBloodRequests(includeFulfilled, loadMore) {
         .append($('<td scope="row">').text(doc.data().group))
         .append($('<td>').text(doc.data().phone))
         .append($('<td>').text(doc.data().place))
-        .append($('<td>').text(humanDate(doc.data().datetime.toDate(), true)))
+        .append($('<td>').text(relativeDate(doc.data().datetime.toDate())).addClass('tooltipped').attr('data-tooltip', humanDate(doc.data().datetime.toDate(), true)))
       );
       if(doc.data().user == firebase.auth().getUid() || isAdmin) {
         if(doc.data().fulfilled == 'true') {
@@ -109,6 +109,7 @@ function loadBloodRequests(includeFulfilled, loadMore) {
       if(loadMore) {
         $('html, body').stop().animate({scrollTop: $('#request-' + firstDoc.id).offset().top - 78}, 1000);
       }
+      $('.tooltipped').tooltip();
     });
     $(progressElement).hide();
     $(loadMoreElement).show();

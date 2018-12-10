@@ -21,7 +21,7 @@ var provider = new firebase.auth.GoogleAuthProvider();
 // Enable offline database caching
 firebase.firestore().enablePersistence({experimentalTabSynchronization:true}).catch(function(err) { console.error(err); });
 
-// Initialize sidenav & dropdown
+// Initialize sidenav, dropdown & tooltips
 $('.sidenav').sidenav();
 var sidenavInstance = document.querySelectorAll('.sidenav')[0].M_Sidenav;
 $('.dropdown-trigger').dropdown();
@@ -252,6 +252,46 @@ function htmlDate(date, returnTime) {
            '-' + monthNames[date.getMonth()] +
            '-' + ('0' + date.getDate()).slice(-2);
   }
+}
+
+
+// Relative dates
+var SECOND = 1000,
+    MINUTE = 60 * SECOND,
+    HOUR = 60 * MINUTE,
+    DAY = 24 * HOUR,
+    WEEK = 7 * DAY,
+    YEAR = DAY * 365,
+    MONTH = YEAR / 12;
+
+var formats = [
+  [ 0.7 * MINUTE, 'just now' ],
+  [ 1.5 * MINUTE, 'a minute ago' ],
+  [ 60 * MINUTE, 'minutes ago', MINUTE ],
+  [ 1.5 * HOUR, 'an hour ago' ],
+  [ DAY, 'hours ago', HOUR ],
+  [ 2 * DAY, 'yesterday' ],
+  [ 7 * DAY, 'days ago', DAY ],
+  [ 1.5 * WEEK, 'a week ago'],
+  [ MONTH, 'weeks ago', WEEK ],
+  [ 1.5 * MONTH, 'a month ago' ],
+  [ YEAR, 'months ago', MONTH ],
+  [ 1.5 * YEAR, 'a year ago' ],
+  [ Number.MAX_VALUE, 'years ago', YEAR ]
+];
+
+function relativeDate(input,reference){
+  !reference && ( reference = (new Date).getTime() );
+  reference instanceof Date && ( reference = reference.getTime() );
+  input instanceof Date && ( input = input.getTime() );
+  var delta = reference - input,
+      format, i, len;
+  for(i = -1, len=formats.length; ++i < len; ){
+    format = formats[i];
+    if(delta < format[0]){
+      return format[2] == undefined ? format[1] : Math.round(delta/format[2]) + ' ' + format[1];
+    }
+  };
 }
 
 
