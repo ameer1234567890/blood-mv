@@ -35,13 +35,16 @@ $('#display-toggle').on('click', function(event) {
 
 
 // Load requests table
-if(getKeyValueStore('includeFulfilled')) {
-  $('#display-toggle').prop('checked', 'checked');
-  loadBloodRequests(true);
-} else {
-  $('#display-toggle').prop('checked', '');
-  loadBloodRequests(false);
-}
+$(document).ready(function() {
+  if(getKeyValueStore('includeFulfilled')) {
+    $('#display-toggle').prop('checked', 'checked');
+    loadBloodRequests(true);
+  } else {
+    $('#display-toggle').prop('checked', '');
+    loadBloodRequests(false);
+  }
+  document.getElementById('fact').innerHTML = getRandomFact();
+});
 
 
 function loadBloodRequests(includeFulfilled, loadMore) {

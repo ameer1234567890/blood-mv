@@ -43,6 +43,7 @@ $(document).ready(function() {
     $('#display-toggle').prop('checked', 'checked');
     loadBloodDonors(false);
   }
+  document.getElementById('fact').innerHTML = getRandomFact();
 });
 
 
