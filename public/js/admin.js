@@ -6,43 +6,44 @@
 
 var nonAdminMessage = '<div class="container"><br><br>Please login with an admin capable user!<br><br><br><br><br><br><br></div>';
 
-$(document).ready(function() {
-  if(authStatusUpdated) {
-    if(isAdmin) {
-      $('#content').show();
-      $(document).ready($(topLoader).hide());
+
+// Check for authorizaton
+if(authStatusUpdated) {
+  if(isAdmin) {
+    $('#content').show();
+    $(topLoader).hide();
+  } else {
+    $('#content').html(nonAdminMessage).show();
+    $(topLoader).hide();
+  }
+} else {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+        if (!!idTokenResult.claims.admin) {
+          $('#content').show();
+          $(topLoader).hide();
+          isAdmin = true;
+          user.getIdToken().then(function(idToken) {
+            theIdToken = idToken;
+          });
+        } else {
+          $('#content').html(nonAdminMessage).show();
+          $(topLoader).hide();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        $('#content').html('Something went wrong!').show();
+        $(topLoader).hide();
+      });
     } else {
       $('#content').html(nonAdminMessage).show();
-      $(document).ready($(topLoader).hide());
+      $(topLoader).hide();
     }
-  } else {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
-          if (!!idTokenResult.claims.admin) {
-            $('#content').show();
-            $(document).ready($(topLoader).hide());
-            isAdmin = true;
-            user.getIdToken().then(function(idToken) {
-              theIdToken = idToken;
-            });
-          } else {
-            $('#content').html(nonAdminMessage).show();
-            $(document).ready($(topLoader).hide());
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          $('#content').html('Something went wrong!').show();
-          $(document).ready($(topLoader).hide());
-        });
-      } else {
-        $('#content').html(nonAdminMessage).show();
-        $(document).ready($(topLoader).hide());
-      }
-    });
-  }
-});
+  });
+}
+
 
 $('#add-claim').on('click', function() {
   $('#add-claim').attr('disabled', 'disabled');

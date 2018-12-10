@@ -35,16 +35,17 @@ $('#display-toggle').on('click', function(event) {
 
 
 // Load donors table
-$(document).ready(function() {
-  if(getKeyValueStore('includeOnlyDonatable')) {
-    $('#display-toggle').prop('checked', '');
-    loadBloodDonors(true);
-  } else {
-    $('#display-toggle').prop('checked', 'checked');
-    loadBloodDonors(false);
-  }
-  document.getElementById('fact').innerHTML = getRandomFact();
-});
+if(getKeyValueStore('includeOnlyDonatable')) {
+  $('#display-toggle').prop('checked', '');
+  loadBloodDonors(true);
+} else {
+  $('#display-toggle').prop('checked', 'checked');
+  loadBloodDonors(false);
+}
+
+
+// Show a random fact
+document.getElementById('fact').innerHTML = getRandomFact();
 
 
 function loadBloodDonors(includeOnlyDonatable, loadMore) {

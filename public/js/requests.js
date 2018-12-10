@@ -35,16 +35,17 @@ $('#display-toggle').on('click', function(event) {
 
 
 // Load requests table
-$(document).ready(function() {
-  if(getKeyValueStore('includeFulfilled')) {
-    $('#display-toggle').prop('checked', 'checked');
-    loadBloodRequests(true);
-  } else {
-    $('#display-toggle').prop('checked', '');
-    loadBloodRequests(false);
-  }
-  document.getElementById('fact').innerHTML = getRandomFact();
-});
+if(getKeyValueStore('includeFulfilled')) {
+  $('#display-toggle').prop('checked', 'checked');
+  loadBloodRequests(true);
+} else {
+  $('#display-toggle').prop('checked', '');
+  loadBloodRequests(false);
+}
+
+
+// Show a random fact
+document.getElementById('fact').innerHTML = getRandomFact();
 
 
 function loadBloodRequests(includeFulfilled, loadMore) {

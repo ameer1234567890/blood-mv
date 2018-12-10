@@ -7,23 +7,23 @@ var collectionName = 'requests';
 
 initializeSelects();
 
-$(document).ready(function() {
-  if(authStatusUpdated) {
+
+// Check and update necessary fields
+if(authStatusUpdated) {
+  if (firebase.auth().currentUser) {
+    $('#mainForm #email').val(firebase.auth().currentUser.email);
+    $('#mainForm #user').val(firebase.auth().getUid());
+    $(progressElement).hide();
+  }
+} else {
+  firebase.auth().onAuthStateChanged(function() {
     if (firebase.auth().currentUser) {
       $('#mainForm #email').val(firebase.auth().currentUser.email);
       $('#mainForm #user').val(firebase.auth().getUid());
-      $(progressElement).hide();
     }
-  } else {
-    firebase.auth().onAuthStateChanged(function() {
-      if (firebase.auth().currentUser) {
-        $('#mainForm #email').val(firebase.auth().currentUser.email);
-        $('#mainForm #user').val(firebase.auth().getUid());
-      }
-    });
-    $(progressElement).hide();
-  }
-});
+  });
+  $(progressElement).hide();
+}
 
 
 // Add request to database

@@ -14,21 +14,20 @@ var atollsInstance = M.FormSelect.getInstance(document.querySelectorAll('select'
 var islandsInstance = M.FormSelect.getInstance(document.querySelectorAll('select')[3]);
 
 
-$(document).ready(function() {
-  if(authStatusUpdated) {
+// Check and update necessary fields
+if(authStatusUpdated) {
+  atollsInstance.destroy();
+  islandsInstance.destroy();
+  loadExistingData();
+  initializeSelects();
+} else {
+  firebase.auth().onAuthStateChanged(function() {
     atollsInstance.destroy();
     islandsInstance.destroy();
     loadExistingData();
     initializeSelects();
-  } else {
-    firebase.auth().onAuthStateChanged(function() {
-      atollsInstance.destroy();
-      islandsInstance.destroy();
-      loadExistingData();
-      initializeSelects();
-    });
-  }
-});
+  });
+}
 
 
 // Load existing data if available
