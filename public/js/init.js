@@ -3,7 +3,7 @@
 /* globals $, firebase, ga, M, navigator,  */
 /* exported tableSearch, getKeyValueStore, setKeyValueStore, age, humanDate, htmlDate, topLoader,
    matIconCheckBox, matIconCheckBoxOutline, matIconExpandMore, matIconMoreHoriz, matIconRefresh,
-   matIconDelete, matIconCheck, matIconClear, matIconShare */
+   matIconDelete, matIconCheck, matIconClear, matIconShare, relativeDate, getRandomFact */
 
 // Create firebase database reference
 var db = firebase.firestore();

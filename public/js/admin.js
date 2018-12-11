@@ -1,7 +1,7 @@
 /* jshint esversion: 6 */
 /* jshint browser: true */
 /* globals $, firebase, db, topLoader, theIdToken:true, authStatusUpdated, isAdmin:true,
-   matIconDelete, matIconRefresh, matIconCheck, matIconClear, humanDate */
+   matIconDelete, matIconRefresh, matIconCheck, matIconClear, humanDate, M, messaging */
 
 
 var nonAdminMessage = '<div class="container"><br><br>Please login with an admin capable user!<br><br><br><br><br><br><br></div>';
