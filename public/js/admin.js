@@ -277,6 +277,69 @@ $('#list-users').on('click', function() {
   });
 });
 
+
+$('#backup-donors').on('click', function() {
+  $('#backup-donors').attr('disabled', 'disabled');
+  $('#backup-donors-loader').css('display', 'inline-block');
+  M.toast({html: 'Processing...', classes: 'lime darken-3'});
+  var donorRecords = '[';
+  db.collection('donors').get().then((querySnapshot) => {
+    var numRecords = querySnapshot.size;
+    var i = 0;
+    querySnapshot.forEach((doc) => {
+      i++;
+      donorRecords += JSON.stringify(doc.data());
+      if(i != numRecords) {
+        donorRecords += ',';
+      }
+    });
+    donorRecords += ']';
+  }).then(() => {
+    $('#backup-donors-result').html('<a href="data:application/octet-stream;charset=utf-16le;base64,' + btoa(donorRecords) + '" download="donors.json">Download Backup File</a>');
+    $('#backup-donors-loader').hide();
+    $('#backup-donors').removeAttr('disabled');
+    M.toast({html: 'Backup file ready!', classes: 'green darken-1'});
+  }).catch((error) => {
+    $('#backup-donors-result').html('Error: ' + error);
+    $('#backup-donors-loader').hide();
+    $('#backup-donors').removeAttr('disabled');
+    M.toast({html: 'Backup file ready!', classes: 'red lighten-1'});
+    console.log(error);
+  });
+});
+
+
+$('#backup-requests').on('click', function() {
+  $('#backup-requests').attr('disabled', 'disabled');
+  $('#backup-requests-loader').css('display', 'inline-block');
+  M.toast({html: 'Processing...', classes: 'lime darken-3'});
+  var requestRecords = '[';
+  db.collection('requests').get().then((querySnapshot) => {
+    var numRecords = querySnapshot.size;
+    var i = 0;
+    querySnapshot.forEach((doc) => {
+      i++;
+      requestRecords += JSON.stringify(doc.data());
+      if(i != numRecords) {
+        requestRecords += ',';
+      }
+    });
+    requestRecords += ']';
+  }).then(() => {
+    $('#backup-requests-result').html('<a href="data:application/octet-stream;charset=utf-16le;base64,' + btoa(requestRecords) + '" download="requests.json">Download Backup File</a>');
+    $('#backup-requests-loader').hide();
+    $('#backup-requests').removeAttr('disabled');
+    M.toast({html: 'Backup file ready!', classes: 'green darken-1'});
+  }).catch((error) => {
+    $('#backup-requests-result').html('Error: ' + error);
+    $('#backup-requests-loader').hide();
+    $('#backup-requests').removeAttr('disabled');
+    M.toast({html: 'Backup file ready!', classes: 'red lighten-1'});
+    console.log(error);
+  });
+});
+
+
 messaging.getToken().then(function(currentToken) {
   $('#token-details-token').val(currentToken);
   $('label[for=token-details-token]').addClass('active');
