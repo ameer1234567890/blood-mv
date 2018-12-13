@@ -242,14 +242,20 @@ body > .progress {
 /*  Styles for page transitions                               */
 /*  --------------------------------------------------------  */
 #content.slide {
+  animation: slide 1s forwards;
+  height: 100%;
+  left: -75%;
   position: absolute;
-  width:100%;
-  left: -100%;
-  animation: slide 0.5s forwards;
+  width: 100%;
 }
 
 @keyframes slide {
-  100% { left: 0; }
+  50% {
+    background-color: #b2dfdb;
+  }
+  100% {
+    left: 0px;
+  }
 }
 
 /*  --------------------------------------------------------  */
