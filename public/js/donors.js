@@ -76,8 +76,7 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
         .append($('<td>').text(doc.data().gender))
         .append($('<td>').text(age(doc.data().born.toDate())))
         .append($('<td>').text(doc.data().group))
-        .append($('<td>').text(doc.data().atoll))
-        .append($('<td>').text(doc.data().island))
+        .append($('<td>').text(doc.data().atoll + ' - ' + doc.data().island))
         .append($('<td>').text(doc.data().phone))
         .append($('<td>').text(relativeDate(doc.data().donated.toDate())).addClass('tooltipped').attr('data-tooltip', humanDate(doc.data().donated.toDate(), false)))
       );
