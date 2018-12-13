@@ -302,7 +302,7 @@ var facts = [
   'The blood type most often requested by hospitals is type O.',
   'It takes your body about 6-8 weeks to regenerate a pint of blood.',
   'Sometimes people who donate blood notice a few minor side effects like nausea, lightheadedness, dizziness, or fainting, but these symptoms usually go away quickly.',
-  'You can burn about 650 calories per donation of one pint of blood —that\'s even more than what you burn in a 30 minute run!',
+  'You can burn about 650 calories per donation of one pint of blood - that\'s even more than what you burn in a 30 minute run!',
   'The actual donation of a pint of whole blood unit (also called bleeding) takes eight to 10 minutes.',
   'One unit of blood can be separated into several components: red blood cells, plasma, platelets and cryoprecipitate.',
   'Dr. Karl Landsteiner first identified the major human blood groups - A, B, AB and O - in 1901.',
