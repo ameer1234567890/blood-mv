@@ -237,3 +237,20 @@ exports.addAdminClaim = functions.https.onRequest((req, res) => {
       return res.end(JSON.stringify({ error: error }));
     });
 });
+
+
+exports.rssFeed = functions.https.onRequest((req, res) => {
+  console.log('Function Version: v1');
+  const collectionName = 'donors';
+  const recordsPerPage = 4;
+  var data = '';
+  db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc').get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      data += doc.id;
+      data += doc.data().group;
+    });
+    return res.status(200).send(data);
+  }).catch((error) => {
+    res.status(500).send('Error!');
+  });
+});

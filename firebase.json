@@ -93,6 +93,9 @@
         "source": "/admin/deleteuser", "function": "deleteUser"
       },
       {
+        "source": "/feed", "function": "rssFeed"
+      },
+      {
         "source": "/admin/addclaim", "function": "addAdminClaim"
       }
     ],
