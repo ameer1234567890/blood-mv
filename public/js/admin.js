@@ -320,7 +320,7 @@ $('#backup-requests').on('click', function() {
     querySnapshot.forEach((doc) => {
       i++;
       requestRecords += JSON.stringify(doc.data());
-      if(i != numRecords) {
+      if(i !== numRecords) {
         requestRecords += ',';
       }
     });

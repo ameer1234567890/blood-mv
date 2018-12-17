@@ -240,35 +240,39 @@ exports.addAdminClaim = functions.https.onRequest((req, res) => {
 
 
 exports.rssFeed = functions.https.onRequest((req, res) => {
-  console.log('Function Version: v6');
+  console.log('Function Version: v10');
   const collectionName = 'donors';
   const recordsPerPage = 4;
-  var data = `<?xml version="1.0" encoding="UTF-8" ?>
-  <rss version="2.0">
-    <channel>
-      <title>Blood MV</title>
-      <description>Blood requests on Blood MV</description>
-      <link>https://blood-mv.firebaseapp.com/requests/</link>
-      <pubDate>Mon, 17 Dec 2018 16:20:00 +0500</pubDate>
-   `;
+  var rssData = '<?xml version="1.0" encoding="UTF-8" ?>';
+  rssData = '<rss version="2.0">';
+  rssData = '  <channel>';
+  rssData = '    <title>Blood MV</title>';
+  rssData = '    <description>Blood requests on Blood MV</description>';
+  rssData = '    <link>https://blood-mv.firebaseapp.com/requests/</link>';
+  rssData = '    <language>en-us</language>';
+  rssData = '    <pubDate>Mon, 17 Dec 2018 16:20:00 +0500</pubDate>';
   db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc').get().then((querySnapshot) => {
+    console.log('we are here');
+    var numRecords = querySnapshot.size;
+    var i = 0;
     querySnapshot.forEach((doc) => {
-      data +='    <item>';
-      data +='      <title>' + doc.data().group + ' requested at ' + doc.data().place + '</title>';
-      data +='      <description>' + doc.data().group + ' requested at ' + doc.data().place + '</description>';
-      data +='      <link>https://blood-mv.firebaseapp.com/requests/#' + doc.id + '</link>';
-      data +='      <guid isPermaLink="false">' + doc.id + '</guid>';
-      data +='      <pubDate>' + doc.data().datetime + '</pubDate>';
-      data += '    </item>'
-      console.log(data);
+      console.log('reached here');
+      i++;
+      rssData += '    <item>';
+      rssData += '      <title>' + doc.data().group + ' requested at ' + doc.data().place + '</title>';
+      rssData += '      <description>' + doc.data().group + ' requested at ' + doc.data().place + '</description>';
+      rssData += '      <link>https://blood-mv.firebaseapp.com/requests/#request-' + doc.id + '</link>';
+      rssData += '      <guid isPermaLink="false">' + doc.id + '</guid>';
+      rssData += '      <pubDate>' + doc.data().datetime + '</pubDate>';
+      rssData += '    </item>';
+      if(i === numRecords) {
+        rssData += '  </channel>';
+        rssData += '</rss>';
+        console.log(rssData);
+        res.status(200).send(rssData);
+      }
     });
-    return data;
-  }).then((data) => {
-    data += `
-    </channel>
-  </rss>`;
-    console.log(data);
-    return res.status(200).send(data);
+    return;
   }).catch((error) => {
     res.status(500).send('Error!');
   });
