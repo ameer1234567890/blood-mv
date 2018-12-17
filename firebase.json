@@ -119,6 +119,15 @@
         ]
       },
       {
+        "source": "/feed",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/rss+xml"
+          }
+        ]
+      },
+      {
         "source": "**/*.@(jpg|jpeg|gif|png|webp)",
         "headers": [
           {
