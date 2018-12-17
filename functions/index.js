@@ -5,6 +5,10 @@ admin.initializeApp();
 const db = admin.firestore();
 db.settings({ timestampsInSnapshots: true });
 const https = require('https');
+const storage = admin.storage();
+const os = require('os');
+const fs = require('fs');
+const path = require('path');
 
 
 exports.subscribeToTopic = functions.https.onRequest((req, res) => {
@@ -240,40 +244,63 @@ exports.addAdminClaim = functions.https.onRequest((req, res) => {
 
 
 exports.rssFeed = functions.https.onRequest((req, res) => {
-  console.log('Function Version: v10');
-  const collectionName = 'donors';
+  console.log('Function Version: v33');
+  const filePath = '/feed/rss.txt';
+  const tempfileName = 'rss.txt';
+  const tempFilePath = path.join(os.tmpdir(), tempfileName);
+  storage.bucket().file(filePath).download({
+    destination: tempFilePath,
+  }).then(() => {
+    rssData = fs.readFileSync(tempFilePath);
+    fs.unlinkSync(tempFilePath);
+    return res.status(200).send(rssData);
+  }).catch(() => {
+    res.status(500).send('Error!');
+  });
+});
+
+exports.prepareRssFeed = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
+  console.log('Function Version: v14');
+  const collectionName = 'requests';
   const recordsPerPage = 4;
-  var rssData = '<?xml version="1.0" encoding="UTF-8" ?>';
-  rssData = '<rss version="2.0">';
-  rssData = '  <channel>';
-  rssData = '    <title>Blood MV</title>';
-  rssData = '    <description>Blood requests on Blood MV</description>';
-  rssData = '    <link>https://blood-mv.firebaseapp.com/requests/</link>';
-  rssData = '    <language>en-us</language>';
-  rssData = '    <pubDate>Mon, 17 Dec 2018 16:20:00 +0500</pubDate>';
-  db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc').get().then((querySnapshot) => {
-    console.log('we are here');
+  var msgBody = '';
+  var rssData = '<?xml version="1.0" encoding="UTF-8" ?>\n';
+  rssData += '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n';
+  rssData += '  <channel>\n';
+  rssData += '    <title>Blood MV</title>\n';
+  rssData += '    <description>Blood requests on Blood MV</description>\n';
+  rssData += '    <link>https://blood-mv.firebaseapp.com/requests/</link>\n';
+  rssData += '    <language>en-us</language>\n';
+  rssData += '    <atom:link href="https://blood-mv.firebaseapp.com/feed" rel="self" type="application/rss+xml" />\n';
+  rssData += '    <pubDate>Mon, 17 Dec 2018 12:20:00 +0500</pubDate>\n';
+  db.collection(collectionName).limit(recordsPerPage).get().then((querySnapshot) => {
     var numRecords = querySnapshot.size;
     var i = 0;
     querySnapshot.forEach((doc) => {
-      console.log('reached here');
       i++;
-      rssData += '    <item>';
-      rssData += '      <title>' + doc.data().group + ' requested at ' + doc.data().place + '</title>';
-      rssData += '      <description>' + doc.data().group + ' requested at ' + doc.data().place + '</description>';
-      rssData += '      <link>https://blood-mv.firebaseapp.com/requests/#request-' + doc.id + '</link>';
-      rssData += '      <guid isPermaLink="false">' + doc.id + '</guid>';
-      rssData += '      <pubDate>' + doc.data().datetime + '</pubDate>';
-      rssData += '    </item>';
+      msgBody = doc.data().group + ' requested at ' + doc.data().place + ' Contact ' + doc.data().phone;
+      rssData += '    <item>\n';
+      rssData += '      <title>' + msgBody + '</title>\n';
+      rssData += '      <description>' + msgBody + '</description>\n';
+      rssData += '      <link>https://blood-mv.firebaseapp.com/requests/#request-' + doc.id + '</link>\n';
+      rssData += '      <guid isPermaLink="false">' + doc.id + '</guid>\n';
+      rssData += '      <pubDate>' + doc.data().datetime.toDate().toUTCString() + '</pubDate>\n';
+      rssData += '    </item>\n';
       if(i === numRecords) {
-        rssData += '  </channel>';
+        rssData += '  </channel>\n';
         rssData += '</rss>';
-        console.log(rssData);
-        res.status(200).send(rssData);
       }
     });
-    return;
-  }).catch((error) => {
+    return rssData;
+  }).then((rssData) => {
+    const fileName = 'rss.txt';
+    const destination = '/feed/rss.txt';
+    const tempFilePath = path.join(os.tmpdir(), fileName);
+    fs.writeFileSync(tempFilePath, rssData );
+    storage.bucket().upload( tempFilePath, { destination } );
+    console.log('Feed updated!');
+    return fs.unlinkSync(tempFilePath);
+  }).catch(() => {
     res.status(500).send('Error!');
   });
 });
