@@ -260,7 +260,7 @@ exports.rssFeed = functions.https.onRequest((req, res) => {
 });
 
 exports.prepareRssFeed = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
-  console.log('Function Version: v14');
+  console.log('Function Version: v15');
   const collectionName = 'requests';
   const recordsPerPage = 4;
   var msgBody = '';
@@ -301,6 +301,6 @@ exports.prepareRssFeed = functions.firestore.document('requests/{docId}').onCrea
     console.log('Feed updated!');
     return fs.unlinkSync(tempFilePath);
   }).catch(() => {
-    res.status(500).send('Error!');
+    console.error('Error!');
   });
 });

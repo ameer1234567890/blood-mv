@@ -246,9 +246,6 @@ body > .progress {
 }
 
 @keyframes slide {
-  50% {
-    background-color: #b2dfdb;
-  }
   100% {
     left: 0px;
   }
