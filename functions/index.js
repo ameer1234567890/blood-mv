@@ -170,7 +170,7 @@ exports.deleteUser = functions.https.onRequest((req, res) => {
 
 
 exports.sendNotification = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
-  console.log('Function Version: v1');
+  console.log('Function Version: v2');
   console.log(snap.data());
   const group = snap.data().group;
   const place = snap.data().place;
@@ -202,6 +202,7 @@ exports.sendNotification = functions.firestore.document('requests/{docId}').onCr
   .catch((error) => {
     return console.log('Error sending message: ', error);
   });
+  return true;
 });
 
 
@@ -239,7 +240,7 @@ exports.rssFeed = functions.https.onRequest((req, res) => {
 });
 
 exports.prepareRssFeed = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
-  console.log('Function Version: v33');
+  console.log('Function Version: v37');
   const collectionName = 'requests';
   const recordsPerPage = 4;
   const tempFileName = 'rss.txt';
@@ -254,8 +255,7 @@ exports.prepareRssFeed = functions.firestore.document('requests/{docId}').onCrea
   rssData += '    <link>https://blood-mv.firebaseapp.com/requests/</link>\n';
   rssData += '    <language>en-us</language>\n';
   rssData += '    <atom:link href="https://blood-mv.firebaseapp.com/feed" rel="self" type="application/rss+xml" />\n';
-  rssData += '    <pubDate>Mon, 17 Dec 2018 12:20:00 +0500</pubDate>\n';
-  db.collection(collectionName).limit(recordsPerPage).get().then((querySnapshot) => {
+  db.collection(collectionName).limit(recordsPerPage).orderBy('datetime', 'desc').get().then((querySnapshot) => {
     var numRecords = querySnapshot.size;
     var i = 0;
     querySnapshot.forEach((doc) => {
