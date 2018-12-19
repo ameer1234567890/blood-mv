@@ -223,8 +223,8 @@ exports.addAdminClaim = functions.https.onRequest((req, res) => {
 
 
 exports.rssFeed = functions.https.onRequest((req, res) => {
-  console.log('Function Version: v34');
-  const filePath = '/feed/rss.txt';
+  console.log('Function Version: v35');
+  const filePath = 'rss.txt';
   const tempFileName = 'rss.txt';
   const tempFilePath = path.join(os.tmpdir(), tempFileName);
   storage.bucket().file(filePath).download({
@@ -239,9 +239,12 @@ exports.rssFeed = functions.https.onRequest((req, res) => {
 });
 
 exports.prepareRssFeed = functions.firestore.document('requests/{docId}').onCreate((snap, context) => {
-  console.log('Function Version: v27');
+  console.log('Function Version: v33');
   const collectionName = 'requests';
   const recordsPerPage = 4;
+  const tempFileName = 'rss.txt';
+  const tempFilePath = path.join(os.tmpdir(), tempFileName);
+  const filePath = 'rss.txt';
   var msgBody = '';
   var rssData = '<?xml version="1.0" encoding="UTF-8" ?>\n';
   rssData += '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n';
@@ -270,9 +273,6 @@ exports.prepareRssFeed = functions.firestore.document('requests/{docId}').onCrea
         rssData += '</rss>';
       }
     });
-    const tempFileName = 'rss.txt';
-    const filePath = '/feed/rss.txt';
-    const tempFilePath = path.join(os.tmpdir(), tempFileName);
     return new Promise((resolve, reject) => {
       fs.writeFile(tempFilePath, rssData, (err, data) => {
         if (err) reject(err);
@@ -280,16 +280,20 @@ exports.prepareRssFeed = functions.firestore.document('requests/{docId}').onCrea
       });
     });
   }).then((data) => {
+    console.log('Temp file written!', data);
     return storage.bucket().upload(tempFilePath, {filePath});
   }).then(() => {
-    console.log('Upload done!');
+    console.log('Upload succeeded!');
     return new Promise((resolve, reject) => {
       fs.unlink(tempFilePath, (err) => {
         if (err) reject(err);
         else resolve();
       });
     });
+  }).then(() => {
+    return console.log('Temp file deleted!');
   }).catch(() => {
     console.error('Error!');
   });
+  return true;
 });
