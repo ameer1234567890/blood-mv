@@ -237,17 +237,18 @@ body > .progress {
 /*  --------------------------------------------------------  */
 /*  Styles for page transitions                               */
 /*  --------------------------------------------------------  */
-#content.slide {
-  animation: slide 1s forwards;
-  height: 100%;
-  left: -75%;
-  position: absolute;
-  width: 100%;
-}
+@media only screen and (max-width: 992px) {
+  #content.slide {
+    animation: slide 1s forwards;
+    left: -75%;
+    position: absolute;
+    width: 100%;
+  }
 
-@keyframes slide {
-  100% {
-    left: 0px;
+  @keyframes slide {
+    100% {
+      left: 0;
+    }
   }
 }
 
