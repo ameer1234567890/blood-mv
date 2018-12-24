@@ -11,7 +11,7 @@
       "jshint --exclude **/*.min.js,**/materialize.js,**/jquery.js public",
 
       "mv public/css/default.css public/css/default.max.css",
-      "csso public/css/default.max.css public/css/default.css",
+      "csso public/css/default.max.css -o public/css/default.css",
 
       "mv public/js/add.js public/js/add.max.js",
       "google-closure-compiler --js=public/js/add.max.js --js_output_file=public/js/add.js --create_source_map=public/js/add.js.map",
