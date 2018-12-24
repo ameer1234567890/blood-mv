@@ -5,7 +5,6 @@
    matIconCheckBox, matIconCheckBoxOutline, matIconMoreHoriz, matIconExpandMore,
    matIconRefresh, matIconDelete, matIconShare */
 
-var progressElement = '#table-spinner';
 var loadMoreElement = '.load-more';
 var collectionName = 'requests';
 var recordsPerPage = 10;
@@ -23,13 +22,31 @@ $('#search').on('keyup', function(event) {
 // Reload list of requests when toggle is clicked
 $('#display-toggle').on('click', function(event) {
   if($('#display-toggle').prop('checked')) {
-    $(progressElement).show();
     $('#requests').find('tr:gt(0)').remove();
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
     setKeyValueStore('includeFulfilled', true);
     loadBloodRequests(true);
   } else {
-    $(progressElement).show();
     $('#requests').find('tr:gt(0)').remove();
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
     setKeyValueStore('includeFulfilled', false);
     loadBloodRequests(false);
   }
@@ -69,6 +86,7 @@ function loadBloodRequests(includeFulfilled, loadMore) {
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
     var firstDoc = querySnapshot.docs[0];
+    $('#requests > tbody > .skeleton-row').remove();
     querySnapshot.forEach((doc) => {
       $('#requests tbody').append($('<tr id="request-' + doc.id + '">')
         .append($('<td scope="row">').text(doc.data().group))
@@ -117,7 +135,6 @@ function loadBloodRequests(includeFulfilled, loadMore) {
       }
       $('.tooltipped').tooltip();
     });
-    $(progressElement).hide();
     $(loadMoreElement).show();
     if(!lastVisible) {
       $(loadMoreElement).off();

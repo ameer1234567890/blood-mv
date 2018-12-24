@@ -3,7 +3,6 @@
 /* globals $, tableSearch, setKeyValueStore, getKeyValueStore, age, humanDate, db, topLoader,
    matIconMoreHoriz, matIconExpandMore, matIconDelete, matIconRefresh, getRandomFact, relativeDate, isAdmin */
 
-var progressElement = '#table-spinner';
 var loadMoreElement = '.load-more';
 var collectionName = 'donors';
 var recordsPerPage = 10;
@@ -22,13 +21,31 @@ $('#search').on('keyup', function(event) {
 // Reload list of donors when toggle is clicked
 $('#display-toggle').on('click', function(event) {
   if($('#display-toggle').prop('checked')) {
-    $(progressElement).show();
     $('#donors').find('tr:gt(0)').remove();
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
     setKeyValueStore('includeOnlyDonatable', false);
     loadBloodDonors(false);
   } else {
-    $(progressElement).show();
     $('#donors').find('tr:gt(0)').remove();
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
     setKeyValueStore('includeOnlyDonatable', true);
     loadBloodDonors(true);
   }
@@ -70,6 +87,7 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
   query.get().then((querySnapshot) => {
     lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
     var firstDoc = querySnapshot.docs[0];
+    $('#donors > tbody > .skeleton-row').remove();
     querySnapshot.forEach((doc) => {
       $('#donors > tbody').append($('<tr id="request-' + doc.id + '">')
         .append($('<td scope="row">').text(doc.data().first + ' ' + doc.data().last))
@@ -96,7 +114,6 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
       }
       $('.tooltipped').tooltip();
     });
-    $(progressElement).hide();
     $(loadMoreElement).show();
     if(!lastVisible) {
       $(loadMoreElement).off();
