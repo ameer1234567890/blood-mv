@@ -22,30 +22,30 @@ $('#search').on('keyup', function(event) {
 $('#display-toggle').on('click', function(event) {
   if($('#display-toggle').prop('checked')) {
     $('#donors').find('tr:gt(0)').remove();
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
     setKeyValueStore('includeOnlyDonatable', false);
     loadBloodDonors(false);
   } else {
     $('#donors').find('tr:gt(0)').remove();
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="8">&nbsp;</td></tr>'));
-    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="8">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row odd"><td colspan="7">&nbsp;</td></tr>'));
+    $('#donors > tbody').append($('<tr class="skeleton-row even"><td colspan="7">&nbsp;</td></tr>'));
     setKeyValueStore('includeOnlyDonatable', true);
     loadBloodDonors(true);
   }

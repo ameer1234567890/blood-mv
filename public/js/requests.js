@@ -24,30 +24,30 @@ $('#display-toggle').on('click', function(event) {
   if($('#display-toggle').prop('checked')) {
     $('#requests').find('tr:gt(0)').remove();
     // TODO: Some kind of loop to iterate 10 or 5 times
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
     setKeyValueStore('includeFulfilled', true);
     loadBloodRequests(true);
   } else {
     $('#requests').find('tr:gt(0)').remove();
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
-    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="7"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row odd"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
+    $('#requests > tbody').append($('<tr class="skeleton-row even"><td colspan="6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"></svg></td></tr>'));
     setKeyValueStore('includeFulfilled', false);
     loadBloodRequests(false);
   }

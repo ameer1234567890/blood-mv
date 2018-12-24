@@ -239,10 +239,10 @@ body > .progress {
     margin: -24px;
   }
   #donors .skeleton-row > td {
-    height: 304px;
+    height: 265px;
   }
   #requests .skeleton-row > td {
-    height: 289px;
+    height: 250px;
   }
   #donors tr.skeleton-row > td:nth-of-type(1):before,
   #requests tr.skeleton-row > td:nth-of-type(1):before {
