@@ -233,10 +233,6 @@ body > .progress {
 /*  --------------------------------------------------------  */
 /*  Skeleton loading                                          */
 /*  --------------------------------------------------------  */
-.skeleton-row > td {
-  height: 59px;
-}
-
 @media only screen and (max-width: 992px) {
   #donors .skeleton-row > td,
   #requests .skeleton-row > td {
