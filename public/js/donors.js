@@ -112,7 +112,9 @@ function loadBloodDonors(includeOnlyDonatable, loadMore) {
       if(loadMore) {
         $('html, body').stop().animate({scrollTop: $('#request-' + firstDoc.id).offset().top - 78}, 500);
       }
-      $('.tooltipped').tooltip();
+      var elems = document.querySelectorAll('.tooltipped');
+      var options = { 'enterDelay': 800};
+      M.Tooltip.init(elems, options);
     });
     $(loadMoreElement).show();
     if(!lastVisible) {
