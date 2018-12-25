@@ -132,7 +132,7 @@ function loadBloodRequests(includeFulfilled, loadMore) {
         toggleFullfillment(doc.id, isFulfilled);
       });
       if(loadMore) {
-        $('html, body').stop().animate({scrollTop: $('#request-' + firstDoc.id).offset().top - 78}, 1000);
+        $('html, body').stop().animate({scrollTop: $('#request-' + firstDoc.id).offset().top - 78}, 500);
       }
       $('.tooltipped').tooltip();
     });

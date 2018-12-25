@@ -109,7 +109,10 @@ var contentElement = '#content';
 
 function updateContent(stateObj, pageURL) {
   if (stateObj) {
-    $(contentElement).load(pageURL + ' #content > *', function(){
+    $('body').css('background-color', '#37474f');
+    $(contentElement).load(pageURL + ' #content > *', function() {
+      $('.material-tooltip').remove();
+      setTimeout(function() {$('body').css('background-color', '#d9e0e7');}, 1000);
       $.getScript(stateObj.script);
       document.title = stateObj.title;
       $(contentElement).removeClass('slide');
