@@ -430,51 +430,14 @@ messaging.onMessage(function(payload) {
 
 
 ga('set', 'dimension2', 'No');
-var deferredPrompt;
 window.addEventListener('beforeinstallprompt', function(e) {
-  e.preventDefault();
-  deferredPrompt = e;
-  console.log('beforeinstallprompt triggered');
   ga('set', 'dimension2', 'Yes');
-  if(getSessionStore('hideA2HS')) {
-    console.log('User has closed A2HS banner before. It is hidden for this session.');
-  } else {
-    showAddToHomeScreen();
-  }
 });
 
 
 ga('set', 'dimension3', 'No');
 window.addEventListener('appinstalled', function(event) {
   ga('set', 'dimension3', 'Yes');
-});
-
-
-function showAddToHomeScreen() {
-  $('.a2hs-banner').show();
-  $('.a2hs-add').on('click', addToHomeScreen);
-}
-
-
-function addToHomeScreen() {
-  $('.a2hs-banner').hide();
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(function(choiceResult) {
-    ga('set', 'dimension4', choiceResult.outcome);
-    if (choiceResult.outcome === 'accepted') {
-      console.log('User accepted the A2HS prompt');
-    } else {
-      console.log('User dismissed the A2HS prompt');
-    }
-    deferredPrompt = null;
-  });
-}
-
-
-$('.a2hs-close').on('click', function() {
-  setSessionStore('hideA2HS', true);
-  $('.a2hs-banner').hide();
-  ga('send', 'event', 'A2H', 'closed');
 });
 
 
