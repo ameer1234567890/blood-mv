@@ -15,6 +15,7 @@
 
       "mv public/js/add.js public/js/add.max.js",
       "google-closure-compiler --js=public/js/add.max.js --js_output_file=public/js/add.js --create_source_map=public/js/add.js.map",
+      "ls -l",
 
       "mv public/js/admin.js public/js/admin.max.js",
       "google-closure-compiler --js=public/js/admin.max.js --js_output_file=public/js/admin.js --create_source_map=public/js/admin.js.map",
