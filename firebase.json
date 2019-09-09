@@ -14,29 +14,29 @@
       "csso public/css/default.max.css -o public/css/default.css",
 
       "mv public/js/add.js public/js/add.max.js",
-      "google-closure-compiler --js=public/js/add.max.js --js_output_file=public/js/add.js --create_source_map=public/js/add.js.map",
+      "google-closure-compiler --js public/js/add.max.js --js_output_file public/js/add.js --create_source_map public/js/add.js.map",
       "ls -l public/js",
 
       "mv public/js/admin.js public/js/admin.max.js",
-      "google-closure-compiler --js=public/js/admin.max.js --js_output_file=public/js/admin.js --create_source_map=public/js/admin.js.map",
+      "google-closure-compiler --js public/js/admin.max.js --js_output_file public/js/admin.js --create_source_map public/js/admin.js.map",
 
       "mv public/js/donors.js public/js/donors.max.js",
-      "google-closure-compiler --js=public//js/donors.max.js --js_output_file=public/js/donors.js --create_source_map=public/js/donors.js.map",
+      "google-closure-compiler --js public//js/donors.max.js --js_output_file public/js/donors.js --create_source_map public/js/donors.js.map",
 
       "mv public/js/init.js public/js/init.max.js",
-      "google-closure-compiler --js=public/js/init.max.js --js_output_file=public/js/init.js --create_source_map=public/js/init.js.map",
+      "google-closure-compiler --js public/js/init.max.js --js_output_file public/js/init.js --create_source_map public/js/init.js.map",
 
       "mv public/js/notify.js public/js/notify.max.js",
-      "google-closure-compiler --js=public/js/notify.max.js --js_output_file=public/js/notify.js --create_source_map=public/js/notify.js.map",
+      "google-closure-compiler --js public/js/notify.max.js --js_output_file public/js/notify.js --create_source_map public/js/notify.js.map",
 
       "mv public/js/requests.js public/js/requests.max.js",
-      "google-closure-compiler --js=public/js/requests.max.js --js_output_file=public/js/requests.js --create_source_map=public/js/requests.js.map",
+      "google-closure-compiler --js public/js/requests.max.js --js_output_file public/js/requests.js --create_source_map public/js/requests.js.map",
 
       "mv public/js/requestsadd.js public/js/requestsadd.max.js",
-      "google-closure-compiler --js=public/js/requestsadd.max.js --js_output_file=public/js/requestsadd.js --create_source_map=public/js/requestsadd.js.map",
+      "google-closure-compiler --js public/js/requestsadd.max.js --js_output_file public/js/requestsadd.js --create_source_map public/js/requestsadd.js.map",
 
       "mv public/sw.js public/sw.max.js",
-      "google-closure-compiler --js=public/sw.max.js --js_output_file=public/sw.js --create_source_map=public/sw.js.map"
+      "google-closure-compiler --js public/sw.max.js --js_output_file public/sw.js --create_source_map public/sw.js.map"
     ],
     "postdeploy": [
       "rm public/css/default.css",
